@@ -752,8 +752,8 @@ body.dark .chip.active{background:var(--accent-orange) !important;color:#fff !im
 <div class="card">
 <div class="card-title">Full Halal Watchlist <span class="ml" id="watchCount"></span></div>
 <div class="alert alert-green">
-<div class="alert-title">672 Stocks Combined</div>
-<div class="alert-text">VCP 365 + IPO 187 + Multi-Year 266 = 672 unique stocks (146 VCP+Multi-Year overlap)<span class="ml">All stocks in one place.</span></div>
+<div class="alert-title">584 Halal Stocks Combined</div>
+<div class="alert-text">VCP 316 + IPO 162 + Multi-Year 239 = 584 unique halal stocks (133 VCP+Multi-Year overlap)<span class="ml">All stocks in one place.</span></div>
 </div>
 <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">
 <button class="chip active" onclick="setCatFilter('all',this)" style="flex:1;min-width:60px">All</button>
@@ -768,7 +768,7 @@ body.dark .chip.active{background:var(--accent-orange) !important;color:#fff !im
 <button class="chip" onclick="setCatFilter('top20',this)" style="flex:1">Top 20</button>
 </div>
 <input type="text" class="search-box" id="stockSearch" placeholder="Search ticker or name..." oninput="renderStocks()">
-<div id="stockCount" style="font-size:0.7em;color:var(--text-muted);margin:5px 0;font-weight:600">672 stocks</div>
+<div id="stockCount" style="font-size:0.7em;color:var(--text-muted);margin:5px 0;font-weight:600">584 stocks</div>
 <div id="stockList"></div>
 </div>
 </div>
@@ -1349,17 +1349,6 @@ FII buying + DII selling = FII driven rally.<br>
 <script>
 const ALL_STOCKS = [
 {
-"ticker": "LICHSGFIN",
-"name": "Lic Housing Finance Limited",
-"price": 567.85,
-"change": 2.82,
-"volume": 6862266,
-"vcp": true,
-"my": true,
-"ipo": false,
-"category": "VCP+MY"
-},
-{
 "ticker": "IONEXCHANG",
 "name": "Ion Exchange (India) Ltd",
 "price": 447.6,
@@ -1481,17 +1470,6 @@ const ALL_STOCKS = [
 "category": "VCP+MY"
 },
 {
-"ticker": "SAREGAMA",
-"name": "Saregama India Limited",
-"price": 514.4,
-"change": 1.83,
-"volume": 280887,
-"vcp": true,
-"my": true,
-"ipo": false,
-"category": "VCP+MY"
-},
-{
 "ticker": "STLTECH",
 "name": "Sterlite Technologies Limited",
 "price": 870.05,
@@ -1523,17 +1501,6 @@ const ALL_STOCKS = [
 "my": false,
 "ipo": false,
 "category": "VCP"
-},
-{
-"ticker": "63MOONS",
-"name": "63 Moons Technologies Ltd",
-"price": 900.7,
-"change": 1.62,
-"volume": 256538,
-"vcp": true,
-"my": true,
-"ipo": false,
-"category": "VCP+MY"
 },
 {
 "ticker": "CARTRADE",
@@ -1706,28 +1673,6 @@ const ALL_STOCKS = [
 "price": 630.5,
 "change": 1.3,
 "volume": 85259,
-"vcp": true,
-"my": true,
-"ipo": false,
-"category": "VCP+MY"
-},
-{
-"ticker": "CUB",
-"name": "City Union Bank Limited",
-"price": 229.4,
-"change": 1.3,
-"volume": 884175,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
-"ticker": "TIPSMUSIC",
-"name": "Tips Music Ltd",
-"price": 666.9,
-"change": 1.29,
-"volume": 177513,
 "vcp": true,
 "my": true,
 "ipo": false,
@@ -1910,28 +1855,6 @@ const ALL_STOCKS = [
 "category": "VCP"
 },
 {
-"ticker": "PVRINOX",
-"name": "PVR Inox Ltd",
-"price": 1233.2,
-"change": 0.97,
-"volume": 540826,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
-"ticker": "SHAREINDIA",
-"name": "Share India Securities Ltd",
-"price": 198.16,
-"change": 0.94,
-"volume": 10271830,
-"vcp": true,
-"my": true,
-"ipo": false,
-"category": "VCP+MY"
-},
-{
 "ticker": "MOTHERSON",
 "name": "Samvardhana Motherson International Ltd",
 "price": 164.72,
@@ -2031,17 +1954,6 @@ const ALL_STOCKS = [
 "category": "VCP+MY"
 },
 {
-"ticker": "IIFLCAPS",
-"name": "IIFL Capital Services Ltd",
-"price": 340.2,
-"change": 0.86,
-"volume": 299953,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "AARTIPHARM",
 "name": "Aarti Pharmalabs Ltd",
 "price": 832.7,
@@ -2062,17 +1974,6 @@ const ALL_STOCKS = [
 "my": false,
 "ipo": false,
 "category": "VCP"
-},
-{
-"ticker": "ABSLAMC",
-"name": "Aditya Birla Sun Life AMC Ltd",
-"price": 1097.3,
-"change": 0.81,
-"volume": 335205,
-"vcp": true,
-"my": true,
-"ipo": false,
-"category": "VCP+MY"
 },
 {
 "ticker": "MAHSEAMLES",
@@ -2124,17 +2025,6 @@ const ALL_STOCKS = [
 "price": 15.01,
 "change": 0.74,
 "volume": 373311822,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
-"ticker": "ABDL",
-"name": "Allied Blenders & Distillers Ltd",
-"price": 615.85,
-"change": 0.72,
-"volume": 123804,
 "vcp": true,
 "my": false,
 "ipo": false,
@@ -2207,17 +2097,6 @@ const ALL_STOCKS = [
 "category": "VCP+MY"
 },
 {
-"ticker": "NIACL",
-"name": "New India Assurance Company Ltd",
-"price": 198.63,
-"change": 0.65,
-"volume": 5292089,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "SSWL",
 "name": "Steel Strips Wheels Limited",
 "price": 375.95,
@@ -2227,28 +2106,6 @@ const ALL_STOCKS = [
 "my": true,
 "ipo": false,
 "category": "VCP+MY"
-},
-{
-"ticker": "MANBA",
-"name": "Manba Finance Ltd",
-"price": 132.29,
-"change": 0.62,
-"volume": 34617,
-"vcp": true,
-"my": true,
-"ipo": false,
-"category": "VCP+MY"
-},
-{
-"ticker": "ANANDRATHI",
-"name": "Anand Rathi Wealth Ltd",
-"price": 2215.6,
-"change": 0.59,
-"volume": 81596,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
 },
 {
 "ticker": "COFORGE",
@@ -2282,17 +2139,6 @@ const ALL_STOCKS = [
 "my": false,
 "ipo": false,
 "category": "VCP"
-},
-{
-"ticker": "PAISALO",
-"name": "Paisalo Digital Ltd",
-"price": 83.51,
-"change": 0.55,
-"volume": 10657863,
-"vcp": true,
-"my": true,
-"ipo": false,
-"category": "VCP+MY"
 },
 {
 "ticker": "TINNARUBR",
@@ -2405,17 +2251,6 @@ const ALL_STOCKS = [
 "category": "VCP"
 },
 {
-"ticker": "POLICYBZR",
-"name": "PB Fintech Ltd",
-"price": 1807.9,
-"change": 0.44,
-"volume": 222326,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "IPCALAB",
 "name": "Ipca Laboratories Limited",
 "price": 1979.4,
@@ -2504,17 +2339,6 @@ const ALL_STOCKS = [
 "category": "VCP"
 },
 {
-"ticker": "RBLBANK",
-"name": "Rbl Bank Limited",
-"price": 412.2,
-"change": 0.34,
-"volume": 2045709,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "SFL",
 "name": "Sheela Foam Limited",
 "price": 700.15,
@@ -2570,17 +2394,6 @@ const ALL_STOCKS = [
 "category": "VCP+MY"
 },
 {
-"ticker": "SOUTHBANK",
-"name": "The South Indian Bank Limited",
-"price": 46.22,
-"change": 0.3,
-"volume": 3509777,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "LALPATHLAB",
 "name": "Dr. Lal Path Labs Ltd.",
 "price": 1921.8,
@@ -2623,17 +2436,6 @@ const ALL_STOCKS = [
 "my": false,
 "ipo": false,
 "category": "VCP"
-},
-{
-"ticker": "PNBHOUSING",
-"name": "Pnb Housing Finance Limited",
-"price": 1182.0,
-"change": 0.25,
-"volume": 764861,
-"vcp": true,
-"my": true,
-"ipo": false,
-"category": "VCP+MY"
 },
 {
 "ticker": "NYKAA",
@@ -2801,17 +2603,6 @@ const ALL_STOCKS = [
 "category": "VCP"
 },
 {
-"ticker": "SMCGLOBAL",
-"name": "SMC Global Securities Ltd",
-"price": 85.75,
-"change": 0.13,
-"volume": 2432648,
-"vcp": true,
-"my": true,
-"ipo": false,
-"category": "VCP+MY"
-},
-{
 "ticker": "MARKSANS",
 "name": "Marksans Pharma Limited",
 "price": 330.8,
@@ -2821,39 +2612,6 @@ const ALL_STOCKS = [
 "my": true,
 "ipo": false,
 "category": "VCP+MY"
-},
-{
-"ticker": "UGARSUGAR",
-"name": "The Ugar Sugar Works Limited",
-"price": 49.98,
-"change": 0.12,
-"volume": 207138,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
-"ticker": "FEDFINA",
-"name": "Fedbank Financial Services Ltd",
-"price": 159.05,
-"change": 0.11,
-"volume": 516079,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
-"ticker": "KOTAKBANK",
-"name": "Kotak Mahindra Bank Limited",
-"price": 416.95,
-"change": 0.1,
-"volume": 8701267,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
 },
 {
 "ticker": "PERSISTENT",
@@ -2887,17 +2645,6 @@ const ALL_STOCKS = [
 "my": true,
 "ipo": false,
 "category": "VCP+MY"
-},
-{
-"ticker": "MOTILALOFS",
-"name": "Motilal Oswal Financial Services Limited",
-"price": 1014.9,
-"change": -0.01,
-"volume": 296865,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
 },
 {
 "ticker": "REDINGTON",
@@ -3010,17 +2757,6 @@ const ALL_STOCKS = [
 "category": "VCP"
 },
 {
-"ticker": "PNB",
-"name": "Punjab National Bank Ltd",
-"price": 116.72,
-"change": -0.11,
-"volume": 5460565,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "FLUOROCHEM",
 "name": "Gujarat Fluorochemicals Ltd",
 "price": 4780.0,
@@ -3043,17 +2779,6 @@ const ALL_STOCKS = [
 "category": "VCP+MY"
 },
 {
-"ticker": "MAHABANK",
-"name": "Bank Of Maharashtra Ltd",
-"price": 84.24,
-"change": -0.13,
-"volume": 6623509,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "PREMEXPLN",
 "name": "Premier Explosives Limited",
 "price": 666.0,
@@ -3070,17 +2795,6 @@ const ALL_STOCKS = [
 "price": 2768.8,
 "change": -0.17,
 "volume": 217853,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
-"ticker": "SBFC",
-"name": "SBFC Finance Ltd",
-"price": 98.31,
-"change": -0.17,
-"volume": 196611,
 "vcp": true,
 "my": false,
 "ipo": false,
@@ -3307,17 +3021,6 @@ const ALL_STOCKS = [
 "category": "VCP"
 },
 {
-"ticker": "ORIENTHOT",
-"name": "Oriental Hotels Limited",
-"price": 139.21,
-"change": -0.43,
-"volume": 196049,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "AVTNPL",
 "name": "Avt Natural Products Limited",
 "price": 90.2,
@@ -3538,28 +3241,6 @@ const ALL_STOCKS = [
 "category": "VCP"
 },
 {
-"ticker": "PFOCUS",
-"name": "Prime Focus Limited",
-"price": 311.65,
-"change": -0.61,
-"volume": 212300,
-"vcp": true,
-"my": true,
-"ipo": false,
-"category": "VCP+MY"
-},
-{
-"ticker": "CHALET",
-"name": "Chalet Hotels Ltd",
-"price": 870.0,
-"change": -0.63,
-"volume": 48095,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "POLYMED",
 "name": "Poly Medicure Limited",
 "price": 1736.5,
@@ -3648,33 +3329,11 @@ const ALL_STOCKS = [
 "category": "VCP"
 },
 {
-"ticker": "IDFCFIRSTB",
-"name": "IDFC First Bank Ltd",
-"price": 86.23,
-"change": -0.7,
-"volume": 6690516,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "ACE",
 "name": "Action Construction Equipment Limited",
 "price": 1112.9,
 "change": -0.74,
 "volume": 174420,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
-"ticker": "MUFIN",
-"name": "Mufin Green Finance Ltd",
-"price": 134.21,
-"change": -0.75,
-"volume": 105658,
 "vcp": true,
 "my": false,
 "ipo": false,
@@ -3778,17 +3437,6 @@ const ALL_STOCKS = [
 "my": true,
 "ipo": false,
 "category": "VCP+MY"
-},
-{
-"ticker": "BLSE",
-"name": "BLS E-Services Ltd",
-"price": 314.05,
-"change": -0.81,
-"volume": 168680,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
 },
 {
 "ticker": "MGEL",
@@ -3934,17 +3582,6 @@ const ALL_STOCKS = [
 "category": "VCP+MY"
 },
 {
-"ticker": "MCX",
-"name": "Multi Commodity Exchange Of India Limited",
-"price": 3270.3,
-"change": -0.9,
-"volume": 1142340,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "NELCO",
 "name": "Nelco Limited",
 "price": 929.0,
@@ -4077,17 +3714,6 @@ const ALL_STOCKS = [
 "category": "VCP+MY"
 },
 {
-"ticker": "NORTHARC",
-"name": "Northern ARC Capital Ltd",
-"price": 306.05,
-"change": -1.0,
-"volume": 390994,
-"vcp": true,
-"my": true,
-"ipo": false,
-"category": "VCP+MY"
-},
-{
 "ticker": "KRISHANA",
 "name": "Krishana Phoschem Ltd",
 "price": 181.66,
@@ -4159,17 +3785,6 @@ const ALL_STOCKS = [
 "price": 907.75,
 "change": -1.06,
 "volume": 133745,
-"vcp": true,
-"my": true,
-"ipo": false,
-"category": "VCP+MY"
-},
-{
-"ticker": "DCBBANK",
-"name": "Dcb Bank Limited",
-"price": 224.71,
-"change": -1.07,
-"volume": 807819,
 "vcp": true,
 "my": true,
 "ipo": false,
@@ -4286,55 +3901,11 @@ const ALL_STOCKS = [
 "category": "VCP+MY"
 },
 {
-"ticker": "IMAGICAA",
-"name": "Imagicaaworld Entertainment Ltd",
-"price": 52.56,
-"change": -1.2,
-"volume": 259078,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
-"ticker": "KTKBANK",
-"name": "The Karnataka Bank Limited",
-"price": 328.5,
-"change": -1.22,
-"volume": 1004702,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
-"ticker": "RELIGARE",
-"name": "Religare Enterprises Limited",
-"price": 255.63,
-"change": -1.22,
-"volume": 199269,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "AGARWALEYE",
 "name": "Dr Agarwals Health Care Ltd",
 "price": 502.0,
 "change": -1.25,
 "volume": 68602,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
-"ticker": "TFCILTD",
-"name": "Tourism Finance Corporation Of India Limited",
-"price": 141.35,
-"change": -1.27,
-"volume": 2057695,
 "vcp": true,
 "my": false,
 "ipo": false,
@@ -4418,33 +3989,11 @@ const ALL_STOCKS = [
 "category": "VCP"
 },
 {
-"ticker": "CGCL",
-"name": "Capri Global Capital Limited",
-"price": 268.5,
-"change": -1.38,
-"volume": 1165430,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "GRASIM",
 "name": "Grasim Industries Limited",
 "price": 3273.0,
 "change": -1.39,
 "volume": 227456,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
-"ticker": "SGFIN",
-"name": "SG Finserve Ltd",
-"price": 662.6,
-"change": -1.4,
-"volume": 98926,
 "vcp": true,
 "my": false,
 "ipo": false,
@@ -4594,28 +4143,6 @@ const ALL_STOCKS = [
 "category": "VCP+MY"
 },
 {
-"ticker": "NAZARA",
-"name": "Nazara Technologies Ltd",
-"price": 368.8,
-"change": -1.56,
-"volume": 373593,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
-"ticker": "THELEELA",
-"name": "Leela Palaces Hotels & Resorts Ltd",
-"price": 545.45,
-"change": -1.57,
-"volume": 174523,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "STAR",
 "name": "Strides Shasun Limited",
 "price": 1197.8,
@@ -4660,17 +4187,6 @@ const ALL_STOCKS = [
 "category": "VCP"
 },
 {
-"ticker": "RADICO",
-"name": "Radico Khaitan Limited",
-"price": 4388.2,
-"change": -1.61,
-"volume": 38439,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "SALSTEEL",
 "name": "SAL Steel",
 "price": 75.4,
@@ -4709,17 +4225,6 @@ const ALL_STOCKS = [
 "price": 1429.3,
 "change": -1.65,
 "volume": 454352,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
-"ticker": "TMB",
-"name": "Tamilnad Mercantile Bank Ltd",
-"price": 908.3,
-"change": -1.66,
-"volume": 41319,
 "vcp": true,
 "my": false,
 "ipo": false,
@@ -4880,17 +4385,6 @@ const ALL_STOCKS = [
 "category": "VCP"
 },
 {
-"ticker": "TI",
-"name": "Tilaknagar Industries Limited",
-"price": 525.7,
-"change": -1.88,
-"volume": 179202,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "CAPLIPOINT",
 "name": "Caplin Point Laboratories Limited",
 "price": 2742.2,
@@ -4995,17 +4489,6 @@ const ALL_STOCKS = [
 "price": 1089.3,
 "change": -2.04,
 "volume": 102307,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
-"ticker": "EDELWEISS",
-"name": "Edelweiss Financial Services Limited",
-"price": 133.95,
-"change": -2.04,
-"volume": 4598154,
 "vcp": true,
 "my": false,
 "ipo": false,
@@ -5166,17 +4649,6 @@ const ALL_STOCKS = [
 "category": "VCP"
 },
 {
-"ticker": "ESAFSFB",
-"name": "ESAF Small Finance Bank Ltd",
-"price": 39.43,
-"change": -2.38,
-"volume": 321533,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "BRIGADE",
 "name": "Brigade Enterprises Limited",
 "price": 635.35,
@@ -5331,17 +4803,6 @@ const ALL_STOCKS = [
 "category": "VCP"
 },
 {
-"ticker": "IFCI",
-"name": "Ifci Limited",
-"price": 82.64,
-"change": -2.95,
-"volume": 71902377,
-"vcp": true,
-"my": false,
-"ipo": false,
-"category": "VCP"
-},
-{
 "ticker": "THEMISMED",
 "name": "Themis Medicare Limited",
 "price": 128.13,
@@ -5452,17 +4913,6 @@ const ALL_STOCKS = [
 "category": "MY"
 },
 {
-"ticker": "MAFANG",
-"name": "Mirae Asset NYSE FANG+ ETF",
-"price": 237.33,
-"change": 5.15,
-"volume": 492216,
-"vcp": false,
-"my": true,
-"ipo": false,
-"category": "MY"
-},
-{
 "ticker": "TBZ",
 "name": "Tribhovandas Bhimji Zaveri Limited",
 "price": 526.3,
@@ -5529,33 +4979,11 @@ const ALL_STOCKS = [
 "category": "MY"
 },
 {
-"ticker": "IBULLSLTD",
-"name": "Indiabulls Limited",
-"price": 26.14,
-"change": 4.98,
-"volume": 27607943,
-"vcp": false,
-"my": true,
-"ipo": false,
-"category": "MY"
-},
-{
 "ticker": "BALPHARMA",
 "name": "Bal Pharma Limited",
 "price": 111.46,
 "change": 4.94,
 "volume": 234703,
-"vcp": false,
-"my": true,
-"ipo": false,
-"category": "MY"
-},
-{
-"ticker": "AIIL",
-"name": "Authum Investment & Infrastructure Ltd",
-"price": 537.5,
-"change": 4.92,
-"volume": 4580990,
 "vcp": false,
 "my": true,
 "ipo": false,
@@ -5606,17 +5034,6 @@ const ALL_STOCKS = [
 "category": "MY"
 },
 {
-"ticker": "ITDC",
-"name": "India Tourism Development Corporation Ltd",
-"price": 691.55,
-"change": 4.06,
-"volume": 2945497,
-"vcp": false,
-"my": true,
-"ipo": false,
-"category": "MY"
-},
-{
 "ticker": "INDUSTOWER",
 "name": "Indus Towers Ltd (Bharti Infratel)",
 "price": 387.1,
@@ -5655,28 +5072,6 @@ const ALL_STOCKS = [
 "price": 1158.0,
 "change": 3.64,
 "volume": 92588,
-"vcp": false,
-"my": true,
-"ipo": false,
-"category": "MY"
-},
-{
-"ticker": "FIVESTAR",
-"name": "Five-Star Business Finance Ltd",
-"price": 549.7,
-"change": 3.59,
-"volume": 1269160,
-"vcp": false,
-"my": true,
-"ipo": false,
-"category": "MY"
-},
-{
-"ticker": "PAYTM",
-"name": "One 97 Communications Ltd",
-"price": 1800.2,
-"change": 3.52,
-"volume": 5859442,
 "vcp": false,
 "my": true,
 "ipo": false,
@@ -5815,33 +5210,11 @@ const ALL_STOCKS = [
 "category": "MY"
 },
 {
-"ticker": "MASPTOP50",
-"name": "Mirae Asset S&P 500 Top 50 ETF",
-"price": 98.27,
-"change": 2.81,
-"volume": 592800,
-"vcp": false,
-"my": true,
-"ipo": false,
-"category": "MY"
-},
-{
 "ticker": "TNPETRO",
 "name": "Tamilnadu Petroproducts Limited",
 "price": 136.63,
 "change": 2.62,
 "volume": 2871462,
-"vcp": false,
-"my": true,
-"ipo": false,
-"category": "MY"
-},
-{
-"ticker": "MONQ50",
-"name": "Motilal Oswal Nasdaq Q 50 ETF",
-"price": 205.0,
-"change": 2.56,
-"volume": 390312,
 "vcp": false,
 "my": true,
 "ipo": false,
@@ -5897,17 +5270,6 @@ const ALL_STOCKS = [
 "price": 1105.0,
 "change": 1.78,
 "volume": 21884,
-"vcp": false,
-"my": true,
-"ipo": false,
-"category": "MY"
-},
-{
-"ticker": "BANDHANBNK",
-"name": "Bandhan Bank Ltd",
-"price": 176.65,
-"change": 1.52,
-"volume": 19619274,
 "vcp": false,
 "my": true,
 "ipo": false,
@@ -6046,17 +5408,6 @@ const ALL_STOCKS = [
 "category": "MY"
 },
 {
-"ticker": "JAGRAN",
-"name": "Jagran Prakashan Limited",
-"price": 62.37,
-"change": 0.58,
-"volume": 85857,
-"vcp": false,
-"my": true,
-"ipo": false,
-"category": "MY"
-},
-{
 "ticker": "MMP",
 "name": "MMP Industries Ltd",
 "price": 449.0,
@@ -6167,17 +5518,6 @@ const ALL_STOCKS = [
 "category": "MY"
 },
 {
-"ticker": "MON100",
-"name": "Motilal Oswal NASDAQ 100 ETF",
-"price": 331.8,
-"change": -0.42,
-"volume": 326625,
-"vcp": false,
-"my": true,
-"ipo": false,
-"category": "MY"
-},
-{
 "ticker": "KINGFA",
 "name": "Kingfa Science & Technology (india) Limited",
 "price": 6200.0,
@@ -6266,17 +5606,6 @@ const ALL_STOCKS = [
 "category": "MY"
 },
 {
-"ticker": "STARHEALTH",
-"name": "Star Health & Allied Insurance Company Ltd",
-"price": 570.75,
-"change": -0.95,
-"volume": 227156,
-"vcp": false,
-"my": true,
-"ipo": false,
-"category": "MY"
-},
-{
 "ticker": "TIMKEN",
 "name": "Timken India Limited",
 "price": 3264.7,
@@ -6293,17 +5622,6 @@ const ALL_STOCKS = [
 "price": 716.6,
 "change": -0.99,
 "volume": 54189,
-"vcp": false,
-"my": true,
-"ipo": false,
-"category": "MY"
-},
-{
-"ticker": "STEELCITY",
-"name": "Steel City Securities Ltd",
-"price": 90.45,
-"change": -1.04,
-"volume": 21258,
 "vcp": false,
 "my": true,
 "ipo": false,
@@ -6436,17 +5754,6 @@ const ALL_STOCKS = [
 "price": 122.7,
 "change": -1.68,
 "volume": 162490,
-"vcp": false,
-"my": true,
-"ipo": false,
-"category": "MY"
-},
-{
-"ticker": "UJJIVANSFB",
-"name": "Ujjivan Small Finance Bank Ltd",
-"price": 65.4,
-"change": -1.68,
-"volume": 4809786,
 "vcp": false,
 "my": true,
 "ipo": false,
@@ -6684,44 +5991,11 @@ const ALL_STOCKS = [
 "category": "MY"
 },
 {
-"ticker": "GRAVISSHO",
-"name": "Graviss Hospitality Ltd",
-"price": 42.7,
-"change": 19.98,
-"volume": 428194,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
 "ticker": "ESDS",
 "name": "ESDS Software Solution Ltd",
 "price": 1740.4,
 "change": 10.0,
 "volume": 5137556,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
-"ticker": "MONEYBOXX",
-"name": "Moneyboxx Finance Ltd",
-"price": 40.86,
-"change": 9.99,
-"volume": 114614,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
-"ticker": "PINELABS",
-"name": "Pine Labs Ltd",
-"price": 187.66,
-"change": 8.37,
-"volume": 117205842,
 "vcp": false,
 "my": false,
 "ipo": true,
@@ -6821,17 +6095,6 @@ const ALL_STOCKS = [
 "price": 103.19,
 "change": 4.86,
 "volume": 44157066,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
-"ticker": "EMPOWER",
-"name": "Empower India Ltd",
-"price": 2.29,
-"change": 4.57,
-"volume": 15238830,
 "vcp": false,
 "my": false,
 "ipo": true,
@@ -7036,17 +6299,6 @@ const ALL_STOCKS = [
 "category": "IPO"
 },
 {
-"ticker": "FINKURVE",
-"name": "Finkurve Financial Services Ltd",
-"price": 67.65,
-"change": 1.38,
-"volume": 198419,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
 "ticker": "JNPR",
 "name": "Juniper Green Energy Ltd",
 "price": 262.55,
@@ -7102,17 +6354,6 @@ const ALL_STOCKS = [
 "category": "IPO"
 },
 {
-"ticker": "SHARDUL",
-"name": "Shardul Securities Ltd",
-"price": 55.5,
-"change": 1.07,
-"volume": 19635,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
 "ticker": "WAKEFIT",
 "name": "Wakefit Innovations Ltd",
 "price": 153.97,
@@ -7151,17 +6392,6 @@ const ALL_STOCKS = [
 "price": 509.2,
 "change": 0.89,
 "volume": 54714,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
-"ticker": "SAHLIBHFI",
-"name": "Shalibhadra Finance Ltd",
-"price": 83.0,
-"change": 0.81,
-"volume": 6955,
 "vcp": false,
 "my": false,
 "ipo": true,
@@ -7212,17 +6442,6 @@ const ALL_STOCKS = [
 "category": "IPO"
 },
 {
-"ticker": "FEDDERSHOL",
-"name": "Fedders Holding Ltd",
-"price": 48.78,
-"change": 0.74,
-"volume": 767779,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
 "ticker": "FRACTAL",
 "name": "Fractal Analytics Ltd",
 "price": 772.25,
@@ -7250,28 +6469,6 @@ const ALL_STOCKS = [
 "price": 169.17,
 "change": 0.63,
 "volume": 85248,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
-"ticker": "CORDELIA",
-"name": "Waterways Leisure Tourism Limited",
-"price": 110.13,
-"change": 0.63,
-"volume": 1421839,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
-"ticker": "TURTLEMINT",
-"name": "Turtlemint Fintech Solutions Ltd",
-"price": 132.65,
-"change": 0.61,
-"volume": 205195,
 "vcp": false,
 "my": false,
 "ipo": true,
@@ -7421,17 +6618,6 @@ const ALL_STOCKS = [
 "category": "IPO"
 },
 {
-"ticker": "GROWW",
-"name": "Billionbrains Garage Ventures Ltd",
-"price": 196.28,
-"change": 0.22,
-"volume": 8929854,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
 "ticker": "LGEINDIA",
 "name": "LG Electronics India Ltd",
 "price": 1653.4,
@@ -7448,17 +6634,6 @@ const ALL_STOCKS = [
 "price": 91.78,
 "change": 0.2,
 "volume": 9188,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
-"ticker": "ALGOQUANT",
-"name": "Algoquant Fintech Ltd",
-"price": 64.04,
-"change": 0.16,
-"volume": 734348,
 "vcp": false,
 "my": false,
 "ipo": true,
@@ -7503,17 +6678,6 @@ const ALL_STOCKS = [
 "price": 17.57,
 "change": 0.06,
 "volume": 11814,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
-"ticker": "CANHLIFE",
-"name": "Canara HSBC Life Insurance Company Ltd",
-"price": 152.44,
-"change": 0.05,
-"volume": 330504,
 "vcp": false,
 "my": false,
 "ipo": true,
@@ -7619,17 +6783,6 @@ const ALL_STOCKS = [
 "category": "IPO"
 },
 {
-"ticker": "TATACAP",
-"name": "Tata Capital Ltd",
-"price": 362.2,
-"change": -0.26,
-"volume": 210941,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
 "ticker": "SRTL",
 "name": "Shree Ram Twistex Ltd",
 "price": 37.29,
@@ -7723,17 +6876,6 @@ const ALL_STOCKS = [
 "price": 7.89,
 "change": -0.38,
 "volume": 50426,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
-"ticker": "AYE",
-"name": "Aye Finance Ltd",
-"price": 177.36,
-"change": -0.42,
-"volume": 315259,
 "vcp": false,
 "my": false,
 "ipo": true,
@@ -7839,17 +6981,6 @@ const ALL_STOCKS = [
 "category": "IPO"
 },
 {
-"ticker": "ICICIAMC",
-"name": "ICICI Prudential Asset Management Co Ltd",
-"price": 3011.8,
-"change": -0.72,
-"volume": 58472,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
 "ticker": "KPL",
 "name": "Kwality Pharmaceuticals Ltd",
 "price": 3485.2,
@@ -7872,33 +7003,11 @@ const ALL_STOCKS = [
 "category": "IPO"
 },
 {
-"ticker": "KISSHT",
-"name": "Onemi Technology Solutions Ltd",
-"price": 331.25,
-"change": -0.79,
-"volume": 812324,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
 "ticker": "VISL",
 "name": "Vedanta Iron & Steel Ltd",
 "price": 33.1,
 "change": -0.81,
 "volume": 7751978,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
-"ticker": "COMFINTE",
-"name": "Comfort Intech Ltd",
-"price": 6.04,
-"change": -0.82,
-"volume": 47057,
 "vcp": false,
 "my": false,
 "ipo": true,
@@ -8004,17 +7113,6 @@ const ALL_STOCKS = [
 "category": "IPO"
 },
 {
-"ticker": "SBIFUNDS",
-"name": "SBI Funds Management Ltd",
-"price": 544.75,
-"change": -1.13,
-"volume": 292025,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
 "ticker": "MODIS",
 "name": "Modis Navnirman Ltd",
 "price": 369.45,
@@ -8031,17 +7129,6 @@ const ALL_STOCKS = [
 "price": 433.9,
 "change": -1.22,
 "volume": 2494912,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
-"ticker": "MMWL",
-"name": "Media Matrix Worldwide Ltd",
-"price": 13.7,
-"change": -1.23,
-"volume": 8172,
 "vcp": false,
 "my": false,
 "ipo": true,
@@ -8075,17 +7162,6 @@ const ALL_STOCKS = [
 "price": 33.0,
 "change": -1.26,
 "volume": 2766411,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
-"ticker": "CRAMC",
-"name": "Canara Robeco Asset Management Company Ltd",
-"price": 237.0,
-"change": -1.27,
-"volume": 122956,
 "vcp": false,
 "my": false,
 "ipo": true,
@@ -8213,17 +7289,6 @@ const ALL_STOCKS = [
 "category": "IPO"
 },
 {
-"ticker": "GAJA",
-"name": "Gaja Alternative Asset Management Ltd",
-"price": 152.8,
-"change": -1.63,
-"volume": 455820,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
 "ticker": "WEWORK",
 "name": "Wework India Management Ltd",
 "price": 665.6,
@@ -8295,17 +7360,6 @@ const ALL_STOCKS = [
 "price": 75.08,
 "change": -1.74,
 "volume": 46293,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
-"ticker": "ADVENTHTL",
-"name": "Advent Hotels International Ltd",
-"price": 130.07,
-"change": -1.75,
-"volume": 36079,
 "vcp": false,
 "my": false,
 "ipo": true,
@@ -8653,17 +7707,6 @@ const ALL_STOCKS = [
 "category": "IPO"
 },
 {
-"ticker": "BLIL",
-"name": "Balmer Lawrie Investment Ltd",
-"price": 68.65,
-"change": -3.88,
-"volume": 135672,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
 "ticker": "MIDWESTLTD",
 "name": "Midwest Ltd",
 "price": 1023.4,
@@ -8713,17 +7756,6 @@ const ALL_STOCKS = [
 "price": 544.9,
 "change": -5.32,
 "volume": 138630,
-"vcp": false,
-"my": false,
-"ipo": true,
-"category": "IPO"
-},
-{
-"ticker": "KOTIC",
-"name": "Kothari Industrial Corporation Ltd",
-"price": 139.94,
-"change": -7.45,
-"volume": 63993,
 "vcp": false,
 "my": false,
 "ipo": true,
@@ -9246,7 +8278,7 @@ function getAIAnswer(q) {
   }
   // Halal
   if (ql.includes('halal') || ql.includes('sharia') || ql.includes('islamic')) {
-    return '<b>🕌 Halal Stock Screening</b><br><br>App has 672 stocks screened.<br><br><b>Categories:</b><br>• 298 Base Halal stocks<br>• 83 VCP 80%+ stocks<br>• 121 Multi-Year Breakout stocks<br>• 151 IPO Strategy stocks<br><br><b>Watchlist tabs:</b><br>All | VCP | VCP+Multi-Year | IPO + Top 5/10/15/20<br><br><b>Note:</b> IPO stocks screened by business type. Proper Islamic finance screening (debt-to-equity <33%, interest income <5%) still needed before investing.';
+    return '<b>🕌 Halal Stock Screening</b><br><br>App has 584 stocks screened.<br><br><b>Categories:</b><br>• 298 Base Halal stocks<br>• 83 VCP 80%+ stocks<br>• 121 Multi-Year Breakout stocks<br>• 151 IPO Strategy stocks<br><br><b>Watchlist tabs:</b><br>All | VCP | VCP+Multi-Year | IPO + Top 5/10/15/20<br><br><b>Note:</b> IPO stocks screened by business type. Proper Islamic finance screening (debt-to-equity <33%, interest income <5%) still needed before investing.';
   }
   // Book
   if (ql.includes('book') || ql.includes('swing trade masterclass')) {
@@ -9273,7 +8305,7 @@ function getAIAnswer(q) {
     return '<b>💰 Liquid Fund Strategy (Nikhil Sir)</b><br><br>When market is sideways/bearish:<br><br>1. <b>Stop active trading</b> — protect capital<br>2. <b>Move money to Liquid Funds</b> — 6-9% annual return<br>3. <b>Wait for market reversal</b><br>4. <b>Enter ETF + active trades</b> when market turns bullish<br><br><b>Why?</b><br>• In sideways market, active trading = stop loss hits = capital erosion<br>• Liquid fund gives safe returns while waiting<br>• When market reverses, you have full capital + extra returns<br><br><b>Nikhil Sir\'s Example:</b><br>10 lakh capital, 8 months sideways market:<br>• Active trader: -1 lakh loss + 30% recovery = ₹11.7L (17% return)<br>• Smart trader: Liquid fund 2.5% + 25% ETF = ₹12.8L (28% return)<br><br>Smart trader made 11% MORE by waiting!';
   }
   // Default / greeting
-  return '🤔 Interesting question! I know about:<br><br>• VCP Strategy (7 criteria, 100 pts)<br>• Position Sizing (formula, risk %)<br>• Market Breadth (4 types, A/D ratio)<br>• IPO Trading (3 types)<br>• Multi-Year Breakout (8 checks)<br>• Pullback Trading (7 checks)<br>• 14-Point Checklist<br>• R:R Ratio (1:3+ ideal)<br>• Stop Loss Rules<br>• Trading Psychology (Confident=100% win)<br>• Halal Stocks (672 stocks)<br>• Sectors (favorable vs avoid)<br>• Capital & Risk Management<br>• TradingView Setup<br>• RSI 60 Strategy (Nikhil Sir)<br>• Sideways Market Rules<br>• Liquid Fund Strategy<br><br>Try the quick buttons above or ask about any of these!<br><br><div style="margin-top:10px;padding:8px 10px;background:var(--card2);border:1px solid var(--gold);border-radius:8px;"><b style="color:var(--gold);">🙏 Learn from our Teacher</b><br>Nikhil Mathew — Oharipadanam Malayalam<br>7 years · 2000+ students<br><a href="https://www.oharipadanam.com" target="_blank" style="color:var(--accent);">📚 Master Swing Trading Course →</a></div>';
+  return '🤔 Interesting question! I know about:<br><br>• VCP Strategy (7 criteria, 100 pts)<br>• Position Sizing (formula, risk %)<br>• Market Breadth (4 types, A/D ratio)<br>• IPO Trading (3 types)<br>• Multi-Year Breakout (8 checks)<br>• Pullback Trading (7 checks)<br>• 14-Point Checklist<br>• R:R Ratio (1:3+ ideal)<br>• Stop Loss Rules<br>• Trading Psychology (Confident=100% win)<br>• Halal Stocks (584 stocks)<br>• Sectors (favorable vs avoid)<br>• Capital & Risk Management<br>• TradingView Setup<br>• RSI 60 Strategy (Nikhil Sir)<br>• Sideways Market Rules<br>• Liquid Fund Strategy<br><br>Try the quick buttons above or ask about any of these!<br><br><div style="margin-top:10px;padding:8px 10px;background:var(--card2);border:1px solid var(--gold);border-radius:8px;"><b style="color:var(--gold);">🙏 Learn from our Teacher</b><br>Nikhil Mathew — Oharipadanam Malayalam<br>7 years · 2000+ students<br><a href="https://www.oharipadanam.com" target="_blank" style="color:var(--accent);">📚 Master Swing Trading Course →</a></div>';
 }
 
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
