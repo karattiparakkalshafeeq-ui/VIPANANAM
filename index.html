@@ -167,6 +167,25 @@ tr:nth-child(even){background:rgba(255,255,255,0.015)}
 @keyframes slideIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
 
 
+
+/* === ENTRY SETUP === */
+.es-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--card2);border:1px solid var(--border);border-radius:10px;margin-bottom:7px;cursor:pointer;font-size:0.82em;transition:all .2s;user-select:none}
+.es-item.on{background:rgba(38,166,154,0.12);border-color:#26a69a}
+.es-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--muted);display:flex;align-items:center;justify-content:center;font-size:0.8em;flex-shrink:0;transition:all .2s}
+.es-item.on .es-check{background:#26a69a;border-color:#26a69a;color:#fff}
+.es-score-bar{height:8px;background:var(--card2);border-radius:4px;overflow:hidden;margin:12px 0 6px}
+.es-score-fill{height:100%;width:0%;background:linear-gradient(90deg,#ef5350,#ff9800,#26a69a);transition:width .3s;border-radius:4px}
+.mood-btn{flex:1;padding:12px 8px;border-radius:10px;border:2px solid var(--border);background:var(--card2);cursor:pointer;font-size:0.8em;font-weight:600;transition:all .2s;text-align:center}
+.mood-btn.sel-conf{border-color:#26a69a;background:rgba(38,166,154,0.15);color:#26a69a}
+.mood-btn.sel-neu{border-color:#ff9800;background:rgba(255,152,0,0.15);color:#ff9800}
+.mood-btn.sel-fear{border-color:#ef5350;background:rgba(239,83,80,0.15);color:#ef5350}
+.es-verdict{padding:16px;border-radius:12px;text-align:center;font-weight:700;font-size:0.95em;margin-top:15px;border:2px solid var(--border);background:var(--card2)}
+.es-verdict.go{border-color:#26a69a;background:rgba(38,166,154,0.12);color:#26a69a}
+.es-verdict.caution{border-color:#ff9800;background:rgba(255,152,0,0.12);color:#ff9800}
+.es-verdict.nogo{border-color:#ef5350;background:rgba(239,83,80,0.12);color:#ef5350}
+.es-plan-row{display:flex;justify-content:space-between;padding:8px 12px;background:var(--card2);border-radius:8px;margin-bottom:5px;font-size:0.82em}
+.es-plan-row b{color:var(--accent)}
+
 /* === DARK MODE === */
 body.dark{background:#0d1117;color:#e6edf3}
 body.dark .card,body.dark .trade-card{background:#161b22;border-color:#30363d}
@@ -808,6 +827,46 @@ body.dark .chip.active{background:var(--accent-orange) !important;color:#fff !im
 <button class="btn btn-primary" onclick="openTradeModal()" style="margin-bottom:10px;">+ Add Trade</button>
 <button class="btn" style="background:var(--card2);color:var(--text);border:1px solid var(--border);font-size:0.8em;margin-bottom:10px;" onclick="exportJournal()">Export CSV</button>
 <div id="journalList"></div></div>
+<div class="card" id="entrySetupCard"><div class="card-title">🎯 Entry Setup — Pre-Trade Checklist <span class="ml">· എൻട്രി സെറ്റപ്പ്</span></div>
+<div style="font-size:0.75em;color:var(--text2);margin-bottom:12px;">Trade എടുക്കും മുമ്പ് ഈ checklist fill ചെയ്യൂ. Nikhil Sir-ന്റെ rules അനുസരിച്ചാണ്. 7/8 + Confident = മാത്രം GO!</div>
+
+<div class="es-item" onclick="toggleES(0,this)"><span class="es-check">✓</span>Nifty Stage 2 uptrend-ൽ ആണോ? (50 EMA-ക്ക് മുകളിൽ)</div>
+<div class="es-item" onclick="toggleES(1,this)"><span class="es-check">✓</span>Stock 20 EMA, 50 EMA എന്നിവയ്ക്ക് മുകളിലാണോ?</div>
+<div class="es-item" onclick="toggleES(2,this)"><span class="es-check">✓</span>20 EMA > 50 EMA ആണോ? (uptrend structure)</div>
+<div class="es-item" onclick="toggleES(3,this)"><span class="es-check">✓</span>RSI 60-ന് മുകളിലേക്ക് break ചെയ്യുന്നുണ്ടോ?</div>
+<div class="es-item" onclick="toggleES(4,this)"><span class="es-check">✓</span>Volume confirmation ഉണ്ടോ? (breakout candle-ൽ volume spike)</div>
+<div class="es-item" onclick="toggleES(5,this)"><span class="es-check">✓</span>VCP contraction കാണുന്നുണ്ടോ? (volatility കുറഞ്ഞു tight ആകുന്നു)</div>
+<div class="es-item" onclick="toggleES(6,this)"><span class="es-check">✓</span>Sector favorable ആണോ? (Metals/Chemicals/Defense/Pharma/Auto ✓)</div>
+<div class="es-item" onclick="toggleES(7,this)"><span class="es-check">✓</span>Market sideways/choppy അല്ലല്ലോ? (ആണെങ്കിൽ trade വേണ്ട — liquid fund!)</div>
+
+<div class="es-score-bar"><div class="es-score-fill" id="esScoreFill"></div></div>
+<div style="text-align:center;font-size:0.8em;font-weight:700;" id="esScoreText">Checklist: 0/8</div>
+
+<div class="calc-label" style="margin-top:18px;">💰 Trade Plan</div>
+<input type="text" id="esTicker" placeholder="Stock Ticker (ഉദാ: MANORAMA)" oninput="document.getElementById('esTicker').value=this.value.toUpperCase()" style="width:100%;padding:11px;margin-bottom:8px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.85em;box-sizing:border-box">
+<div style="display:flex;gap:8px;margin-bottom:8px;">
+<input type="number" id="esCapital" placeholder="Capital ₹" value="50000" oninput="calcESPlan()" style="flex:1;padding:11px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.85em">
+<input type="number" id="esRisk" placeholder="Risk %" value="0.5" step="0.1" oninput="calcESPlan()" style="flex:1;padding:11px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.85em">
+</div>
+<div style="display:flex;gap:8px;margin-bottom:8px;">
+<input type="number" id="esEntry" placeholder="Entry Price ₹" oninput="calcESPlan()" style="flex:1;padding:11px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.85em">
+<input type="number" id="esSL" placeholder="Stop Loss ₹" oninput="calcESPlan()" style="flex:1;padding:11px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.85em">
+</div>
+<div id="esPlanOut"></div>
+
+<div class="calc-label" style="margin-top:18px;">🧠 Psychology Check</div>
+<div style="font-size:0.7em;color:var(--text2);margin-bottom:8px;">ഇപ്പോൾ നിനക്ക് എങ്ങനെ feel ആകുന്നു? (Journal stats അനുസരിച്ച്!)</div>
+<div style="display:flex;gap:8px;">
+<div class="mood-btn" id="moodConf" onclick="setESMood('Confident')">💪<br>Confident</div>
+<div class="mood-btn" id="moodNeu" onclick="setESMood('Neutral')">😐<br>Neutral</div>
+<div class="mood-btn" id="moodFear" onclick="setESMood('Fearful')">😨<br>Fearful</div>
+</div>
+<div id="esMoodMsg" style="font-size:0.72em;margin-top:8px;text-align:center;color:var(--text2);">Mood select ചെയ്യൂ</div>
+
+<div class="es-verdict" id="esVerdict">📋 Checklist, Trade Plan, Mood — എല്ലാം fill ചെയ്യൂ</div>
+<button class="btn btn-primary" style="width:100%;margin-top:12px;display:none;" id="esSaveBtn" onclick="saveESToJournal()">✓ GO! — Save to Journal</button>
+</div>
+
 <div class="card"><div class="card-title">Psychology <span class="ml">· സൈക്കോളജി</span></div>
 <div class="alert alert-green"><div class="alert-title">✅ Confident = 100% Win</div><div class="alert-text">Trust your analysis!</div></div>
 <div class="alert alert-red"><div class="alert-title">❌ Fearful = 0% Win</div><div class="alert-text">Not confident? DON'T trade.</div></div>
@@ -9774,6 +9833,134 @@ function renderHeatmap(){
     h += '<div class="heatmap-stock" style="background:' + color + '" onclick="selectStock(\'' + s.ticker + '\')"><div class="hm-ticker">' + s.ticker + '</div><div class="hm-change">' + (pct > 0 ? '+' : '') + pct.toFixed(1) + '%</div></div>';
   });
   grid.innerHTML = h;
+}
+
+// === ENTRY SETUP ===
+var esChecks = [false,false,false,false,false,false,false,false];
+var esMood = null;
+var esLastPlan = null;
+
+function toggleES(i, el){
+  esChecks[i] = !esChecks[i];
+  if(el) el.classList.toggle('on', esChecks[i]);
+  updateESScore();
+}
+function updateESScore(){
+  var score = esChecks.filter(Boolean).length;
+  var fill = document.getElementById('esScoreFill');
+  var txt = document.getElementById('esScoreText');
+  if(fill) fill.style.width = (score/8*100) + '%';
+  if(txt){
+    if(score >= 7){ txt.textContent = 'Checklist: ' + score + '/8 ✅ Strong Setup'; txt.style.color = '#26a69a'; }
+    else if(score >= 5){ txt.textContent = 'Checklist: ' + score + '/8 ⚠️ Average'; txt.style.color = '#ff9800'; }
+    else { txt.textContent = 'Checklist: ' + score + '/8 ❌ Weak Setup'; txt.style.color = '#ef5350'; }
+  }
+  checkESVerdict();
+}
+function calcESPlan(){
+  var cap = parseFloat(document.getElementById('esCapital').value) || 0;
+  var riskPct = parseFloat(document.getElementById('esRisk').value) || 0;
+  var entry = parseFloat(document.getElementById('esEntry').value) || 0;
+  var sl = parseFloat(document.getElementById('esSL').value) || 0;
+  var out = document.getElementById('esPlanOut');
+  if(entry > 0 && sl > 0 && sl < entry){
+    var riskPerShare = entry - sl;
+    var target = entry + riskPerShare * 2.5;
+    var qty = riskPct > 0 ? Math.floor((cap * riskPct/100) / riskPerShare) : 0;
+    var riskAmt = qty * riskPerShare;
+    esLastPlan = {entry:entry, sl:sl, target:target, qty:qty, riskAmt:riskAmt, cap:cap, riskPct:riskPct};
+    out.innerHTML = '<div class="es-plan-row"><span>🎯 Target (1:2.5)</span><b>₹' + target.toFixed(2) + '</b></div>'
+      + '<div class="es-plan-row"><span>📦 Quantity</span><b>' + qty + ' shares</b></div>'
+      + '<div class="es-plan-row"><span>⚠️ Risk Amount</span><b>₹' + riskAmt.toFixed(0) + '</b></div>'
+      + '<div class="es-plan-row"><span>💰 Position Value</span><b>₹' + (qty*entry).toFixed(0) + '</b></div>';
+  } else {
+    esLastPlan = null;
+    out.innerHTML = '<div style="font-size:0.75em;color:var(--muted);padding:8px;">Entry-യും SL-ഉം നൽകൂ (SL, Entry-ക്ക് താഴെയായിരിക്കണം)</div>';
+  }
+  checkESVerdict();
+}
+function setESMood(m){
+  esMood = m;
+  document.getElementById('moodConf').className = 'mood-btn' + (m==='Confident' ? ' sel-conf' : '');
+  document.getElementById('moodNeu').className = 'mood-btn' + (m==='Neutral' ? ' sel-neu' : '');
+  document.getElementById('moodFear').className = 'mood-btn' + (m==='Fearful' ? ' sel-fear' : '');
+  var msg = document.getElementById('esMoodMsg');
+  if(m === 'Confident'){ msg.innerHTML = '🟢 നിന്റെ stats: Confident = <b>100% win rate</b>! GO!'; msg.style.color = '#26a69a'; }
+  else if(m === 'Neutral'){ msg.innerHTML = '🟡 Neutral trades — ശരാശരി റിസൾട്ട്. Setup strong ആണെങ്കിൽ മാത്രം.'; msg.style.color = '#ff9800'; }
+  else { msg.innerHTML = '🔴 നിന്റെ stats: Fearful = <b>0% win rate</b>! TRADE CHEYYARUTHU — wait!'; msg.style.color = '#ef5350'; }
+  checkESVerdict();
+}
+function checkESVerdict(){
+  var v = document.getElementById('esVerdict');
+  var saveBtn = document.getElementById('esSaveBtn');
+  if(!v) return;
+  var score = esChecks.filter(Boolean).length;
+  var hasPlan = esLastPlan && esLastPlan.qty > 0;
+  var hasTicker = (document.getElementById('esTicker').value || '').trim().length > 0;
+  if(!esMood || !hasPlan){
+    v.className = 'es-verdict';
+    v.innerHTML = '📋 Checklist, Trade Plan, Mood — എല്ലാം fill ചെയ്യൂ';
+    if(saveBtn) saveBtn.style.display = 'none';
+    return;
+  }
+  if(esMood === 'Fearful'){
+    v.className = 'es-verdict nogo';
+    v.innerHTML = '❌ NO-GO — Fearful mood = 0% win rate. ഇന്ന് trade വേണ്ട. Wait for confidence!';
+    if(saveBtn) saveBtn.style.display = 'none';
+  } else if(score >= 7 && esMood === 'Confident'){
+    v.className = 'es-verdict go';
+    v.innerHTML = '✅ ENTRY APPROVED! ' + score + '/8 setup + Confident mood + Plan ready. GO! 🚀';
+    if(saveBtn) saveBtn.style.display = hasTicker ? 'block' : 'block';
+  } else if(score >= 5){
+    v.className = 'es-verdict caution';
+    v.innerHTML = '⚠️ CAUTION — ' + score + '/8 setup. Checklist പൂർണ്ണമല്ല. സൂക്ഷിച്ചു മാത്രം!';
+    if(saveBtn) saveBtn.style.display = 'none';
+  } else {
+    v.className = 'es-verdict nogo';
+    v.innerHTML = '❌ NO-GO — Setup weak (' + score + '/8). Book rule: 80%+ score വേണം entry-ക്ക്.';
+    if(saveBtn) saveBtn.style.display = 'none';
+  }
+}
+function saveESToJournal(){
+  var ticker = (document.getElementById('esTicker').value || '').trim().toUpperCase();
+  if(!ticker){ alert('Ticker നൽകൂ!'); return; }
+  if(!esLastPlan || esLastPlan.qty <= 0){ alert('Trade Plan fill ചെയ്യൂ (Entry, SL)!'); return; }
+  var stock = (typeof ALL_STOCKS !== 'undefined') ? ALL_STOCKS.find(function(s){ return s.ticker === ticker; }) : null;
+  var t = {
+    id: Date.now(),
+    date: new Date().toISOString().slice(0,10),
+    exitDate: '',
+    symbol: ticker,
+    entry: esLastPlan.entry,
+    exit: null,
+    qty: esLastPlan.qty,
+    sl: esLastPlan.sl,
+    target: Math.round(esLastPlan.target*100)/100,
+    emotion: esMood || 'Neutral',
+    strategy: stock ? (stock.category === 'VCP+MY' ? 'VCP+Multi-Year' : (stock.vcp ? 'VCP' : stock.my ? 'Multi-Year' : stock.ipo ? 'IPO' : 'Watchlist')) : 'Manual',
+    phase: 'Open',
+    notes: 'Entry Setup: ' + esChecks.filter(Boolean).length + '/8 checklist. Plan: qty ' + esLastPlan.qty + ', risk ₹' + esLastPlan.riskAmt.toFixed(0) + ' (' + esLastPlan.riskPct + '%). Target ₹' + esLastPlan.target.toFixed(2),
+    pnl: null,
+    lesson: ''
+  };
+  trades.push(t);
+  try{ localStorage.setItem('vipananam_trades_v3', JSON.stringify(trades)); }catch(e){}
+  if(typeof renderJournal === 'function') renderJournal();
+  if(typeof updateJournalAnalytics === 'function') updateJournalAnalytics();
+  // Reset form
+  for(var i=0;i<8;i++){ esChecks[i]=false; }
+  document.querySelectorAll('#entrySetupCard .es-item').forEach(function(el){ el.classList.remove('on'); });
+  esMood = null;
+  document.getElementById('moodConf').className='mood-btn'; document.getElementById('moodNeu').className='mood-btn'; document.getElementById('moodFear').className='mood-btn';
+  document.getElementById('esMoodMsg').textContent='Mood select ചെയ്യൂ';
+  document.getElementById('esTicker').value=''; document.getElementById('esEntry').value=''; document.getElementById('esSL').value='';
+  document.getElementById('esPlanOut').innerHTML='';
+  esLastPlan = null;
+  updateESScore();
+  document.getElementById('esVerdict').className='es-verdict';
+  document.getElementById('esVerdict').innerHTML='📋 Saved! പുതിയ setup-നായി fill ചെയ്യൂ';
+  document.getElementById('esSaveBtn').style.display='none';
+  alert('✅ ' + ticker + ' — Journal-ലേക്ക് save ആയി! (Phase: Open)');
 }
 
 // === SECTOR BROWSE ===
