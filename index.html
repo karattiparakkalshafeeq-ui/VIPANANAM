@@ -168,6 +168,14 @@ tr:nth-child(even){background:rgba(255,255,255,0.015)}
 
 
 
+/* === MOBILE POLISH === */
+body{overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+.stock-item{min-height:50px}
+.heatmap-stock{min-height:52px}
+.modal{padding-bottom:max(20px,env(safe-area-inset-bottom))}
+.tab-btn{min-width:52px;min-height:48px}
+.stock-tag{white-space:nowrap}
+
 /* === ENTRY SETUP === */
 .es-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--card2);border:1px solid var(--border);border-radius:10px;margin-bottom:7px;cursor:pointer;font-size:0.82em;transition:all .2s;user-select:none}
 .es-item.on{background:rgba(38,166,154,0.12);border-color:#26a69a}
@@ -1302,6 +1310,14 @@ FII buying + DII selling = FII driven rally.<br>
 <table class="rs-table" id="rsTable"></table>
 </div>
 
+</div>
+
+<!-- STOCK DETAIL MODAL -->
+<div class="modal-overlay" id="stockModal" onclick="if(event.target===this)closeStockModal()">
+<div class="modal">
+<div class="modal-title">Stock Details <button class="modal-close" onclick="closeStockModal()">&times;</button></div>
+<div id="stockModalBody"></div>
+</div>
 </div>
 
 <!-- ADD TRADE MODAL -->
@@ -10436,16 +10452,64 @@ window.showPage = function(id, btn){
 function selectStock(ticker) {
   const stock = ALL_STOCKS.find(s => s.ticker === ticker);
   if (!stock) return;
-  const cat = stock.category || 'VCP';
   const ch = stock.change || 0;
   const chStr = (ch > 0 ? '+' : '') + ch.toFixed(2) + '%';
+  const chColor = ch > 0 ? '#26a69a' : (ch < 0 ? '#ef5350' : '#888');
   let tags = [];
-  if (stock.vcp) tags.push('VCP');
-  if (stock.my) tags.push('Multi-Year');
-  if (stock.ipo) tags.push('IPO');
-  alert(stock.ticker + '\n' + stock.name + '\nPrice: Rs.' + (stock.price||0).toFixed(2) + '\nChange: ' + chStr + '\nVolume: ' + (stock.volume||0).toLocaleString('en-IN') + '\nCategory: ' + cat + '\nTags: ' + tags.join(', '));
+  if (stock.vcp) tags.push('<span class="stock-tag tag-gold">VCP</span>');
+  if (stock.my) tags.push('<span class="stock-tag tag-blue">Multi-Year</span>');
+  if (stock.ipo) tags.push('<span class="stock-tag tag-green">IPO</span>');
+  document.getElementById('stockModalBody').innerHTML =
+    '<div style="text-align:center;margin-bottom:14px;">' +
+      '<div style="font-size:1.45em;font-weight:800;">' + stock.ticker + '</div>' +
+      '<div style="font-size:0.78em;color:var(--text2);margin-top:2px;">' + (stock.name || '') + '</div>' +
+      '<div style="margin-top:8px;font-size:1.15em;font-weight:700;">\u20B9' + (stock.price || 0).toFixed(2) +
+        ' <span style="color:' + chColor + ';font-size:0.82em;">' + chStr + '</span></div>' +
+      '<div style="margin-top:8px;">' + (tags.join(' ') || '<span style="font-size:0.75em;color:var(--muted);">No tags</span>') + '</div>' +
+    '</div>' +
+    '<div class="es-plan-row"><span>\uD83D\uDCCA Volume</span><b>' + (stock.volume || 0).toLocaleString('en-IN') + '</b></div>' +
+    '<div class="es-plan-row"><span>\uD83D\uDDC2 Category</span><b>' + (stock.category || '-') + '</b></div>' +
+    '<a href="https://www.tradingview.com/chart/?symbol=NSE:' + encodeURIComponent(stock.ticker) + '" target="_blank" rel="noopener" ' +
+      'style="display:block;width:100%;margin-top:16px;padding:14px;background:linear-gradient(135deg,#2962ff,#42a5f5);border:none;border-radius:12px;color:#fff;font-weight:700;font-size:0.92em;text-align:center;text-decoration:none;cursor:pointer;">' +
+      '\uD83D\uDCC8 Open in TradingView</a>' +
+    '<div style="display:flex;gap:8px;margin-top:10px;">' +
+      '<button onclick="analyzeStock(\'' + stock.ticker + '\')" style="flex:1;min-height:44px;padding:10px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.78em;cursor:pointer;">\uD83D\uDD0D<br>Analyze</button>' +
+      '<button onclick="addStockToJournal(\'' + stock.ticker + '\')" style="flex:1;min-height:44px;padding:10px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.78em;cursor:pointer;">\uD83D\uDCDD<br>Journal</button>' +
+      '<button onclick="copyTicker(\'' + stock.ticker + '\')" style="flex:1;min-height:44px;padding:10px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.78em;cursor:pointer;">\uD83D\uDCCB<br>Copy</button>' +
+    '</div>' +
+    '<div style="font-size:0.68em;color:var(--muted);text-align:center;margin-top:10px;">TradingView \u2192 NSE:' + stock.ticker + ' \u00B7 Daily timeframe \u00B7 EMA 20/50 + RSI</div>';
+  document.getElementById('stockModal').classList.add('show');
 }
-
+function closeStockModal(){ document.getElementById('stockModal').classList.remove('show'); }
+function analyzeStock(ticker){
+  closeStockModal();
+  var tabs = document.querySelectorAll('.tab-btn');
+  showPage('analyze', tabs[4]);
+  var an = document.getElementById('anStock');
+  if(an) an.value = ticker;
+  var en = document.getElementById('anEntry');
+  if(en) en.focus();
+}
+function addStockToJournal(ticker){
+  closeStockModal();
+  var tabs = document.querySelectorAll('.tab-btn');
+  showPage('journal', tabs[3]);
+  var sym = document.getElementById('tSymbol');
+  if(sym) sym.value = ticker;
+  openTradeModal();
+}
+function copyTicker(ticker){
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(ticker);
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = ticker; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+    }
+  }catch(e){}
+  alert(ticker + ' copied! \uD83D\uDCCB');
+}
 </script>
 </body>
 </html>
