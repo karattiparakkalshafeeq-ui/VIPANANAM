@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMWUzYTVmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzI1NjNlYiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTAwIiBmaWxsPSJ1cmwoI2JnKSIvPjx0ZXh0IHg9IjI1NiIgeT0iMzQwIiBmb250LXNpemU9IjI4MCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+44KgPC90ZXh0PjxjaXJjbGUgY3g9IjM4MCIgY3k9IjE0MCIgcj0iNjAiIGZpbGw9IiMxNmEzNGEiIG9wYWNpdHk9IjAuOSIvPjx0ZXh0IHg9IjM4MCIgeT0iMTY1IiBmb250LXNpemU9IjcwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7ilKI8L3RleHQ+PC9zdmc+">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMWUzYTVmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzI1NjNlYiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTAwIiBmaWxsPSJ1cmwoI2JnKSIvPjx0ZXh0IHg9IjI1NiIgeT0iMzQwIiBmb250LXNpemU9IjI4MCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+44KgPC90ZXh0PjxjaXJjbGUgY3g9IjM4MCIgY3k9IjE0MCIgcj0iNjAiIGZpbGw9IiMxNmEzNGEiIG9wYWNpdHk9IjAuOSIvPjx0ZXh0IHg9IjM4MCIgeT0iMTY1IiBmb250LXNpemU9IjcwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7ilKI8L3RleHQ+PC9zdmc+">
+<title>Debt Tracker 2026</title>
+<style>
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --success: #16a34a;
+  --success-bg: #dcfce7;
+  --warning: #ea580c;
+  --warning-bg: #ffedd5;
+  --danger: #dc2626;
+  --danger-bg: #fee2e2;
+  --bg: #f1f5f9;
+  --card: #ffffff;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+  --radius: 12px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.app { max-width: 600px; margin: 0 auto; padding-bottom: 80px; }
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #1e3a5f, #2563eb);
+  color: white;
+  padding: 20px 16px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.header h1 { font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.header .subtitle { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+
+/* Tabs */
+.tabs {
+  display: flex;
+  background: var(--card);
+  overflow-x: auto;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  box-shadow: var(--shadow);
+}
+.tab-btn {
+  flex: 1;
+  min-width: 80px;
+  padding: 12px 8px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+.tab-btn:active { background: var(--bg); }
+
+/* Content */
+.tab-content { display: none; padding: 16px; }
+.tab-content.active { display: block; }
+
+/* Cards */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 12px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.card-title { font-size: 16px; font-weight: 700; }
+.card-subtitle { font-size: 12px; color: var(--text-muted); }
+
+/* Dashboard summary cards */
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.summary-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.summary-card .label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.summary-card .value { font-size: 20px; font-weight: 800; margin-top: 4px; }
+.summary-card .sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.summary-card.income .value { color: var(--success); }
+.summary-card.debt .value { color: var(--danger); }
+.summary-card.savings .value { color: var(--primary); }
+.summary-card.monthly .value { color: var(--warning); }
+
+/* Person card */
+.person-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.person-info .name { font-weight: 700; font-size: 15px; }
+.person-info .note { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.person-amount { text-align: right; }
+.person-amount .amt { font-size: 18px; font-weight: 800; color: var(--danger); }
+.person-amount .cur { font-size: 11px; color: var(--text-muted); }
+.person-amount .inr { font-size: 12px; color: var(--text-muted); }
+
+/* Progress */
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s;
+}
+.progress-fill.green { background: var(--success); }
+.progress-fill.blue { background: var(--primary); }
+.progress-fill.orange { background: var(--warning); }
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Payment table */
+.payment-table {
+  width: 100%;
+  font-size: 13px;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+.payment-table th {
+  text-align: left;
+  padding: 6px 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 2px solid var(--border);
+}
+.payment-table td {
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.payment-table tr:last-child td { border-bottom: none; }
+.payment-table .done { color: var(--success); font-weight: 700; }
+.payment-table .pending { color: var(--text-muted); }
+.payment-table .future { color: var(--text-muted); opacity: 0.5; }
+
+/* Pay button */
+.pay-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--success);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.pay-btn:active { transform: scale(0.98); }
+.pay-btn:disabled { background: var(--border); color: var(--text-muted); cursor: default; }
+.pay-btn.done-btn { background: var(--success-bg); color: var(--success); border: 1px solid var(--success); }
+
+/* Completed badge */
+.completed-badge {
+  display: block;
+  text-align: center;
+  padding: 8px;
+  margin-top: 8px;
+  background: var(--success-bg);
+  color: var(--success);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Toggle button */
+.toggle-btn {
+  padding: 4px 12px;
+  border: none;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.toggle-btn.done {
+  background: var(--success-bg);
+  color: var(--success);
+}
+.toggle-btn.pending {
+  background: var(--bg);
+  color: var(--text-muted);
+}
+
+/* Badge */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.badge.green { background: var(--success-bg); color: var(--success); }
+.badge.orange { background: var(--warning-bg); color: var(--warning); }
+.badge.red { background: var(--danger-bg); color: var(--danger); }
+.badge.blue { background: #dbeafe; color: var(--primary); }
+
+/* Collapsible */
+.collapsible-header {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.collapsible-header .arrow {
+  transition: transform 0.2s;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.collapsible-header.open .arrow { transform: rotate(180deg); }
+.collapsible-body {
+  display: none;
+  margin-top: 12px;
+}
+.collapsible-body.open { display: block; }
+
+/* Cash flow */
+.cashflow-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.cashflow-row:last-child { border-bottom: none; }
+.cashflow-row.total {
+  border-top: 2px solid var(--border);
+  border-bottom: none;
+  margin-top: 4px;
+  padding-top: 12px;
+  font-weight: 800;
+  font-size: 16px;
+}
+.cashflow-label { display: flex; align-items: center; gap: 8px; }
+.cashflow-amount { font-weight: 700; }
+.cashflow-amount.positive { color: var(--success); }
+.cashflow-amount.negative { color: var(--danger); }
+.dot { width: 8px; height: 8px; border-radius: 50%; }
+.dot.green { background: var(--success); }
+.dot.red { background: var(--danger); }
+.dot.blue { background: var(--primary); }
+.dot.orange { background: var(--warning); }
+
+/* Section title */
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 16px 0 8px;
+  padding-left: 4px;
+}
+
+/* Empty state */
+.empty { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+
+/* Info row */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+}
+.info-row:last-child { border-bottom: none; }
+.info-row .label { color: var(--text-muted); }
+.info-row .value { font-weight: 600; }
+
+/* Note box */
+.note-box {
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #92400e;
+  margin-top: 8px;
+}
+
+/* Recommendation box */
+.reco-box {
+  margin-top: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.reco-header {
+  background: #1e3a5f;
+  color: white;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.reco-list {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-top: none;
+  padding: 10px 12px;
+}
+.reco-item {
+  display: flex;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.5;
+  border-bottom: 1px solid #dbeafe;
+}
+.reco-item:last-child { border-bottom: none; }
+.reco-icon {
+  min-width: 18px;
+  text-align: center;
+  font-weight: 700;
+}
+.reco-icon.red { color: var(--danger); }
+.reco-icon.green { color: var(--success); }
+.reco-icon.orange { color: var(--warning); }
+.reco-icon.blue { color: var(--primary); }
+
+/* Due date highlight */
+.due-soon {
+  background: var(--danger-bg);
+  color: var(--danger);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Expense form */
+.expense-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.expense-form input, .expense-form select {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%;
+}
+.expense-form input:focus, .expense-form select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+.expense-form .full-width { grid-column: 1 / -1; }
+.add-expense-btn {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: var(--primary);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  grid-column: 1 / -1;
+}
+.add-expense-btn:active { transform: scale(0.98); }
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: var(--card);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  margin-bottom: 8px;
+}
+.expense-item .info { flex: 1; }
+.expense-item .info .name { font-weight: 700; font-size: 14px; }
+.expense-item .info .sub { font-size: 11px; color: var(--text-muted); }
+.expense-item .amt { font-weight: 700; font-size: 15px; color: var(--warning); margin-right: 8px; }
+.expense-item .del-btn {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.expense-item .del-btn:active { transform: scale(0.95); }
+
+@media (max-width: 400px) {
+  .summary-grid { grid-template-columns: 1fr; }
+  .tab-btn { font-size: 12px; padding: 10px 4px; }
+  .expense-form { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <h1>💰 Debt Tracker 2026</h1>
+    <div class="subtitle">Muhammedshafeeq KP · Salary: <span id="hdr-salary"></span></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="dashboard">📊 Dashboard</button>
+    <button class="tab-btn" data-tab="persons">👥 By Person</button>
+    <button class="tab-btn" data-tab="savings">🏦 Savings</button>
+    <button class="tab-btn" data-tab="debt">💸 Debt</button>
+    <button class="tab-btn" data-tab="expenses">🛒 Expenses</button>
+  </div>
+
+  <div id="dashboard" class="tab-content active"></div>
+  <div id="persons" class="tab-content"></div>
+  <div id="savings" class="tab-content"></div>
+  <div id="debt" class="tab-content"></div>
+  <div id="expenses" class="tab-content"></div>
+</div>
+
+<script>
+const DATA = {
+  "exchangeRate": 24.69,
+  "salary": 1400,
+  "persons": [
+    {
+      "name": "KUTTIMON",
+      "amount": 3500,
+      "currency": "INR",
+      "recommendations": [
+        {"type": "good", "text": "Small amount - ₹3,500. Pay this first, easy to clear in 1 month from your surplus."},
+        {"type": "tip", "text": "Clear this and one person is off your list. Psychological win!"}
+      ]
+    },
+    {
+      "name": "MAMU",
+      "amount": 100,
+      "currency": "AED",
+      "recommendations": [
+        {"type": "good", "text": "Only 100 AED (≈₹2,469). Smallest debt - clear immediately."},
+        {"type": "tip", "text": "Pay both MAMU and KUTTIMON together (~₹5,969) in one month. Two people off the list!"}
+      ]
+    },
+    {
+      "name": "ABU BASHAR",
+      "amount": 830,
+      "currency": "AED",
+      "recommendations": [
+        {"type": "warning", "text": "830 AED (≈₹20,493). Second biggest person debt after Faizal."},
+        {"type": "tip", "text": "Option 1: Pay 100 AED/month for 8 months - light burden."},
+        {"type": "tip", "text": "Option 2: Pay 200 AED/month for 4 months - clears faster."},
+        {"type": "tip", "text": "Option 3: Pay in full if you get any bonus or extra income."}
+      ]
+    },
+    {
+      "name": "FAIZAL",
+      "amount": 25200,
+      "currency": "INR",
+      "note": "BAJAJ ₹20,000 + UKO BANK ₹5,200",
+      "recommendations": [
+        {"type": "warning", "text": "Largest person debt - ₹25,200. This is Bajaj ₹20,000 + UKO Bank ₹5,200."},
+        {"type": "tip", "text": "Option 1: Pay ₹2,000/month for ~13 months. Steady and manageable."},
+        {"type": "tip", "text": "Option 2: Pay ₹5,000/month for 5 months. Clears by Feb 2027."},
+        {"type": "tip", "text": "Option 3: Pay UKO ₹5,200 first (smaller), then tackle Bajaj ₹20,000."},
+        {"type": "good", "text": "Faizal kuri savings (₹1.5L) will mature April 2029 - can use part of it to clear this."}
+      ]
+    },
+    {
+      "name": "VAVA",
+      "amount": 3200,
+      "currency": "INR",
+      "recommendations": [
+        {"type": "good", "text": "₹3,200 - small amount. Can clear in 1 month from surplus."},
+        {"type": "tip", "text": "Pay KUTTIMON (₹3,500) + VAVA (₹3,200) + MAMU (₹2,469) together = ₹9,169. Three people cleared in ~3 months!"}
+      ]
+    },
+    {
+      "name": "SUTTU",
+      "amount": 2200,
+      "currency": "INR",
+      "recommendations": [
+        {"type": "good", "text": "₹2,200 - very small amount. Easy to clear quickly."},
+        {"type": "tip", "text": "Pay SUTTU + MAMU together (~₹4,669). Two more people off the list!"}
+      ]
+    },
+    {
+      "name": "HISHAM",
+      "amount": 2500,
+      "currency": "INR",
+      "recommendations": [
+        {"type": "good", "text": "₹2,500 - small amount. Clear early to reduce the number of people you owe."},
+        {"type": "tip", "text": "Pay HISHAM + SUTTU together = ₹4,700. Two birds with one stone."}
+      ]
+    },
+  ],
+  "savings": [
+    {
+      "id": "faizal-kuri",
+      "name": "Faizal Kuri",
+      "monthlyAmount": 3750,
+      "currency": "INR",
+      "startYear": 2026, "startMonth": 1, "day": 5,
+      "totalMonths": 40,
+      "paidCount": 9,
+      "recommendations": [
+        {"type": "good", "text": "This is your best investment - ₹1.5L in 40 months. Keep paying without fail."},
+        {"type": "tip", "text": "When this matures (April 2029), you can clear UKO Bank Loan (₹2L+) in one shot."},
+        {"type": "warning", "text": "31 months left - long commitment. Don't skip payments, you'll lose the benefit."},
+        {"type": "good", "text": "₹3,750/month is 11% of salary. Affordable if other debts are managed well."}
+      ]
+    },
+    {
+      "id": "kunithatha-kuri",
+      "name": "Kunithatha Kuri (Chittiyan)",
+      "monthlyAmount": 2000,
+      "perPayment": 1000,
+      "paymentsPerMonth": 2,
+      "currency": "INR",
+      "startYear": 2026, "startMonth": 6,
+      "totalMonths": 15,
+      "paidCount": 6,
+      "recommendations": [
+        {"type": "good", "text": "₹2,000/month for 15 months = ₹30,000 total. Small and manageable."},
+        {"type": "tip", "text": "Two payments of ₹1,000 each per month. Easy to track."},
+        {"type": "good", "text": "Completes by August 2027. After that, ₹2,000/month is freed up."},
+        {"type": "tip", "text": "When this completes, redirect ₹2,000 to Abu Bashar or Faizal payment."}
+      ]
+    },
+  ],
+  "debts": [
+    {
+      "id": "lingage-home",
+      "name": "Lingage by Home",
+      "monthlyAmount": 4000,
+      "currency": "INR",
+      "startYear": 2026, "startMonth": 1, "day": 24,
+      "totalMonths": 13,
+      "totalAmount": 52000,
+      "paidCount": 8,
+      "recommendations": [
+        {"type": "good", "text": "₹4,000/month is manageable. 8 months paid, 5 months left - ENDS on 24/01/2027."},
+        {"type": "tip", "text": "Finish this first - it's the smallest loan and will free up ₹4,000/month by January 2027."},
+        {"type": "tip", "text": "Once paid off, redirect this ₹4,000 to Gold Loan savings."}
+      ]
+    },
+    {
+      "id": "lingage-shalu",
+      "name": "Lingage by Shalu's Home",
+      "monthlyAmount": 12000,
+      "currency": "INR",
+      "startYear": 2025, "startMonth": 11, "day": 18,
+      "totalMonths": 27,
+      "totalAmount": 324000,
+      "paidCount": 7,
+      "recommendations": [
+        {"type": "warning", "text": "BIGGEST monthly burden - ₹12,000/month (38% of your total outflow)."},
+        {"type": "danger", "text": "₹2,40,000 balance with 20 months left. This blocks money that could go to Gold Loan."},
+        {"type": "tip", "text": "Option 1: Continue as-is. By July 2027 it will be done. But Gold Loan will still be pending."},
+        {"type": "tip", "text": "Option 2: Request temporary reduction (e.g. ₹8,000/month) for 4 months until Gold Loan is sorted. Use ₹4,000 saved for Gold Loan."},
+        {"type": "good", "text": "This is a 0% interest chit - no extra cost for taking longer. Don't stress too much."}
+      ]
+    },
+    {
+      "id": "gold-loan",
+      "name": "Gold Loan",
+      "totalAmount": 210000,
+      "currency": "INR",
+      "dueDate": "2027-01-01",
+      "type": "lump-sum",
+      "note": "CHAIN",
+      "recommendations": [
+        {"type": "danger", "text": "URGENT! ₹2,10,000 due in ~4 months. You need ~₹52,000/month saved for this - not possible with current surplus of ₹3,500."},
+        {"type": "tip", "text": "Option 1: Pay monthly interest only (~₹1,500-2,000/month) and renew the loan for another year. Gold stays pledged but you get time."},
+        {"type": "tip", "text": "Option 2: Sell the gold if you don't need it urgently. Use the money to clear this loan fully. No more interest."},
+        {"type": "tip", "text": "Option 3: After Bajaj & Lingage Home finish (Jan-Mar 2027), you'll have ₹8,000/month freed up. Use that + savings to tackle this."},
+        {"type": "warning", "text": "Don't ignore this! If you don't pay or renew, the bank can auction your gold."}
+      ]
+    },
+    {
+      "id": "uko-bank",
+      "name": "UKO Bank Loan",
+      "monthlyAmount": 5200,
+      "currency": "INR",
+      "startYear": 2026, "startMonth": 1, "day": 30,
+      "totalMonths": 48,
+      "totalAmount": 250000,
+      "paidCount": 8,
+      "interest": 208,
+      "principal": 4992,
+      "recommendations": [
+        {"type": "good", "text": "Very low interest - only ₹208/month (0.08%). Most of your payment (₹4,992) goes to principal. Good loan."},
+        {"type": "tip", "text": "Don't rush to close this early. The interest cost is very low. Keep paying ₹5,200/month as scheduled."},
+        {"type": "warning", "text": "40 months left (until Jan 2029). ₹2,08,400 balance. This is a long-term commitment."},
+        {"type": "good", "text": "If you have extra money, use it for Gold Loan first - not this one. This loan is cheap."}
+      ]
+    },
+    {
+      "id": "kudubashree",
+      "name": "Kudubashree Loan",
+      "totalAmount": 15000,
+      "currency": "INR",
+      "dueDate": "2026-01-21",
+      "type": "lump-sum",
+      "recommendations": [
+        {"type": "danger", "text": "OVERDUE by 8 months! Due January 2026, now September 2026. This affects your credit score."},
+        {"type": "tip", "text": "Small amount - ₹15,000. Pay this FIRST before anything else. Even ₹5,000 x 3 months will clear it."},
+        {"type": "warning", "text": "Kudubashree loans have government backing. Late payment may block future benefits."},
+        {"type": "good", "text": "Once cleared, that's one less loan to worry about. Only ₹15,000!"}
+      ]
+    },
+    {
+      "id": "bajaj",
+      "name": "Bajaj Loan",
+      "monthlyAmount": 4098,
+      "currency": "INR",
+      "startYear": 2026, "startMonth": 6, "day": 2,
+      "totalMonths": 8,
+      "totalAmount": 32784,
+      "paidCount": 4,
+      "recommendations": [
+        {"type": "good", "text": "Halfway done! Only 4 months left. ₹16,392 balance."},
+        {"type": "tip", "text": "Pay on time for next 4 months (Oct, Nov, Dec 2026, Jan 2027). Done by January 2027."},
+        {"type": "good", "text": "Once done, ₹4,098/month freed up. Redirect this to Gold Loan."},
+        {"type": "tip", "text": "After Jan 2027: Lingage Home (₹4,000) + Bajaj (₹4,098) = ₹8,098/month available for Gold Loan."}
+      ]
+    },
+    {
+      "id": "adav-dubai",
+      "name": "Adav Dubai",
+      "monthlyAmount": 355,
+      "currency": "AED",
+      "startYear": 2026, "startMonth": 2, "day": 16,
+      "totalMonths": 4,
+      "totalAmount": 1420,
+      "paidCount": 4,
+      "completed": true,
+      "note": "All 4 months paid. Loan: 30,000 INR, Payback: 1,420 AED (~₹35,060)",
+      "recommendations": [
+        {"type": "good", "text": "COMPLETED! All 4 months paid. No further action needed."},
+        {"type": "warning", "text": "You paid ₹35,060 for a ₹30,000 loan - lost ₹5,060 in 4 months. Avoid such high-interest short loans in future."}
+      ]
+    }
+  ]
+};
+
+// ===== State Management =====
+function loadState() {
+  try { return JSON.parse(localStorage.getItem('trackerState')) || {}; }
+  catch(e) { return {}; }
+}
+function saveState(state) {
+  localStorage.setItem('trackerState', JSON.stringify(state));
+}
+function getPaymentStatus(category, id, index) {
+  const state = loadState();
+  if (state[category] && state[category][id] && state[category][id][index] !== undefined) {
+    return state[category][id][index];
+  }
+  return null; // null = use default
+}
+function setPaymentStatus(category, id, index, value) {
+  const state = loadState();
+  if (!state[category]) state[category] = {};
+  if (!state[category][id]) state[category][id] = {};
+  state[category][id][index] = value;
+  saveState(state);
+}
+
+// ===== Helpers =====
+const RATE = DATA.exchangeRate;
+function toINR(amount, currency) {
+  return currency === 'AED' ? amount * RATE : amount;
+}
+function fmtINR(amount) {
+  return '₹' + Math.round(amount).toLocaleString('en-IN');
+}
+function fmtAED(amount) {
+  return amount.toLocaleString('en-IN') + ' AED';
+}
+function fmtMoney(amount, currency) {
+  return currency === 'AED' ? fmtAED(amount) : fmtINR(amount);
+}
+function fmtDate(d) {
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}-${month}-${year}`;
+}
+function generateDates(startYear, startMonth, day, count, perMonth) {
+  const dates = [];
+  perMonth = perMonth || 1;
+  for (let i = 0; i < count; i++) {
+    const m = startMonth - 1 + i;
+    const y = startYear + Math.floor(m / 12);
+    const mo = m % 12;
+    if (perMonth === 1) {
+      dates.push(new Date(y, mo, day));
+    } else {
+      // bi-monthly: mid and end of month
+      dates.push(new Date(y, mo, 15));
+      const lastDay = new Date(y, mo + 1, 0).getDate();
+      dates.push(new Date(y, mo, Math.min(day, lastDay)));
+    }
+  }
+  return dates;
+}
+function getEffectivePaid(category, id, defaultPaid, totalEntries) {
+  const state = loadState();
+  let paid = 0;
+  for (let i = 0; i < totalEntries; i++) {
+    const s = getPaymentStatus(category, id, i);
+    if (s === true) paid++;
+    else if (s === null && i < defaultPaid) paid++;
+  }
+  return paid;
+}
+
+// ===== Dashboard =====
+function renderDashboard() {
+  const container = document.getElementById('dashboard');
+  
+  // Calculate totals
+  let totalDebtINR = 0;
+  let monthlyDebtINR = 0;
+  let monthlyDebtAED = 0;
+  
+  DATA.debts.forEach(d => {
+    const balance = getDebtBalance(d);
+    totalDebtINR += toINR(balance, d.currency);
+    if (d.monthlyAmount) {
+      if (d.currency === 'AED') monthlyDebtAED += d.monthlyAmount;
+      else monthlyDebtINR += d.monthlyAmount;
+    }
+  });
+  
+  let totalPersonINR = 0;
+  DATA.persons.forEach(p => {
+    totalPersonINR += toINR(p.amount, p.currency);
+  });
+  
+  let totalSavingsINR = 0;
+  let monthlySavingsINR = 0;
+  let savingsPaidINR = 0;
+  DATA.savings.forEach(s => {
+    const total = s.monthlyAmount * s.totalMonths;
+    totalSavingsINR += total;
+    monthlySavingsINR += s.monthlyAmount;
+    const entries = s.paymentsPerMonth ? s.totalMonths * s.paymentsPerMonth : s.totalMonths;
+    const paid = getEffectivePaid('savings', s.id, s.paidCount, entries);
+    savingsPaidINR += (paid / entries) * total;
+  });
+  
+  const expenses = getExpenses();
+  let monthlyExpenseINR = 0;
+  let monthlyExpenseAED = 0;
+  expenses.forEach(e => {
+    if (e.currency === 'AED') monthlyExpenseAED += parseFloat(e.amount);
+    else monthlyExpenseINR += parseFloat(e.amount);
+  });
+  const totalExpenseINR = monthlyExpenseINR + (monthlyExpenseAED * RATE);
+  
+  const salaryINR = DATA.salary * RATE;
+  const monthlyOutflowINR = monthlyDebtINR + monthlySavingsINR + monthlyExpenseINR;
+  const monthlyOutflowAED = monthlyDebtAED + monthlyExpenseAED;
+  const totalMonthlyINR = monthlyOutflowINR + (monthlyOutflowAED * RATE);
+  const surplus = salaryINR - totalMonthlyINR;
+  
+  container.innerHTML = `
+    <div class="summary-grid">
+      <div class="summary-card income">
+        <div class="label">Monthly Income</div>
+        <div class="value">${fmtAED(DATA.salary)}</div>
+        <div class="sub">≈ ${fmtINR(salaryINR)}</div>
+      </div>
+      <div class="summary-card debt">
+        <div class="label">Total Debt</div>
+        <div class="value">${fmtINR(totalDebtINR + totalPersonINR)}</div>
+        <div class="sub">incl. persons ${fmtINR(totalPersonINR)}</div>
+      </div>
+      <div class="summary-card savings">
+        <div class="label">Total Savings</div>
+        <div class="value">${fmtINR(totalSavingsINR)}</div>
+        <div class="sub">paid: ${fmtINR(savingsPaidINR)}</div>
+      </div>
+      <div class="summary-card monthly">
+        <div class="label">Monthly Outflow</div>
+        <div class="value">${fmtINR(totalMonthlyINR)}</div>
+        <div class="sub">incl. ${fmtAED(monthlyOutflowAED)}</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Monthly Cash Flow</div>
+      </div>
+      <div class="cashflow-row">
+        <div class="cashflow-label"><span class="dot green"></span> Salary (Income)</div>
+        <div class="cashflow-amount positive">+${fmtINR(salaryINR)}</div>
+      </div>
+      <div class="cashflow-row">
+        <div class="cashflow-label"><span class="dot red"></span> Debt Payments</div>
+        <div class="cashflow-amount negative">-${fmtINR(monthlyDebtINR + monthlyDebtAED * RATE)}</div>
+      </div>
+      <div class="cashflow-row">
+        <div class="cashflow-label"><span class="dot blue"></span> Savings (Kuri)</div>
+        <div class="cashflow-amount negative">-${fmtINR(monthlySavingsINR)}</div>
+      </div>
+      ${totalExpenseINR > 0 ? `<div class="cashflow-row">
+        <div class="cashflow-label"><span class="dot orange"></span> Living Expenses</div>
+        <div class="cashflow-amount negative">-${fmtINR(totalExpenseINR)}</div>
+      </div>` : ''}
+      <div class="cashflow-row total">
+        <div>Monthly Surplus</div>
+        <div class="cashflow-amount ${surplus >= 0 ? 'positive' : 'negative'}">${surplus >= 0 ? '+' : ''}${fmtINR(surplus)}</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Quick Overview</div>
+      </div>
+      <div class="info-row"><span class="label">Money owed to people</span><span class="value">${fmtINR(totalPersonINR)}</span></div>
+      <div class="info-row"><span class="label">Active loans (balance)</span><span class="value">${fmtINR(totalDebtINR)}</span></div>
+      <div class="info-row"><span class="label">Savings committed</span><span class="value">${fmtINR(totalSavingsINR)}</span></div>
+      <div class="info-row"><span class="label">Savings already paid</span><span class="value">${fmtINR(savingsPaidINR)}</span></div>
+      <div class="info-row"><span class="label">Savings remaining</span><span class="value">${fmtINR(totalSavingsINR - savingsPaidINR)}</span></div>
+      <div class="info-row"><span class="label">Exchange rate</span><span class="value">1 AED = ₹${RATE}</span></div>
+      ${totalExpenseINR > 0 ? `<div class="info-row"><span class="label">Monthly living expenses</span><span class="value">${fmtINR(totalExpenseINR)}</span></div>` : ''}
+    </div>
+  `;
+}
+
+function getDebtBalance(d) {
+  if (d.type === 'lump-sum') return d.totalAmount;
+  const entries = d.totalMonths;
+  const paid = getEffectivePaid('debts', d.id, d.paidCount, entries);
+  const remaining = entries - paid;
+  const perMonth = d.monthlyAmount;
+  return remaining * perMonth;
+}
+
+// ===== By Person =====
+function renderRecommendations(recos) {
+  if (!recos || recos.length === 0) return '';
+  let html = '<div class="reco-box">';
+  html += '<div class="reco-header">💡 Suggestions & Options</div>';
+  html += '<div class="reco-list">';
+  recos.forEach(r => {
+    const icon = r.type === 'danger' ? '🔴' : r.type === 'warning' ? '🟠' : r.type === 'good' ? '🟢' : '🔵';
+    const cls = r.type === 'danger' ? 'red' : r.type === 'warning' ? 'orange' : r.type === 'good' ? 'green' : 'blue';
+    html += '<div class="reco-item"><span class="reco-icon ' + cls + '">' + icon + '</span><span>' + r.text + '</span></div>';
+  });
+  html += '</div></div>';
+  return html;
+}
+
+function getPersonPaid(id) {
+  const state = loadState();
+  if (state.personPayments && state.personPayments[id] !== undefined) {
+    return state.personPayments[id];
+  }
+  return 0;
+}
+function setPersonPaid(id, amount) {
+  const state = loadState();
+  if (!state.personPayments) state.personPayments = {};
+  state.personPayments[id] = amount;
+  saveState(state);
+}
+function renderPersons() {
+  const container = document.getElementById('persons');
+  let totalINR = 0;
+  let totalPaidINR = 0;
+  
+  let html = '<div class="section-title">Money You Owe (കൊടുക്കാൻ ബാക്കി)</div>';
+  
+  DATA.persons.forEach((p, pi) => {
+    const inr = toINR(p.amount, p.currency);
+    totalINR += inr;
+    const paidAmt = getPersonPaid(p.name);
+    const paidINR = toINR(paidAmt, p.currency);
+    totalPaidINR += paidINR;
+    const balance = p.amount - paidAmt;
+    const balanceINR = inr - paidINR;
+    const pct = p.amount > 0 ? Math.min(100, Math.round((paidAmt / p.amount) * 100)) : 0;
+    const isDone = balance <= 0;
+    
+    html += `
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">${p.name}</div>
+            ${p.note ? `<div class="card-subtitle">${p.note}</div>` : ''}
+          </div>
+          <span class="badge ${isDone ? 'green' : pct > 0 ? 'blue' : 'red'}">${isDone ? 'PAID' : pct > 0 ? pct + '%' : 'UNPAID'}</span>
+        </div>
+        <div class="info-row"><span class="label">Total owed</span><span class="value">${fmtMoney(p.amount, p.currency)}</span></div>
+        <div class="info-row"><span class="label">Paid so far</span><span class="value" style="color:var(--success)">${fmtMoney(paidAmt, p.currency)}</span></div>
+        <div class="info-row"><span class="label">Balance</span><span class="value" style="color:${isDone ? 'var(--success)' : 'var(--danger)'}">${fmtMoney(Math.max(0, balance), p.currency)}</span></div>
+        ${p.currency === 'AED' ? `<div class="info-row"><span class="label">Balance in INR</span><span class="value">≈ ${fmtINR(Math.max(0, balanceINR))}</span></div>` : ''}
+        <div class="progress-bar"><div class="progress-fill ${isDone ? 'green' : pct > 0 ? 'blue' : 'orange'}" style="width:${pct}%"></div></div>
+        <div class="progress-info"><span>${fmtMoney(paidAmt, p.currency)} / ${fmtMoney(p.amount, p.currency)}</span><span>${pct}%</span></div>
+        ${isDone ? '<div class="completed-badge">✓ Fully Paid!</div>' : `<button class="pay-btn" onclick="payPerson(${pi})">✓ Pay (Enter Amount)</button>`}
+        ${p.recommendations ? renderRecommendations(p.recommendations) : ''}
+      </div>
+    `;
+  });
+  
+  const totalBalanceINR = totalINR - totalPaidINR;
+  html += `
+    <div class="card" style="margin-top:16px;">
+      <div class="info-row"><span class="label" style="font-size:15px; font-weight:700;">Total Owed</span><span class="value" style="font-size:18px; color:var(--danger);">${fmtINR(totalINR)}</span></div>
+      <div class="info-row"><span class="label" style="font-size:14px;">Total Paid</span><span class="value" style="color:var(--success);">${fmtINR(totalPaidINR)}</span></div>
+      <div class="info-row"><span class="label" style="font-size:15px; font-weight:700;">Total Balance</span><span class="value" style="font-size:18px; color:var(--danger);">${fmtINR(totalBalanceINR)}</span></div>
+    </div>
+  `;
+  
+  container.innerHTML = html;
+}
+
+function payPerson(pi) {
+  const p = DATA.persons[pi];
+  const currentPaid = getPersonPaid(p.name);
+  const balance = p.amount - currentPaid;
+  const input = prompt('Enter payment amount for ' + p.name + '\nBalance: ' + fmtMoney(balance, p.currency) + (p.currency === 'AED' ? '\n(Enter amount in ' + p.currency + ')' : '\n(Enter amount in INR)'));
+  if (input === null) return;
+  const amt = parseFloat(input);
+  if (isNaN(amt) || amt <= 0) {
+    alert('Please enter a valid amount.');
+    return;
+  }
+  const newTotal = currentPaid + amt;
+  if (newTotal > p.amount) {
+    if (!confirm('This amount exceeds the total owed. It will be capped at ' + fmtMoney(p.amount, p.currency) + '. Continue?')) return;
+    setPersonPaid(p.name, p.amount);
+  } else {
+    setPersonPaid(p.name, newTotal);
+  }
+  renderPersons();
+  renderDashboard();
+}
+
+// ===== Savings =====
+function renderSavings() {
+  const container = document.getElementById('savings');
+  let html = '<div class="section-title">Savings / Kuri (ലാഭം)</div>';
+  
+  DATA.savings.forEach(s => {
+    const perMonth = s.paymentsPerMonth || 1;
+    const totalEntries = s.totalMonths * perMonth;
+    const paid = getEffectivePaid('savings', s.id, s.paidCount, totalEntries);
+    const totalAmount = s.monthlyAmount * s.totalMonths;
+    const paidAmount = (paid / totalEntries) * totalAmount;
+    const balanceAmount = totalAmount - paidAmount;
+    const pct = Math.round((paid / totalEntries) * 100);
+    
+    let dates;
+    if (perMonth === 2) {
+      dates = generateDates(s.startYear, s.startMonth, s.day || 30, s.totalMonths, 2);
+    } else {
+      dates = generateDates(s.startYear, s.startMonth, s.day, s.totalMonths, 1);
+    }
+    
+    html += `
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">${s.name}</div>
+            <div class="card-subtitle">${s.totalMonths} months · ${fmtMoney(s.monthlyAmount, s.currency)}/month</div>
+          </div>
+          <span class="badge blue">${pct}% done</span>
+        </div>
+        <div class="info-row"><span class="label">Total amount</span><span class="value">${fmtMoney(totalAmount, s.currency)}</span></div>
+        <div class="info-row"><span class="label">Paid so far</span><span class="value" style="color:var(--success)">${fmtMoney(paidAmount, s.currency)}</span></div>
+        <div class="info-row"><span class="label">Remaining</span><span class="value" style="color:var(--danger)">${fmtMoney(balanceAmount, s.currency)}</span></div>
+        <div class="progress-bar"><div class="progress-fill blue" style="width:${pct}%"></div></div>
+        <div class="progress-info"><span>${paid}/${totalEntries} payments</span><span>${pct}%</span></div>
+        ${paid < totalEntries ? `<button class="pay-btn" onclick="payNow('savings','${s.id}',${totalEntries},${s.paidCount})">✓ Pay Next Installment (${fmtMoney(perMonth === 2 ? s.perPayment : s.monthlyAmount, s.currency)})</button>` : `<div class="completed-badge">✓ All Payments Completed!</div>`}
+        ${s.recommendations ? renderRecommendations(s.recommendations) : ''}
+      </div>
+    `;
+    
+    // Payment schedule
+    html += `<div class="card">
+      <div class="collapsible-header" onclick="toggleCollapse(this)">
+        <div class="card-title" style="font-size:14px;">Payment Schedule</div>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <table class="payment-table">
+          <thead><tr><th>#</th><th>Date</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody>`;
+    
+    for (let i = 0; i < dates.length; i++) {
+      const status = getPaymentStatus('savings', s.id, i);
+      const isPaid = status === true || (status === null && i < s.paidCount);
+      const isDefaultPaid = i < s.paidCount;
+      const amt = perMonth === 2 ? s.perPayment : s.monthlyAmount;
+      
+      html += `<tr>
+        <td>${i + 1}</td>
+        <td>${fmtDate(dates[i])}</td>
+        <td>${fmtMoney(amt, s.currency)}</td>
+        <td><button class="toggle-btn ${isPaid ? 'done' : 'pending'}" onclick="togglePayment('savings','${s.id}',${i},${isDefaultPaid})">${isPaid ? '✓ Done' : 'Pending'}</button></td>
+      </tr>`;
+    }
+    
+    html += `</tbody></table>
+      </div>
+    </div>`;
+  });
+  
+  container.innerHTML = html;
+}
+
+// ===== Debt =====
+function renderDebt() {
+  const container = document.getElementById('debt');
+  let html = '<div class="section-title">Loans & Debts (കടം)</div>';
+  
+  DATA.debts.forEach(d => {
+    if (d.type === 'lump-sum') {
+      const isOverdue = new Date(d.dueDate) < new Date();
+      html += `
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">${d.name}</div>
+              ${d.note ? `<div class="card-subtitle">${d.note}</div>` : ''}
+            </div>
+            <span class="badge ${isOverdue ? 'red' : 'orange'}">Due ${d.dueDate}</span>
+          </div>
+          <div class="info-row"><span class="label">Total amount</span><span class="value" style="color:var(--danger)">${fmtMoney(d.totalAmount, d.currency)}</span></div>
+          ${isOverdue ? '<div class="note-box">⚠️ This payment is overdue!</div>' : ''}
+        </div>
+      `;
+      return;
+    }
+    
+    const entries = d.totalMonths;
+    const paid = getEffectivePaid('debts', d.id, d.paidCount, entries);
+    const balance = getDebtBalance(d);
+    const pct = Math.round((paid / entries) * 100);
+    const dates = generateDates(d.startYear, d.startMonth, d.day, entries, 1);
+    
+    html += `
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">${d.name}</div>
+            <div class="card-subtitle">${fmtMoney(d.monthlyAmount, d.currency)}/month · ${entries} months</div>
+          </div>
+          <span class="badge ${pct >= 75 ? 'green' : pct >= 40 ? 'blue' : 'orange'}">${pct}% done</span>
+        </div>
+        <div class="info-row"><span class="label">Total loan</span><span class="value">${fmtMoney(d.totalAmount, d.currency)}</span></div>
+        <div class="info-row"><span class="label">Paid</span><span class="value" style="color:var(--success)">${fmtMoney(d.totalAmount - balance, d.currency)}</span></div>
+        <div class="info-row"><span class="label">Balance</span><span class="value" style="color:var(--danger)">${fmtMoney(balance, d.currency)}</span></div>
+        ${d.interest ? `<div class="info-row"><span class="label">Monthly split</span><span class="value">Interest ${fmtMoney(d.interest, d.currency)} + Principal ${fmtMoney(d.principal, d.currency)}</span></div>` : ''}
+        ${d.note ? `<div class="note-box">${d.note}</div>` : ''}
+        <div class="progress-bar"><div class="progress-fill ${pct >= 75 ? 'green' : pct >= 40 ? 'blue' : 'orange'}" style="width:${pct}%"></div></div>
+        <div class="progress-info"><span>${paid}/${entries} months paid</span><span>${entries - paid} left</span></div>
+        ${paid < entries ? `<button class="pay-btn" onclick="payNow('debts','${d.id}',${entries},${d.paidCount})">✓ Pay This Month (${fmtMoney(d.monthlyAmount, d.currency)})</button>` : `<div class="completed-badge">✓ Loan Fully Paid!</div>`}
+        ${d.recommendations ? renderRecommendations(d.recommendations) : ''}
+      </div>
+    `;
+    
+    // Payment schedule
+    html += `<div class="card">
+      <div class="collapsible-header" onclick="toggleCollapse(this)">
+        <div class="card-title" style="font-size:14px;">Payment Schedule</div>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <table class="payment-table">
+          <thead><tr><th>#</th><th>Date</th><th>Amount</th><th>Balance</th><th>Status</th></tr></thead>
+          <tbody>`;
+    
+    let runningBalance = d.totalAmount;
+    for (let i = 0; i < entries; i++) {
+      const status = getPaymentStatus('debts', d.id, i);
+      const isPaid = status === true || (status === null && i < d.paidCount);
+      const isDefaultPaid = i < d.paidCount;
+      runningBalance -= d.monthlyAmount;
+      const bal = Math.max(0, runningBalance + d.monthlyAmount); // balance before this payment
+      const afterBal = Math.max(0, runningBalance);
+      
+      html += `<tr>
+        <td>${i + 1}</td>
+        <td>${fmtDate(dates[i])}</td>
+        <td>${fmtMoney(d.monthlyAmount, d.currency)}</td>
+        <td>${fmtMoney(afterBal, d.currency)}</td>
+        <td><button class="toggle-btn ${isPaid ? 'done' : 'pending'}" onclick="togglePayment('debts','${d.id}',${i},${isDefaultPaid})">${isPaid ? '✓ Done' : 'Pending'}</button></td>
+      </tr>`;
+    }
+    
+    html += `</tbody></table>
+      </div>
+    </div>`;
+  });
+  
+  container.innerHTML = html;
+}
+
+// ===== Interactions =====
+function togglePayment(category, id, index, defaultPaid) {
+  const current = getPaymentStatus(category, id, index);
+  let newVal;
+  if (current === true) newVal = false;
+  else if (current === false) newVal = null;
+  else {
+    // current is null (default)
+    if (index < defaultPaid) newVal = false;
+    else newVal = true;
+  }
+  setPaymentStatus(category, id, index, newVal);
+  // Re-render
+  if (category === 'savings') renderSavings();
+  else renderDebt();
+  renderDashboard();
+}
+
+function payNow(category, id, totalEntries, defaultPaid) {
+  // Find the next pending payment and mark it as done
+  for (let i = 0; i < totalEntries; i++) {
+    const status = getPaymentStatus(category, id, i);
+    const isPaid = status === true || (status === null && i < defaultPaid);
+    if (!isPaid) {
+      setPaymentStatus(category, id, i, true);
+      break;
+    }
+  }
+  // Re-render
+  if (category === 'savings') renderSavings();
+  else renderDebt();
+  renderDashboard();
+}
+
+function toggleCollapse(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ===== Expenses =====
+function getExpenses() {
+  const state = loadState();
+  return state.expenses || [];
+}
+function saveExpensesList(expenses) {
+  const state = loadState();
+  state.expenses = expenses;
+  saveState(state);
+}
+function renderExpenses() {
+  const container = document.getElementById('expenses');
+  const expenses = getExpenses();
+  let totalINR = 0;
+  let totalAED = 0;
+  expenses.forEach(e => {
+    if (e.currency === 'AED') totalAED += parseFloat(e.amount);
+    else totalINR += parseFloat(e.amount);
+  });
+  const totalAllINR = totalINR + (totalAED * RATE);
+  
+  let html = '<div class="section-title">Add New Expense</div>';
+  html += `<div class="card">
+    <div class="expense-form">
+      <input type="text" id="exp-name" placeholder="Expense name (e.g. Rent, Food)" class="full-width">
+      <input type="number" id="exp-amount" placeholder="Amount" step="0.01">
+      <select id="exp-currency">
+        <option value="INR">₹ INR</option>
+        <option value="AED">AED</option>
+      </select>
+      <button class="add-expense-btn" onclick="addExpense()">+ Add Expense</button>
+    </div>
+  </div>`;
+  
+  html += '<div class="section-title">Monthly Expenses</div>';
+  
+  if (expenses.length === 0) {
+    html += '<div class="empty">No expenses added yet. Add your first expense above!</div>';
+  } else {
+    expenses.forEach((e, i) => {
+      const inr = e.currency === 'AED' ? parseFloat(e.amount) * RATE : parseFloat(e.amount);
+      html += `<div class="expense-item">
+        <div class="info">
+          <div class="name">${e.name}</div>
+          <div class="sub">${e.currency === 'AED' ? 'AED' : '₹'} · ${e.currency === 'AED' ? '≈ ' + fmtINR(inr) : ''}</div>
+        </div>
+        <div class="amt">${fmtMoney(parseFloat(e.amount), e.currency)}</div>
+        <button class="del-btn" onclick="deleteExpense(${i})">Delete</button>
+      </div>`;
+    });
+    
+    html += `<div class="card" style="margin-top:12px;">
+      <div class="info-row"><span class="label" style="font-weight:700;">Total Monthly Expenses</span><span class="value" style="color:var(--warning);font-size:18px;">${fmtINR(totalAllINR)}</span></div>
+      ${totalAED > 0 ? `<div class="info-row"><span class="label">In AED</span><span class="value">${totalAED} AED + ₹${totalINR}</span></div>` : ''}
+    </div>`;
+  }
+  
+  container.innerHTML = html;
+}
+function addExpense() {
+  const name = document.getElementById('exp-name').value.trim();
+  const amount = document.getElementById('exp-amount').value.trim();
+  const currency = document.getElementById('exp-currency').value;
+  if (!name || !amount) {
+    alert('Please enter both name and amount.');
+    return;
+  }
+  const amt = parseFloat(amount);
+  if (isNaN(amt) || amt <= 0) {
+    alert('Please enter a valid amount.');
+    return;
+  }
+  const expenses = getExpenses();
+  expenses.push({ name: name, amount: amt, currency: currency });
+  saveExpensesList(expenses);
+  renderExpenses();
+  renderDashboard();
+}
+function deleteExpense(i) {
+  const expenses = getExpenses();
+  expenses.splice(i, 1);
+  saveExpensesList(expenses);
+  renderExpenses();
+  renderDashboard();
+}
+
+// ===== Auto Mark Paid =====
+// Automatically marks payments as Done when their date has passed
+function autoMarkPaid() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Debts
+  DATA.debts.forEach(d => {
+    if (d.type === 'lump-sum' || d.completed) return;
+    const dates = generateDates(d.startYear, d.startMonth, d.day, d.totalMonths, 1);
+    for (let i = 0; i < dates.length; i++) {
+      const status = getPaymentStatus('debts', d.id, i);
+      if (status === null && dates[i] <= today) {
+        // Date passed and not explicitly set - auto mark as done
+        setPaymentStatus('debts', d.id, i, true);
+      }
+    }
+  });
+
+  // Savings
+  DATA.savings.forEach(s => {
+    const perMonth = s.paymentsPerMonth || 1;
+    const totalEntries = s.totalMonths * perMonth;
+    let dates;
+    if (perMonth === 2) {
+      dates = generateDates(s.startYear, s.startMonth, s.day || 30, s.totalMonths, 2);
+    } else {
+      dates = generateDates(s.startYear, s.startMonth, s.day, s.totalMonths, 1);
+    }
+    for (let i = 0; i < dates.length; i++) {
+      const status = getPaymentStatus('savings', s.id, i);
+      if (status === null && dates[i] <= today) {
+        setPaymentStatus('savings', s.id, i, true);
+      }
+    }
+  });
+}
+
+// Init
+document.getElementById('hdr-salary').textContent = fmtAED(DATA.salary);
+autoMarkPaid();
+renderDashboard();
+renderPersons();
+renderSavings();
+renderDebt();
+renderExpenses();
+</script>
+</body>
+</html>
