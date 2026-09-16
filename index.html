@@ -1009,6 +1009,12 @@ Chart nookki screenshot eduthu upload cheyyu. Book-de niyamangal adisthana aayi 
 </div>
 <div id="scoreDetails" style="margin-top:10px;font-size:0.8em;color:var(--text2);"></div>
 <div id="scoreWarning" style="margin-top:8px;"></div>
+<div id="setupChartCard" style="display:none;margin-top:15px;">
+<div class="section-title">📊 Trade Setup Chart <span class="ml">· ആപ്പ് വരച്ചത്</span></div>
+<canvas id="tradeSetupCanvas" width="760" height="480" style="width:100%;border-radius:10px;border:1px solid var(--border);background:#131a24;"></canvas>
+<div style="font-size:0.68em;color:var(--muted);margin-top:4px;">Schematic view · ഇത് ഉദാഹരണ pattern ആണ് — levels നിന്റെ വിലകൾ അനുസരിച്ചാണ്</div>
+<button onclick="downloadTradeSetupChart()" style="width:100%;margin-top:8px;padding:11px;background:#26a69a;border:none;border-radius:10px;color:#fff;font-weight:700;font-size:0.85em;cursor:pointer;">⬇ Save Chart Image</button>
+</div>
 </div>
 </div>
 
@@ -8065,6 +8071,167 @@ function setIPOType(t, btn) {
   btn.classList.add('active');
 }
 
+// === AUTO TRADE SETUP CHART ===
+function fmtP(v){ return '\u20B9' + (Math.round(v * 100) / 100).toLocaleString('en-IN'); }
+function rr(ctx, x, y, w, h, r){
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+function genPattern(strategy, entry, sl){
+  var risk = entry - sl, wps;
+  if(strategy === 'pullback'){
+    wps = [sl + risk*0.05, sl + risk*0.75, entry - risk*0.35, entry - risk*0.8, entry - risk*0.5, entry + risk*0.04];
+  } else if(strategy === 'ipo'){
+    wps = [sl + risk*0.1, entry - risk*0.55, entry - risk*0.38, entry - risk*0.22, entry - risk*0.1, entry + risk*0.05];
+  } else {
+    wps = [sl - risk*0.05, sl + risk*0.55, entry - risk*0.5, entry - risk*0.14, entry - risk*0.4, entry - risk*0.08, entry - risk*0.25, entry - risk*0.04, entry + risk*0.06];
+  }
+  var candles = [];
+  for(var w = 0; w < wps.length - 1; w++){
+    var a = wps[w], b = wps[w+1], steps = 5;
+    for(var s = 0; s < steps; s++){
+      var p = a + (b - a) * (s / steps);
+      var noise = (Math.random() - 0.5) * risk * 0.1;
+      var c = p + noise;
+      var o = candles.length ? candles[candles.length-1].c : p - noise;
+      candles.push({o:o, h:Math.max(o,c) + Math.random()*risk*0.07, l:Math.min(o,c) - Math.random()*risk*0.07, c:c});
+    }
+  }
+  candles.push({o: entry - risk*0.04, h: entry + risk*0.14, l: entry - risk*0.06, c: entry + risk*0.1});
+  return candles;
+}
+function renderTradeSetupChart(){
+  var la = window.lastAnalysis; if(!la) return;
+  var card = document.getElementById('setupChartCard');
+  card.style.display = 'block';
+  var cv = document.getElementById('tradeSetupCanvas');
+  var ctx = cv.getContext('2d');
+  var W = cv.width, H = cv.height;
+  var entry = la.entry, sl = la.sl, t1 = la.t1, t2 = la.t2, t3 = la.t3;
+  var risk = entry - sl;
+
+  ctx.fillStyle = '#131a24'; ctx.fillRect(0, 0, W, H);
+
+  var mL = 14, mR = 130, mT = 86, mB = 46;
+  var cw = W - mL - mR, ch = H - mT - mB;
+
+  var pMin = sl - risk * 1.25, pMax = t3 + risk * 0.5;
+  function py(p){ return mT + (pMax - p) / (pMax - pMin) * ch; }
+
+  // grid
+  ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.lineWidth = 1;
+  for(var g = 0; g <= 5; g++){
+    var gy = mT + ch * g / 5;
+    ctx.beginPath(); ctx.moveTo(mL, gy); ctx.lineTo(mL + cw, gy); ctx.stroke();
+  }
+  for(var gx = 0; gx <= 8; gx++){
+    var gxx = mL + cw * gx / 8;
+    ctx.beginPath(); ctx.moveTo(gxx, mT); ctx.lineTo(gxx, mT + ch); ctx.stroke();
+  }
+
+  // zones
+  ctx.fillStyle = 'rgba(239,83,80,0.13)';
+  ctx.fillRect(mL, py(entry), cw, py(sl) - py(entry));
+  ctx.fillStyle = 'rgba(38,166,154,0.09)';
+  ctx.fillRect(mL, py(t3), cw, py(entry) - py(t3));
+
+  // candles
+  var strategy = (typeof activeStrategy !== 'undefined') ? activeStrategy : 'vcp';
+  var candles = genPattern(strategy, entry, sl);
+  var n = candles.length;
+  var cwid = cw / (n + 2);
+  var x0 = mL + cwid;
+  for(var i = 0; i < n; i++){
+    var p = candles[i], x = x0 + i * cwid, up = p.c >= p.o;
+    var col = up ? '#26a69a' : '#ef5350';
+    ctx.strokeStyle = col; ctx.lineWidth = Math.max(1.5, cwid * 0.16);
+    ctx.beginPath(); ctx.moveTo(x, py(p.h)); ctx.lineTo(x, py(p.l)); ctx.stroke();
+    ctx.fillStyle = up ? 'rgba(38,166,154,0.9)' : 'rgba(239,83,80,0.9)';
+    var by1 = py(Math.max(p.o, p.c)), by2 = py(Math.min(p.o, p.c));
+    ctx.fillRect(x - cwid * 0.3, by1, cwid * 0.6, Math.max(2.5, by2 - by1));
+  }
+
+  // level lines + right labels
+  function level(price, color, dash, label, sub){
+    var y = py(price);
+    ctx.save();
+    ctx.strokeStyle = color; ctx.lineWidth = 2.5;
+    if(dash) ctx.setLineDash([9, 6]);
+    ctx.beginPath(); ctx.moveTo(mL, y); ctx.lineTo(mL + cw, y); ctx.stroke();
+    ctx.restore();
+    ctx.fillStyle = 'rgba(5,10,18,0.88)';
+    rr(ctx, mL + cw + 6, y - 15, mR - 12, 30, 6); ctx.fill();
+    ctx.strokeStyle = color; ctx.lineWidth = 1;
+    rr(ctx, mL + cw + 6, y - 15, mR - 12, 30, 6); ctx.stroke();
+    ctx.fillStyle = color; ctx.font = 'bold 13px Arial'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText(label, mL + cw + 12, y - 3);
+    ctx.fillStyle = '#cfd8dc'; ctx.font = '11px Arial';
+    ctx.fillText(sub, mL + cw + 12, y + 10);
+    ctx.textBaseline = 'alphabetic';
+  }
+  level(t3, '#26a69a', true, 'TARGET 3', fmtP(t3) + ' · 1:6');
+  level(t2, '#26a69a', true, 'TARGET 2', fmtP(t2) + ' · 1:3');
+  level(t1, '#26a69a', true, 'TARGET 1', fmtP(t1) + ' · 1:2');
+  level(entry, '#2196f3', false, 'ENTRY', fmtP(entry) + ' · BUY');
+  level(sl, '#ef5350', false, 'STOP LOSS', fmtP(sl) + ' · EXIT');
+
+  // BUY arrow at breakout candle
+  var bx = x0 + (n - 1) * cwid;
+  ctx.save();
+  ctx.fillStyle = '#FFD700';
+  ctx.beginPath();
+  ctx.moveTo(bx, py(entry) - 8);
+  ctx.lineTo(bx - 9, py(entry) - 24);
+  ctx.lineTo(bx + 9, py(entry) - 24);
+  ctx.closePath(); ctx.fill();
+  ctx.font = 'bold 12px Arial'; ctx.textAlign = 'center';
+  ctx.fillText('BUY', bx, py(entry) - 30);
+  ctx.restore();
+
+  // badge top-left
+  ctx.save();
+  var recColor = la.rec === 'TRADE' ? '#26a69a' : (la.rec === 'WAIT' ? '#ff9800' : '#ef5350');
+  var bw2 = 300, bh2 = 64;
+  ctx.fillStyle = 'rgba(5,10,18,0.85)';
+  rr(ctx, mL, 12, bw2, bh2, 10); ctx.fill();
+  ctx.strokeStyle = recColor; ctx.lineWidth = 2;
+  rr(ctx, mL, 12, bw2, bh2, 10); ctx.stroke();
+  ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#FFD700'; ctx.font = 'bold 15px Arial';
+  ctx.fillText('VIPANANAM · ' + la.stock.toUpperCase(), mL + 14, 30);
+  ctx.fillStyle = '#fff'; ctx.font = '12px Arial';
+  ctx.fillText(la.strat + ' Strategy · Score: ' + la.score + '/100 · Risk ' + fmtP(risk) + '/share', mL + 14, 48);
+  ctx.fillStyle = recColor; ctx.font = 'bold 13px Arial';
+  ctx.fillText('\u25CF ' + la.rec, mL + 14, 64);
+  ctx.restore();
+
+  // watermark
+  ctx.save();
+  ctx.fillStyle = 'rgba(255,255,255,0.18)'; ctx.font = 'bold 13px Arial'; ctx.textAlign = 'right';
+  ctx.fillText('VipaNanam Swing Trading', W - 16, H - 14);
+  ctx.restore();
+
+  // title
+  ctx.save();
+  ctx.fillStyle = '#eceff1'; ctx.font = 'bold 16px Arial'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+  ctx.fillText('\uD83D\uDCCC Trade Setup Plan', mL + 320, 44);
+  ctx.restore();
+}
+function downloadTradeSetupChart(){
+  var cv = document.getElementById('tradeSetupCanvas');
+  var la = window.lastAnalysis;
+  if(!la){ alert('ആദ്യം Analyze ചെയ്യൂ!'); return; }
+  var a = document.createElement('a');
+  a.download = (la.stock || 'Stock').replace(/[^A-Za-z0-9]/g, '') + '_Trade_Setup.png';
+  a.href = cv.toDataURL('image/png');
+  a.click();
+}
+
 function showScreenshot(event) {
   const file = event.target.files[0];
   if (file) {
@@ -8155,6 +8322,7 @@ function analyzeTrade() {
   else if (activeStrategy === 'ipo') stratName = 'IPO Type ' + ipoType;
   else stratName = 'Multi-Year Breakout';
   
+  window.lastAnalysis = {score: pctScore, rec: rec, strat: stratName, stock: (document.getElementById('anStock').value || 'Stock'), entry: entry, sl: sl, t1: t1, t2: t2, t3: t3};
   // Display
   document.getElementById('scoreHeader').innerHTML = 
     '<div style="font-size:1.5em;font-weight:800;color:' + recColor + ';">' + recIcon + ' ' + rec + '</div>' +
@@ -8195,6 +8363,7 @@ function analyzeTrade() {
   }
   
   document.getElementById('analyzeResult').style.display = 'block';
+  renderTradeSetupChart();
 }
 
 
