@@ -1330,6 +1330,46 @@ function autoMarkPaid() {
   });
 }
 
+// === Data Backup card (Sarvam AI partner, 18 Sep 2026) ===
+var vpOrigRenderDashboard = renderDashboard;
+renderDashboard = function() {
+  vpOrigRenderDashboard();
+  var d = document.getElementById('dashboard');
+  var bc = document.createElement('div');
+  bc.className = 'card';
+  bc.innerHTML = '<div class="card-header"><div class="card-title">💾 Data Backup</div></div>' +
+    '<div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;">Backup എടുക്കാം, device/file മാറ്റുമ്പോൾ data കൊണ്ടുപോകാം. (v2 · 18 Sep)</div>' +
+    '<div style="display:flex;gap:8px;">' +
+    '<button onclick="vpExportData()" style="flex:1;padding:10px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;">⬇ Export Data</button>' +
+    '<button onclick="document.getElementById(\'vpImportFile\').click()" style="flex:1;padding:10px;background:var(--success);color:#fff;border:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;">⬆ Import Data</button>' +
+    '<input type="file" id="vpImportFile" accept=".json,application/json" style="display:none" onchange="vpImportData(event)">' +
+    '</div>';
+  d.appendChild(bc);
+};
+function vpExportData() {
+  var state = localStorage.getItem('trackerState') || '{}';
+  var blob = new Blob([state], {type: 'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'vipananam-money-backup-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+}
+function vpImportData(ev) {
+  var f = ev.target.files[0];
+  if (!f) return;
+  var r = new FileReader();
+  r.onload = function() {
+    try {
+      var data = JSON.parse(r.result);
+      if (typeof data !== 'object' || data === null || Array.isArray(data)) throw new Error('bad');
+      localStorage.setItem('trackerState', JSON.stringify(data));
+      alert('✅ Data imported! Reloading...');
+      location.reload();
+    } catch (e) { alert('❌ Invalid backup file!'); }
+  };
+  r.readAsText(f);
+}
+
 // Init
 document.getElementById('hdr-salary').textContent = fmtAED(DATA.salary);
 autoMarkPaid();
