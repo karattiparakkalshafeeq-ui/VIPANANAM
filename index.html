@@ -735,6 +735,18 @@ body.dark .chip.active{background:var(--accent-orange) !important;color:#fff !im
 <div class="drow"><div class="dlabel">SIP Investor</div><div class="dvalue positive">Keep investing ✓</div></div>
 <div style="font-size:0.7em;color:var(--text2);margin-top:8px;line-height:1.55;">Entry only when ALL improve: Nifty back above 200-WMA + US bond yields fall + Crude falls + FIIs buy again.<span class="ml">നിഫ്റ്റി 200-WMA-ക്ക് മുകളിൽ തിരിച്ചെത്തുക + US bond yield താഴുക + Crude താഴുക + FII വാങ്ങൽ തുടങ്ങുക — എല്ലാം ശരിയായാൽ മാത്രം entry.</span></div>
 </div>
+<div class="card" id="sirVideoCard" style="display:none;">
+<div class="card-title">🔔 Sir's Latest Video <span class="ml">· പുതിയ വീഡിയോ</span></div>
+<a id="sirVideoLink" href="#" target="_blank" rel="noopener" style="text-decoration:none;display:block;">
+<div style="display:flex;gap:10px;align-items:center;">
+<div style="font-size:1.5em;">▶️</div>
+<div style="flex:1;">
+<div id="sirVideoTitle" style="font-size:0.8em;color:var(--text);font-weight:700;line-height:1.35;"></div>
+<div id="sirVideoDate" style="font-size:0.6em;color:var(--muted);margin-top:3px;"></div>
+</div>
+</div>
+</a>
+</div>
 <div class="card"><div class="card-title">FII/DII <span class="ml">· ഇൻവെസ്റ്റർ ഡാറ്റ</span></div>
 <table><tr><th>Date</th><th>FII (₹Cr)</th><th>DII (₹Cr)</th><th>Total</th></tr>
 <tr><td>Sep 29</td><td style="color:var(--red);">-9,980</td><td style="color:var(--green);">+6,953</td><td style="color:var(--red);">-3,027</td></tr>
@@ -8550,6 +8562,29 @@ function copyTicker(ticker){
   }catch(e){}
   alert(ticker + ' copied! \uD83D\uDCCB');
 }
+
+function loadSirVideo(){
+  try{
+    fetch("market-latest.json?t="+Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){
+        if(!d || !d.videoId) return;
+        var card = document.getElementById("sirVideoCard");
+        var link = document.getElementById("sirVideoLink");
+        var ttl  = document.getElementById("sirVideoTitle");
+        var dt   = document.getElementById("sirVideoDate");
+        if(!card || !link || !ttl || !dt) return;
+        ttl.textContent = d.title || "Latest video";
+        link.href = d.url || ("https://youtu.be/" + d.videoId);
+        var s = "Every Saturday";
+        if(d.published){ try{ s = new Date(d.published).toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}) + " \u00b7 Every Saturday"; }catch(e){} }
+        dt.textContent = "Latest: " + s;
+        card.style.display = "";
+      })
+      .catch(function(){});
+  }catch(e){}
+}
+if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", loadSirVideo); else loadSirVideo();
 </script>
 </body>
 </html>
