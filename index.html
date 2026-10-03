@@ -722,9 +722,10 @@ body.dark .chip.active{background:var(--accent-orange) !important;color:#fff !im
 </div>
 </a>
 <div class="index-grid" id="indexGrid"></div>
+<div id="liveStrip" style="display:none;text-align:center;font-size:0.62em;color:var(--green);margin:-4px 0 10px;letter-spacing:0.5px;"><span class="live-dot" style="display:inline-block;margin-right:5px;"></span><span id="liveText">LIVE</span></div>
 <div class="card"><div class="card-title">Market Status <span class="ml">മാർക്കറ്റ് അവസ്ഥ</span></div>
 <div class="alert alert-red"><div class="alert-title">🔴 HIGH RISK · NO-TRADE ZONE</div><div class="alert-text">Nifty 8 weeks down · first 200-WMA breach since 2020. Swing trader: NO opportunity — stay 100% cash. Use 0.5% risk only.<span class="ml">നിഫ്റ്റി 8 ആഴ്ച താഴ്ച · 2020-ന് ശേഷം ആദ്യമായി 200-WMA തകർന്നു. സ്വിംഗ് ട്രേഡർ: അവസരമില്ല — 100% ക്യാഷിൽ ഇരിക്കൂ.</span></div></div>
-<div class="drow"><div class="dlabel">Nifty CMP</div><div class="dvalue negative">22,420</div></div>
+<div class="drow"><div class="dlabel">Nifty CMP</div><div class="dvalue negative" id="niftyCmp">22,420</div></div>
 <div class="drow"><div class="dlabel">Support</div><div class="dvalue negative">22,200–22,000</div></div>
 <div class="drow"><div class="dlabel">Resistance</div><div class="dvalue positive">22,800–23,000</div></div>
 <div class="drow"><div class="dlabel">200-WMA (Pivot)</div><div class="dvalue" style="color:var(--accent);">22,600</div></div>
@@ -752,7 +753,7 @@ body.dark .chip.active{background:var(--accent-orange) !important;color:#fff !im
 <tr><td>Sep 29</td><td style="color:var(--red);">-9,980</td><td style="color:var(--green);">+6,953</td><td style="color:var(--red);">-3,027</td></tr>
 <tr><td>Sep 30</td><td style="color:var(--red);">-10,148</td><td style="color:var(--green);">+11,272</td><td style="color:var(--green);">+1,124</td></tr>
 <tr><td>Oct 1</td><td style="color:var(--red);">-9,484</td><td style="color:var(--green);">+10,042</td><td style="color:var(--green);">+558</td></tr>
-</table><div style="font-size:0.62em;color:var(--muted);margin-top:6px;">FII selling 6 sessions: ₹43,687 Cr · DII buying 32 sessions</div></div>
+</table><div id="fiiLiveNote" style="font-size:0.62em;color:var(--muted);margin-top:6px;">FII selling 6 sessions: ₹43,687 Cr · DII buying 32 sessions</div></div>
 <div class="card"><div class="card-title">RBI & Rates <span class="ml">· റിസർവ് ബാങ്ക്</span></div>
 <div class="drow"><div class="dlabel">Repo Rate</div><div class="dvalue">5.25%</div></div>
 <div class="drow"><div class="dlabel">CPI Inflation</div><div class="dvalue" style="color:var(--accent);">4.45% (19-mo high)</div></div>
@@ -6598,13 +6599,29 @@ function updateDate() {
 updateDate();
 
 // Render index cards
+var LIVE = null;
+function _fmtNum(n, d){ d = (d===undefined?2:d); if(n===null||n===undefined||isNaN(n)) return '--'; return Number(n).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+function _pctCls(p){ if(p===null||p===undefined||isNaN(p)) return ''; return p>=0 ? 'positive' : 'negative'; }
+function _pctTxt(p, fb){ if(p===null||p===undefined||isNaN(p)) return (fb===undefined?'':fb); return (p>=0?'▲ +':'▼ ') + Math.abs(p).toFixed(2) + '%'; }
 function renderIndex() {
   const m = MARKET;
-  document.getElementById('indexGrid').innerHTML = 
-    '<div class="index-card"><div class="index-name">Nifty 50</div><div class="index-value" id="niftyVal">' + m.nifty.value + '</div><div class="index-change negative">▼ ' + m.nifty.change + '</div></div>' +
-    '<div class="index-card"><div class="index-name">Sensex</div><div class="index-value">' + m.sensex.value + '</div><div class="index-change negative">▼ ' + m.sensex.change + '</div></div>' +
-    '<div class="index-card"><div class="index-name">Brent Crude</div><div class="index-value" style="color:var(--red);">$' + m.brent.value + '</div><div class="index-change negative">▲ +11%</div></div>' +
-    '<div class="index-card"><div class="index-name">USD/INR</div><div class="index-value">₹' + m.usdinr + '</div><div class="index-change" style="color:var(--text2);">RBI</div></div>';
+  var L = LIVE || {};
+  var nv = (L.nifty && L.nifty.price!=null) ? L.nifty.price : m.nifty.value;
+  var sv = (L.sensex && L.sensex.price!=null) ? L.sensex.price : m.sensex.value;
+  var bv = (L.brent && L.brent.price!=null) ? L.brent.price : m.brent.value;
+  var uv = (L.usdinr && L.usdinr.price!=null) ? L.usdinr.price : m.usdinr;
+  var vv = (L.vix && L.vix.price!=null) ? L.vix.price : null;
+  var np = (L.nifty && L.nifty.pct!=null) ? L.nifty.pct : null;
+  var sp = (L.sensex && L.sensex.pct!=null) ? L.sensex.pct : null;
+  var bp = (L.brent && L.brent.pct!=null) ? L.brent.pct : null;
+  var up = (L.usdinr && L.usdinr.pct!=null) ? L.usdinr.pct : null;
+  var vp = (L.vix && L.vix.pct!=null) ? L.vix.pct : null;
+  document.getElementById('indexGrid').innerHTML =
+    '<div class="index-card"><div class="index-name">Nifty 50</div><div class="index-value">' + _fmtNum(nv) + '</div><div class="index-change ' + _pctCls(np) + '">' + _pctTxt(np, (m.nifty.change>=0?'▲ +':'▼ ')+m.nifty.change) + '</div></div>' +
+    '<div class="index-card"><div class="index-name">Sensex</div><div class="index-value">' + _fmtNum(sv) + '</div><div class="index-change ' + _pctCls(sp) + '">' + _pctTxt(sp, (m.sensex.change>=0?'▲ +':'▼ ')+m.sensex.change) + '</div></div>' +
+    '<div class="index-card"><div class="index-name">Brent Crude</div><div class="index-value" style="color:var(--red);">$' + _fmtNum(bv) + '</div><div class="index-change ' + _pctCls(bp) + '">' + _pctTxt(bp) + '</div></div>' +
+    '<div class="index-card"><div class="index-name">USD/INR</div><div class="index-value">₹' + _fmtNum(uv) + '</div><div class="index-change ' + _pctCls(up) + '">' + _pctTxt(up, 'RBI') + '</div></div>' +
+    (vv!=null ? '<div class="index-card"><div class="index-name">India VIX</div><div class="index-value" style="color:var(--accent);">' + _fmtNum(vv) + '</div><div class="index-change ' + _pctCls(vp) + '">' + _pctTxt(vp) + '</div></div>' : '');
 }
 renderIndex();
 
@@ -8585,6 +8602,36 @@ function loadSirVideo(){
   }catch(e){}
 }
 if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", loadSirVideo); else loadSirVideo();
+
+function loadLiveMarket(){
+  try{
+    fetch('market-live.json?t='+Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){
+        if(!d) return;
+        LIVE = d;
+        renderIndex();
+        var nc = document.getElementById('niftyCmp');
+        if(nc && d.nifty && d.nifty.price!=null) nc.textContent = _fmtNum(d.nifty.price);
+        var fl = document.getElementById('fiiLiveNote');
+        if(fl && d.fii && d.dii && d.fii.net!=null){
+          fl.textContent = 'Latest (NSE): FII ' + (d.fii.net>=0?'+':'') + _fmtNum(d.fii.net,0) + ' Cr · DII ' + (d.dii.net>=0?'+':'') + _fmtNum(d.dii.net,0) + ' Cr (' + d.fii.date + ')';
+        }
+        var strip = document.getElementById('liveStrip');
+        var txt = document.getElementById('liveText');
+        if(strip && txt){
+          var t = '';
+          if(d.updated){ try{ t = new Date(d.updated).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Kolkata'}); }catch(e){} }
+          txt.textContent = 'LIVE' + (t ? ' · updated ' + t + ' IST' : '');
+          strip.style.display = 'block';
+        }
+      })
+      .catch(function(){});
+  }catch(e){}
+}
+loadLiveMarket();
+setInterval(loadLiveMarket, 300000);
+document.addEventListener('visibilitychange', function(){ if(!document.hidden) loadLiveMarket(); });
 </script>
 </body>
 </html>
