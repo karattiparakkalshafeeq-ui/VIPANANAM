@@ -1,0 +1,56 @@
+name: Update Latest Video
+
+# Runs every Saturday at 14:00 UTC (7:30 PM IST), shortly after Nikhil Sir
+# publishes his weekly video. Can also be run manually from the Actions tab.
+on:
+  schedule:
+    - cron: '0 14 * * 6'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-video:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch latest Oharipadanam video
+        run: |
+          python3 - <<'PY'
+          import urllib.request, re, json, datetime, html
+          url = "https://www.youtube.com/feeds/videos.xml?channel_id=UC-8g60Jlq7Jwbt7Du7NGy0A"
+          req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+          xml = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "ignore")
+          m = re.search(r"<entry>(.*?)</entry>", xml, re.S)
+          if not m:
+              raise SystemExit("No video entries found in feed")
+          e = m.group(1)
+          vid = re.search(r"<yt:videoId>(.*?)</yt:videoId>", e).group(1)
+          title = html.unescape(re.search(r"<title>(.*?)</title>", e).group(1))
+          pub = re.search(r"<published>(.*?)</published>", e).group(1)
+          data = {
+              "videoId": vid,
+              "title": title,
+              "url": "https://youtu.be/" + vid,
+              "published": pub,
+              "updated": datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+          }
+          with open("market-latest.json", "w", encoding="utf-8") as f:
+              json.dump(data, f, ensure_ascii=True, indent=2)
+          print("Latest video:", title)
+          PY
+
+      - name: Commit if changed
+        run: |
+          git config user.name "vipananam-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add market-latest.json
+          if git diff --staged --quiet; then
+            echo "No change to market-latest.json"
+          else
+            git commit -m "Auto: latest Oharipadanam video"
+            git push
+          fi
