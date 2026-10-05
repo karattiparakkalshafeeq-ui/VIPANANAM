@@ -676,6 +676,35 @@ body.dark .btn, body.dark .btn-primary { color:#1a1a2e !important; }
 .chip{cursor:pointer;transition:all 0.2s}
 .chip:hover{background:rgba(255,152,0,0.15) !important}
 body.dark .chip.active{background:var(--accent-orange) !important;color:#fff !important}
+
+/* === NEWS TICKER (Task 3) === */
+body{padding-bottom:100px}
+@media(min-width:768px){body{padding-bottom:112px}}
+@media(min-width:1024px){body{padding-bottom:122px}}
+.news-ticker{position:fixed;left:0;right:0;bottom:60px;z-index:998;height:28px;display:flex;align-items:center;overflow:hidden;background:linear-gradient(90deg,#1a1a2e,#263238,#1a1a2e);border-top:1px solid rgba(255,152,0,0.5);border-bottom:1px solid rgba(255,152,0,0.5);box-shadow:0 -2px 10px rgba(0,0,0,0.35)}
+.news-ticker-track{display:inline-flex;white-space:nowrap;padding-left:100%;animation:tickerScroll 60s linear infinite}
+.news-ticker-track span{font-size:0.7em;color:#e0e0e0;padding:0 24px}
+.news-ticker-track span::before{content:'\25CF';color:#ff9800;margin-right:8px;font-size:0.7em}
+.news-ticker-track b{color:#FFD700}
+@keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+@media(min-width:768px){.news-ticker{bottom:66px}}
+@media(min-width:1024px){.news-ticker{bottom:76px}}
+body.dark .news-ticker{background:linear-gradient(90deg,#0d1117,#161b22,#0d1117)}
+
+/* === SECTOR BROWSE STOCKS + FUNDAMENTALS (Task 6 / 7) === */
+.sector-browse-card{cursor:pointer;transition:all .2s}
+.sector-browse-card.open{border-color:var(--accent-orange)}
+.sector-stock-list{margin-top:10px;border-top:1px solid rgba(255,152,0,0.25);padding-top:8px}
+.sb-stock{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.5);margin:4px 0;cursor:pointer}
+.sb-stock:hover{background:rgba(255,255,255,0.75)}
+.sb-tk{font-weight:700;font-size:0.82em}
+.sb-nm{font-size:0.62em;color:var(--text-muted)}
+.sb-px{font-size:0.78em;font-weight:700;text-align:right}
+.sb-ch{font-size:0.68em;text-align:right}
+.fund-row{display:flex;justify-content:space-between;padding:6px 10px;background:var(--card2);border-radius:8px;margin-bottom:4px;font-size:0.75em}
+.fund-row span{color:var(--text2)}
+.fund-row b{color:var(--accent)}
+body.dark .sb-stock{background:rgba(22,27,34,0.5)}
 </style>
 
 
@@ -684,12 +713,6 @@ body.dark .chip.active{background:var(--accent-orange) !important;color:#fff !im
 <div id="splash">
 <div class="splash-logo">V</div>
 <div class="splash-title"><span class="accent">V</span>ipaNanam</div>
-<div class="splash-ml">വിപണനം · Swing Trading</div>
-<div class="splash-tagline">MARKETS · WISDOM · GROWTH</div>
-<div class="splash-name">MuhammedShafeeq KP</div>
-<div class="splash-credit">Built with <b>Sarvam AI</b> · AI Partner</div>
-<div class="splash-teacher">Teacher: Nikhil Mathew · Oharipadanam</div>
-<div class="splash-bar"><div class="splash-bar-fill"></div></div>
 </div>
 
 
@@ -708,7 +731,7 @@ body.dark .chip.active{background:var(--accent-orange) !important;color:#fff !im
 <div style="font-size:0.65em;color:var(--text2);margin-top:4px;">Markets · Wisdom · Growth</div>
 <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,215,0,0.2);">
 <span style="font-size:0.6em;color:var(--muted);">Built with</span> <span style="font-size:0.7em;color:var(--accent);font-weight:700;">Sarvam AI</span> <span style="font-size:0.55em;color:var(--muted);">· AI Partner</span>
-<div style="font-size:0.55em;color:var(--muted);margin-top:3px;">App Version: <b style="color:var(--gold);">2026.10.04</b> · Auto-Update ON</div>
+<div style="font-size:0.55em;color:var(--muted);margin-top:3px;">App Version: <b style="color:var(--gold);">2026.10.06</b> · Auto-Update ON</div>
 </div>
 </div>
 <a href="debt-tracker.html" style="text-decoration:none;display:block;">
@@ -760,14 +783,6 @@ body.dark .chip.active{background:var(--accent-orange) !important;color:#fff !im
 <div class="drow"><div class="dlabel">RBI MPC</div><div class="dvalue" style="color:var(--accent);">Oct 5-7 · hike seen</div></div>
 <div class="drow"><div class="dlabel">US 10-yr Yield</div><div class="dvalue negative">5.2%+ (20-yr high)</div></div>
 <div class="drow"><div class="dlabel">Brent Crude</div><div class="dvalue negative">$95.60</div></div>
-</div>
-<div class="card"><div class="card-title">Daily Checklist <span class="ml">· ദൈനംദിനം</span></div>
-<div class="checklist-item"><div class="checklist-num">1</div><div class="checklist-text"><strong>8:30 AM — Global Cues</strong>GIFT Nifty, Brent, US/Asian markets</div></div>
-<div class="checklist-item"><div class="checklist-num">2</div><div class="checklist-text"><strong>9:00 AM — Nifty vs 200-WMA</strong>Above 22,600? Only then think longs. Below = stay cash.</div></div>
-<div class="checklist-item"><div class="checklist-num">3</div><div class="checklist-text"><strong>9:15 AM — Check Watchlist</strong>Open watchlist tab, check for breakouts</div></div>
-<div class="checklist-item"><div class="checklist-num">4</div><div class="checklist-text"><strong>9:30 AM — Market Open</strong>Breakout + volume = entry. Use Calculator.</div></div>
-<div class="checklist-item"><div class="checklist-num">5</div><div class="checklist-text"><strong>Monitor Crude</strong>If Brent > $100 → exit longs</div></div>
-<div class="checklist-item"><div class="checklist-num">6</div><div class="checklist-text"><strong>3:30 PM — Update Journal</strong>Log trades + emotions</div></div>
 </div>
 </div>
 
@@ -867,67 +882,6 @@ body.dark .chip.active{background:var(--accent-orange) !important;color:#fff !im
 <button class="btn btn-primary" onclick="openTradeModal()" style="margin-bottom:10px;">+ Add Trade</button>
 <button class="btn" style="background:var(--card2);color:var(--text);border:1px solid var(--border);font-size:0.8em;margin-bottom:10px;" onclick="exportJournal()">Export CSV</button>
 <div id="journalList"></div></div>
-<div class="card" id="entrySetupCard"><div class="card-title">🎯 Entry Setup — Pre-Trade Checklist <span class="ml">· എൻട്രി സെറ്റപ്പ്</span></div>
-<div style="font-size:0.75em;color:var(--text2);margin-bottom:12px;">Trade എടുക്കും മുമ്പ് ഈ checklist fill ചെയ്യൂ. Nikhil Sir-ന്റെ rules അനുസരിച്ചാണ്. 7/8 + Confident = മാത്രം GO!</div>
-
-<div class="es-item" onclick="toggleES(0,this)"><span class="es-check">✓</span>Nifty Stage 2 uptrend-ൽ ആണോ? (50 EMA-ക്ക് മുകളിൽ)</div>
-<div class="es-item" onclick="toggleES(1,this)"><span class="es-check">✓</span>Stock 20 EMA, 50 EMA എന്നിവയ്ക്ക് മുകളിലാണോ?</div>
-<div class="es-item" onclick="toggleES(2,this)"><span class="es-check">✓</span>20 EMA > 50 EMA ആണോ? (uptrend structure)</div>
-<div class="es-item" onclick="toggleES(3,this)"><span class="es-check">✓</span>RSI 60-ന് മുകളിലേക്ക് break ചെയ്യുന്നുണ്ടോ?</div>
-<div class="es-item" onclick="toggleES(4,this)"><span class="es-check">✓</span>Volume confirmation ഉണ്ടോ? (breakout candle-ൽ volume spike)</div>
-<div class="es-item" onclick="toggleES(5,this)"><span class="es-check">✓</span>VCP contraction കാണുന്നുണ്ടോ? (volatility കുറഞ്ഞു tight ആകുന്നു)</div>
-<div class="es-item" onclick="toggleES(6,this)"><span class="es-check">✓</span>Sector favorable ആണോ? (Metals/Chemicals/Defense/Pharma/Auto ✓)</div>
-<div class="es-item" onclick="toggleES(7,this)"><span class="es-check">✓</span>Market sideways/choppy അല്ലല്ലോ? (ആണെങ്കിൽ trade വേണ്ട — liquid fund!)</div>
-
-<div class="es-score-bar"><div class="es-score-fill" id="esScoreFill"></div></div>
-<div style="text-align:center;font-size:0.8em;font-weight:700;" id="esScoreText">Checklist: 0/8</div>
-
-<div class="calc-label" style="margin-top:18px;">💰 Trade Plan</div>
-<input type="text" id="esTicker" placeholder="Stock Ticker (ഉദാ: MANORAMA)" oninput="document.getElementById('esTicker').value=this.value.toUpperCase()" style="width:100%;padding:11px;margin-bottom:8px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.85em;box-sizing:border-box">
-<div style="display:flex;gap:8px;margin-bottom:8px;">
-<input type="number" id="esCapital" placeholder="Capital ₹" value="50000" oninput="calcESPlan()" style="flex:1;padding:11px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.85em">
-<input type="number" id="esRisk" placeholder="Risk %" value="0.5" step="0.1" oninput="calcESPlan()" style="flex:1;padding:11px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.85em">
-</div>
-<div style="display:flex;gap:8px;margin-bottom:8px;">
-<input type="number" id="esEntry" placeholder="Entry Price ₹" oninput="calcESPlan()" style="flex:1;padding:11px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.85em">
-<input type="number" id="esSL" placeholder="Stop Loss ₹" oninput="calcESPlan()" style="flex:1;padding:11px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.85em">
-</div>
-<div id="esPlanOut"></div>
-
-<div class="calc-label" style="margin-top:18px;">🧠 Psychology Check</div>
-<div style="font-size:0.7em;color:var(--text2);margin-bottom:8px;">ഇപ്പോൾ നിനക്ക് എങ്ങനെ feel ആകുന്നു? (Journal stats അനുസരിച്ച്!)</div>
-<div style="display:flex;gap:8px;">
-<div class="mood-btn" id="moodConf" onclick="setESMood('Confident')">💪<br>Confident</div>
-<div class="mood-btn" id="moodNeu" onclick="setESMood('Neutral')">😐<br>Neutral</div>
-<div class="mood-btn" id="moodFear" onclick="setESMood('Fearful')">😨<br>Fearful</div>
-</div>
-<div id="esMoodMsg" style="font-size:0.72em;margin-top:8px;text-align:center;color:var(--text2);">Mood select ചെയ്യൂ</div>
-
-<div class="es-verdict" id="esVerdict">📋 Checklist, Trade Plan, Mood — എല്ലാം fill ചെയ്യൂ</div>
-<button class="btn btn-primary" style="width:100%;margin-top:12px;display:none;" id="esSaveBtn" onclick="saveESToJournal()">✓ GO! — Save to Journal</button>
-</div>
-
-<div class="card"><div class="card-title">Psychology <span class="ml">· സൈക്കോളജി</span></div>
-<div class="alert alert-green"><div class="alert-title">✅ Confident = 100% Win</div><div class="alert-text">Trust your analysis!</div></div>
-<div class="alert alert-red"><div class="alert-title">❌ Fearful = 0% Win</div><div class="alert-text">Not confident? DON'T trade.</div></div>
-
-<div id="journalAnalytics" style="margin-top:15px;">
-<div class="section-title">📊 Performance Analytics</div>
-<div class="metrics-grid" id="metricsGrid"></div>
-<div class="section-title" style="margin-top:15px;">🔥 P&L Heatmap — Calendar View</div>
-<div class="summary-pills">
-<div class="summary-pill green">Profit Day</div>
-<div class="summary-pill red">Loss Day</div>
-<div class="summary-pill yellow">Break-even</div>
-</div>
-<div id="pnlHeatmap"></div>
-<div class="section-title" style="margin-top:15px;">📈 Equity Curve — Account Growth</div>
-<div class="equity-wrap">
-<canvas id="equityCanvas" width="500" height="200"></canvas>
-</div>
-</div>
-
-</div>
 </div>
 
 
@@ -1154,88 +1108,6 @@ Chart nookki screenshot eduthu upload cheyyu. Book-de niyamangal adisthana aayi 
 <div class="drow"><div class="dlabel">1 Month</div><div class="dvalue negative">▲ +11%</div></div>
 <div class="alert alert-red" style="margin-top:8px;"><div class="alert-title">Worst Hit</div><div class="alert-text">Aviation, Paints, FMCG, OMCs. <strong>Benefit:</strong> ONGC, Oil India, Reliance.</div></div>
 </div>
-<div class="card"><div class="card-title">📊 Market Breadth Analysis <span class="ml">· മാർക്കറ്റ് ബ്രെഡ്ത്ത്</span></div>
-
-<div style="font-size:0.82em;color:var(--text2);margin-bottom:10px;">
-Market breadth = എത്ര സ്റ്റോക്കുകൾ മാർക്കറ്റ് നീക്കത്തിൽ പങ്കെടുക്കുന്നു എന്ന് അളക്കുന്നു. Nifty ഉയർന്നാൽ മാത്രം പോരാ — കൂടുതൽ സ്റ്റോക്കുകൾ ഉയർന്നാൽ മാത്രമേ real move ആകൂ.
-<span style="display:block;margin-top:4px;color:var(--muted);font-style:italic;">Book Chapter: Market Breadth മാർക്കറ്റ് ബ്രെഡ്ത്ത്</span>
-</div>
-
-<div style="font-size:0.82em;font-weight:700;color:var(--accent);margin:10px 0 6px 0;">BREADTH INDICATOR: Advance/Decline Ratio</div>
-<div style="font-size:0.8em;color:var(--text2);margin-bottom:10px;">
-മാർക്കറ്റിൽ എത്ര സ്റ്റോക്കുകൾ ഉയർന്നു (advances), എത്ര ഇടിഞ്ഞു (declines) എന്ന് പരിശോധിക്കുക.<br>
-<strong style="color:var(--green);">2:1 അല്ലെങ്കിൽ കൂടുതൽ advances = ആരോഗ്യകരമായ മാർക്കറ്റ്</strong>
-</div>
-
-<div style="font-size:0.82em;font-weight:700;color:var(--accent);margin:10px 0 6px 0;">MARKET BREADTH — 4 TYPES</div>
-
-<div style="background:rgba(38,166,154,0.08);border-left:4px solid var(--green);border-radius:8px;padding:10px;margin:6px 0;">
-<div style="font-weight:700;font-size:0.88em;color:var(--green);">1. BULLISH (Good Breadth) ✅</div>
-<div style="font-size:0.8em;color:var(--text2);margin-top:4px;">
-Market UP + കൂടുതൽ സ്റ്റോക്കുകൾ UP = Real move<br>
-<strong>Trade ചെയ്യാം!</strong> Breakout stocks തിരയാം.
-</div>
-</div>
-
-<div style="background:rgba(255,152,0,0.08);border-left:4px solid var(--accent);border-radius:8px;padding:10px;margin:6px 0;">
-<div style="font-weight:700;font-size:0.88em;color:var(--accent);">2. DIVERGENCE (Caution) ⚠️</div>
-<div style="font-size:0.8em;color:var(--text2);margin-top:4px;">
-Market UP but ചില സ്റ്റോക്കുകൾ മാത്രം UP = Large caps മാത്രം നീങ്ങുന്നു<br>
-Real breadth ഇല്ല. <strong>ശ്രദ്ധിക്കുക — പുതിയ entry വേണ്ട.</strong>
-</div>
-</div>
-
-<div style="background:rgba(239,83,80,0.08);border-left:4px solid var(--red);border-radius:8px;padding:10px;margin:6px 0;">
-<div style="font-weight:700;font-size:0.88em;color:var(--red);">3. BEARISH (Bad Breadth) ❌</div>
-<div style="font-size:0.8em;color:var(--text2);margin-top:4px;">
-Market DOWN + കൂടുതൽ സ്റ്റോക്കുകൾ DOWN = ദുർബലമായ മാർക്കറ്റ്<br>
-<strong>Trade ചെയ്യരുത്! നിലവിലുള്ള trades-ൽ SL tighten ചെയ്യുക.</strong>
-</div>
-</div>
-
-<div style="background:rgba(106,106,138,0.08);border-left:4px solid var(--muted);border-radius:8px;padding:10px;margin:6px 0;">
-<div style="font-weight:700;font-size:0.88em;color:var(--text2);">4. SIDEWAYS (No Direction) ⏸️</div>
-<div style="font-size:0.8em;color:var(--text2);margin-top:4px;">
-Market FLAT, സ്റ്റോക്കുകൾ പങ്കെടുക്കുന്നില്ല<br>
-<strong>കാത്തിരിക്കുക. ഒന്നും ചെയ്യാതിരിക്കുക.</strong>
-</div>
-</div>
-
-<div style="background:rgba(239,83,80,0.1);border:1px solid var(--red);border-radius:8px;padding:10px;margin:10px 0;">
-<div style="font-weight:700;font-size:0.88em;color:var(--red);">⚠️ WARNING (Book)</div>
-<div style="font-size:0.8em;color:var(--text2);margin-top:4px;">
-"Never buy breakouts when market breadth is poor. Even the best stock will struggle if the overall market is weak."
-<span style="display:block;margin-top:4px;color:var(--muted);font-style:italic;">മാർക്കറ്റ് ബ്രെഡ്ത്ത് മോശമായിരിക്കുമ്പോൾ ഒരിക്കലും ബ്രേക്ക്ഔട്ടുകൾ വാങ്ങരുത്.</span>
-</div>
-</div>
-
-<div style="font-size:0.82em;font-weight:700;color:var(--accent);margin:12px 0 6px 0;">SCANNER RESULT ANALYSIS (Book Rule)</div>
-<div style="font-size:0.8em;color:var(--text2);margin-bottom:8px;">
-ChartInk scanner result-ൽ എത്ര സ്റ്റോക്കുകൾ ഉണ്ട് എന്ന് നോക്കുക:
-</div>
-<table>
-<tr><th>Scanner Stocks</th><th>Market Condition</th><th>Action</th></tr>
-<tr><td><strong>300+</strong></td><td style="color:var(--green);">Good Market</td><td><span class="tag tag-green">Trade OK</span></td></tr>
-<tr><td><strong>Below 300</strong></td><td style="color:var(--red);">Weak Market</td><td><span class="tag tag-red">Caution</span></td></tr>
-</table>
-
-<div style="font-size:0.82em;font-weight:700;color:var(--accent);margin:12px 0 6px 0;">DAILY BREADTH CHECKLIST (Book)</div>
-<div style="font-size:0.8em;color:var(--text2);line-height:1.7;">
-1. Nifty/Sensex ഉയർന്നോ ഇടിഞ്ഞോ എന്ന് നോക്കുക<br>
-2. Nifty 50-ൽ എത്ര സ്റ്റോക്കുകൾ advances, എത്ര declines എന്ന് നോക്കുക<br>
-3. 35+ stocks ഉയർന്നാൽ = healthy breadth. 5-10 stocks മാത്രം = poor breadth<br>
-4. Advance/Decline ratio 2:1 അല്ലെങ്കിൽ കൂടുതൽ = Bullish. 1:2 അല്ലെങ്കിൽ കൂടുതൽ = Bearish<br>
-5. ഒരൊറ്റ stock (e.g. Reliance) മാത്രം Nifty ഉയർത്തിയാൽ = Divergence (caution)<br>
-6. ChartInk scanner result-ൽ 300+ stocks ഉണ്ടോ എന്ന് നോക്കുക
-</div>
-
-<div style="font-size:0.82em;font-weight:700;color:var(--accent);margin:12px 0 6px 0;">RELATIVE STRENGTH (RS) — Stock vs Index</div>
-<div style="font-size:0.8em;color:var(--text2);line-height:1.7;">
-ഒരു സ്റ്റോക്ക് ഇൻഡക്സിനേക്കാൾ മികച്ച് perform ചെയ്യുന്നുവെങ്കിൽ ആ സ്റ്റോക്കിന് Relative Strength ഉയർന്നതാണ്.<br>
-RS ഉയർന്ന സ്റ്റോക്കുകൾ = മാർക്കറ്റ് ഇടിയുമ്പോൾ കുറച്ചേ ഇടിയൂ, മാർക്കറ്റ് ഉയരുമ്പോൾ കൂടുതൽ ഉയരും.
-</div>
-
-</div>
 
 <div class="card"><div class="card-title">Strategy Now <span class="ml">· തന്ത്രം</span></div>
 <div class="alert alert-red"><div class="alert-title">🔴 Rules</div><div class="alert-text">
@@ -1268,42 +1140,6 @@ RS ഉയർന്ന സ്റ്റോക്കുകൾ = മാർക്ക�
 <div class="chart-canvas-wrap">
 <canvas id="emaChart" width="600" height="200"></canvas>
 </div>
-<div style="background:rgba(255,255,255,0.5);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.3);border-radius:10px;padding:10px;margin:8px 0;font-size:0.7em;color:var(--text-secondary)">
-<b style="color:var(--accent-orange)">EMA Breadth reading:</b> 
-50%+ above 200 EMA = Bullish trend | Below 30% = Bearish | 40-60% = Range/Sideways<br>
-<b style="color:var(--accent-green)">Current:</b> 200 EMA: 65.5% (Bullish), 50 EMA: 54.2% (Neutral-Bullish), 20 EMA: 44.6% (Sideways)
-</div>
-
-<div class="section-title" style="margin-top:20px;">🏦 FII / DII Activity — Institutional Money Flow</div>
-
-<div class="summary-pills" id="fiiDiiSummary"></div>
-
-<div class="sub-tabs">
-<div class="sub-tab active" onclick="filterFIIDII('daily',this)">Daily</div>
-<div class="sub-tab" onclick="filterFIIDII('weekly',this)">Weekly</div>
-<div class="sub-tab" onclick="filterFIIDII('monthly',this)">Monthly</div>
-</div>
-
-<div id="fiiDiiTable"></div>
-
-<div class="section-title" style="margin-top:15px;">📊 FII/DII Trend Chart</div>
-<div class="chart-canvas-wrap">
-<canvas id="fiiDiiChart" width="600" height="250"></canvas>
-<div class="chart-legend">
-<span><span class="dot" style="background:#ef5350"></span>FII Net (Red = Selling)</span>
-<span><span class="dot" style="background:#26a69a"></span>DII Net (Green = Buying)</span>
-</div>
-</div>
-
-<div style="background:#161b22;border:1px solid #30363d;border-radius:10px;padding:12px;margin:10px 0;font-size:0.75em;color:#aaa;">
-<b style="color:#ff9800">How to read:</b> FII selling + DII buying = DII absorbing FII selling (market stable). 
-FII buying + DII buying = Bullish. FII selling + DII selling = Bearish. 
-FII buying + DII selling = FII driven rally.<br>
-<b style="color:#26a69a">Current trend:</b> FII net sellers, DII net buyers — DII absorbing selling pressure.
-</div>
-
-div>
-
 
 <div class="section-title" style="margin-top:20px;">🏦 FII / DII Activity — Institutional Money Flow</div>
 
@@ -1334,6 +1170,8 @@ FII buying + DII selling = FII driven rally.<br>
 </div>
 
 </div>
+
+
 
 <div class="section-title" style="margin-top:20px;">🏭 Sector Strength — Weinstein Stage Analysis</div>
 <div class="summary-pills" id="sectorSummary"></div>
@@ -1383,6 +1221,9 @@ FII buying + DII selling = FII driven rally.<br>
 </div></div>
 
 <!-- TAB BAR -->
+<div class="news-ticker" id="newsTicker">
+<div class="news-ticker-track" id="newsTickerTrack"></div>
+</div>
 <div class="tab-bar">
 <button class="tab-btn active" onclick="showPage('dashboard',this)"><span class="icon">📊</span>Dashboard</button>
 <button class="tab-btn" onclick="showPage('watchlist',this)"><span class="icon">👁️</span>Watchlist</button>
@@ -7418,38 +7259,42 @@ function drawPullbackChart(ctx,w,h){
 
 function drawIPOChart(ctx,w,h){
   const pad=40, cw=w-pad*2, ch=h-pad*2;
+  const lp=h-75;
   ctx.strokeStyle='#666'; ctx.lineWidth=1; ctx.setLineDash([3,3]); ctx.beginPath();
-  ctx.moveTo(pad,h-80); ctx.lineTo(pad+cw,h-80); ctx.stroke(); ctx.setLineDash([]);
-  ctx.fillStyle='#666'; ctx.font='9px Arial'; ctx.fillText('Listing Price',pad+5,h-85);
+  ctx.moveTo(pad,lp); ctx.lineTo(pad+cw,lp); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#666'; ctx.font='9px Arial'; ctx.fillText('Listing Price',pad+5,lp-6);
   ctx.strokeStyle='#ff9800'; ctx.lineWidth=2; ctx.beginPath();
-  const pts=[[pad,h-90],[pad+cw*0.08,h-70],[pad+cw*0.15,h-85],[pad+cw*0.25,h-75],[pad+cw*0.35,h-82],[pad+cw*0.45,h-78],[pad+cw*0.55,h-80],[pad+cw*0.65,h-79],[pad+cw*0.72,h-81],[pad+cw*0.78,h-78],[pad+cw*0.82,h-60],[pad+cw*0.90,h-45],[pad+cw*0.98,h-30]];
+  const pts=[[pad,h-58],[pad+cw*0.08,h-68],[pad+cw*0.15,h-60],[pad+cw*0.25,h-72],[pad+cw*0.35,h-62],[pad+cw*0.45,h-73],[pad+cw*0.55,h-64],[pad+cw*0.65,h-74],[pad+cw*0.72,h-66],[pad+cw*0.78,h-73],[pad+cw*0.82,h-100],[pad+cw*0.90,h-125],[pad+cw*0.98,h-150]];
   pts.forEach((p,i)=>i===0?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1])); ctx.stroke();
   const vb=h-8;
   [[pad+cw*0.05,40,'#ef5350'],[pad+cw*0.15,15],[pad+cw*0.25,12],[pad+cw*0.35,10],[pad+cw*0.45,8],[pad+cw*0.55,7],[pad+cw*0.65,6],[pad+cw*0.75,8],[pad+cw*0.82,35,'#26a69a']].forEach(b=>{ctx.fillStyle=b[2]||'#37474f';ctx.fillRect(b[0],vb-b[1],8,b[1]);});
-  ctx.fillStyle='#FFD700'; ctx.font='bold 9px Arial'; ctx.fillText('BASE',pad+cw*0.35,h-95);
-  ctx.fillStyle='#26a69a'; ctx.fillText('BREAKOUT!',pad+cw*0.80,h-70);
+  ctx.fillStyle='#FFD700'; ctx.font='bold 9px Arial'; ctx.fillText('BASE',pad+cw*0.33,h-88);
+  ctx.fillStyle='#26a69a'; ctx.fillText('BREAKOUT!',pad+cw*0.76,h-158);
   const lg=document.getElementById('chartLegend');
   if(lg) lg.innerHTML='<span><span class="dot" style="background:#ff9800"></span>Price</span><span><span class="dot" style="background:#666"></span>Listing Price</span><span><span class="dot" style="background:#ef5350"></span>Listing Day Vol</span><span><span class="dot" style="background:#26a69a"></span>Breakout Vol</span>';
 }
 
+
 function drawMultiYearChart(ctx,w,h){
   const pad=40, cw=w-pad*2, ch=h-pad*2;
+  const res=h-105;
   ctx.strokeStyle='#ef5350'; ctx.lineWidth=1.5; ctx.setLineDash([5,3]); ctx.beginPath();
-  ctx.moveTo(pad,h-50); ctx.lineTo(pad+cw*0.78,h-50); ctx.stroke(); ctx.setLineDash([]);
-  ctx.fillStyle='#ef5350'; ctx.font='bold 9px Arial'; ctx.fillText('Multi-Year Resistance',pad+5,h-55);
+  ctx.moveTo(pad,res); ctx.lineTo(pad+cw*0.80,res); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#ef5350'; ctx.font='bold 9px Arial'; ctx.fillText('Multi-Year Resistance',pad+5,res-6);
   ctx.strokeStyle='#ff9800'; ctx.lineWidth=2; ctx.beginPath();
-  const pts=[[pad,h-120],[pad+cw*0.05,h-60],[pad+cw*0.10,h-90],[pad+cw*0.18,h-100],[pad+cw*0.22,h-55],[pad+cw*0.28,h-85],[pad+cw*0.35,h-110],[pad+cw*0.42,h-58],[pad+cw*0.48,h-90],[pad+cw*0.55,h-100],[pad+cw*0.60,h-62],[pad+cw*0.68,h-85],[pad+cw*0.75,h-70],[pad+cw*0.80,h-60],[pad+cw*0.83,h-40],[pad+cw*0.90,h-25],[pad+cw*0.98,h-15]];
+  const pts=[[pad,h-45],[pad+cw*0.05,h-103],[pad+cw*0.10,h-55],[pad+cw*0.18,h-104],[pad+cw*0.22,h-48],[pad+cw*0.28,h-100],[pad+cw*0.35,h-52],[pad+cw*0.42,h-105],[pad+cw*0.48,h-50],[pad+cw*0.55,h-101],[pad+cw*0.60,h-53],[pad+cw*0.68,h-104],[pad+cw*0.75,h-58],[pad+cw*0.80,h-100],[pad+cw*0.83,h-128],[pad+cw*0.90,h-148],[pad+cw*0.98,h-165]];
   pts.forEach((p,i)=>i===0?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1])); ctx.stroke();
   ctx.fillStyle='#FFD700';
-  [0.05,0.22,0.42,0.60].forEach((t,i)=>{ctx.beginPath();ctx.arc(pad+cw*t,h-55,4,0,Math.PI*2);ctx.fill();ctx.fillText('T'+(i+1),pad+cw*t-5,h-65);});
+  [0.05,0.18,0.42,0.68].forEach((t,i)=>{ctx.beginPath();ctx.arc(pad+cw*t,h-105,4,0,Math.PI*2);ctx.fill();ctx.fillText('T'+(i+1),pad+cw*t-5,h-113);});
   ctx.strokeStyle='#ef5350'; ctx.lineWidth=1; ctx.setLineDash([2,2]); ctx.beginPath();
-  ctx.moveTo(pad+cw*0.75,h-75); ctx.lineTo(pad+cw*0.98,h-75); ctx.stroke(); ctx.setLineDash([]);
-  ctx.fillStyle='#ef5350'; ctx.fillText('SL',pad+cw*0.97,h-78);
+  ctx.moveTo(pad+cw*0.82,h-118); ctx.lineTo(pad+cw*0.98,h-118); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#ef5350'; ctx.fillText('SL',pad+cw*0.97,h-122);
   const vb=h-5;
   [[pad+cw*0.05,30],[pad+cw*0.22,25],[pad+cw*0.42,20],[pad+cw*0.60,15],[pad+cw*0.75,10],[pad+cw*0.83,40,'#26a69a']].forEach(b=>{ctx.fillStyle=b[2]||'#37474f';ctx.fillRect(b[0],vb-b[1],8,b[1]);});
   const lg=document.getElementById('chartLegend');
   if(lg) lg.innerHTML='<span><span class="dot" style="background:#ff9800"></span>Price</span><span><span class="dot" style="background:#ef5350"></span>Resistance</span><span><span class="dot" style="background:#FFD700"></span>Touch Points</span><span><span class="dot" style="background:#26a69a"></span>PVB Volume</span>';
 }
+
 
 // === PATTERN LIBRARY ===
 function showPattern(type, btn){
@@ -8066,25 +7911,73 @@ const SECTOR_BROWSE = [
 ];
 
 function renderSectorBrowse(){
-  const c = document.getElementById('sectorBrowseList');
+  var c = document.getElementById('sectorBrowseList');
   if(!c) return;
-  let h = '';
-  SECTOR_BROWSE.forEach(s => {
-    const upPct = Math.round((s.up / s.stocks) * 100);
-    const sentiment = upPct > 60 ? 'green' : upPct < 40 ? 'red' : 'yellow';
-    h += '<div class="sector-browse-card">' +
-      '<div class="sector-browse-header">' +
-        '<div><div class="sector-browse-name">' + s.name + '</div>' +
-        '<div class="sector-browse-count">' + s.stocks + ' stocks</div></div>' +
-        '<div style="text-align:right">' +
-          '<span class="up-arrow">' + s.up + ' ↑</span> &nbsp; ' +
-          '<span class="down-arrow">' + s.down + ' ↓</span>' +
-          '<div class="summary-pill ' + sentiment + '" style="margin-top:4px">' + upPct + '% up</div>' +
-        '</div>' +
-      '</div></div>';
+  if(!STOCK_META || !STOCK_META.stocks){
+    c.innerHTML = '<div class="empty">Loading sector data…</div>';
+    return;
+  }
+  var groups = {}, order = [];
+  ALL_STOCKS.forEach(function(s){
+    var m = STOCK_META.stocks[s.ticker];
+    var key = (m && m.industry) ? m.industry : 'Other / Unknown';
+    if(!groups[key]){ groups[key] = []; order.push(key); }
+    groups[key].push(s);
   });
+  order.sort(function(a,b){ return groups[b].length - groups[a].length; });
+  var h = '<input type="text" class="search-box" id="sectorSearch" placeholder="Search sector / industry..." oninput="filterSectorBrowse(this.value)">';
+  h += '<div id="sectorCards">';
+  order.forEach(function(k){
+    var list = groups[k];
+    var up = list.filter(function(s){ return (s.change||0) > 0; }).length;
+    var down = list.filter(function(s){ return (s.change||0) < 0; }).length;
+    var upPct = Math.round(up / list.length * 100);
+    var sent = upPct > 60 ? 'green' : (upPct < 40 ? 'red' : 'yellow');
+    h += '<div class="sector-browse-card" onclick="toggleSectorStocks(this)">' +
+      '<div class="sector-browse-header">' +
+        '<div><div class="sector-browse-name">' + k + '</div>' +
+        '<div class="sector-browse-count">' + list.length + ' stocks &nbsp;·&nbsp; tap to view ▾</div></div>' +
+        '<div style="text-align:right">' +
+          '<span class="up-arrow">' + up + ' ↑</span> &nbsp; ' +
+          '<span class="down-arrow">' + down + ' ↓</span>' +
+          '<div class="summary-pill ' + sent + '" style="margin-top:4px">' + upPct + '% up</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="sector-stock-list" style="display:none">' + list.map(sbStockRow).join('') + '</div>' +
+      '</div>';
+  });
+  h += '</div>';
   c.innerHTML = h;
 }
+
+function sbStockRow(s){
+  var ch = s.change || 0;
+  var col = ch > 0 ? 'var(--green)' : (ch < 0 ? 'var(--red)' : 'var(--text-muted)');
+  return '<div class="sb-stock" onclick="event.stopPropagation();selectStock(\'' + s.ticker + '\')">' +
+    '<div><div class="sb-tk">' + s.ticker + '</div><div class="sb-nm">' + (s.name || '') + '</div></div>' +
+    '<div><div class="sb-px">₹' + (s.price || 0).toFixed(2) + '</div>' +
+    '<div class="sb-ch" style="color:' + col + '">' + (ch > 0 ? '+' : '') + ch.toFixed(2) + '%</div></div>' +
+    '</div>';
+}
+
+function toggleSectorStocks(el){
+  var l = el.querySelector('.sector-stock-list');
+  if(!l) return;
+  var open = l.style.display !== 'none' && l.style.display !== '';
+  l.style.display = open ? 'none' : 'block';
+  if(open) el.classList.remove('open'); else el.classList.add('open');
+}
+
+function filterSectorBrowse(q){
+  q = (q || '').toLowerCase();
+  var cards = document.querySelectorAll('#sectorCards .sector-browse-card');
+  for(var i=0;i<cards.length;i++){
+    var n = cards[i].querySelector('.sector-browse-name');
+    var txt = n ? n.textContent.toLowerCase() : '';
+    cards[i].style.display = txt.indexOf(q) >= 0 ? '' : 'none';
+  }
+}
+
 
 // === WL VIEW SWITCHER ===
 function setWLView(view, btn){
@@ -8537,6 +8430,7 @@ function selectStock(ticker) {
     '</div>' +
     '<div class="es-plan-row"><span>\uD83D\uDCCA Volume</span><b>' + (stock.volume || 0).toLocaleString('en-IN') + '</b></div>' +
     '<div class="es-plan-row"><span>\uD83D\uDDC2 Category</span><b>' + (stock.category || '-') + '</b></div>' +
+    '<div id="fundBlock"></div>' +
     '<button onclick="chartStock(\'' + stock.ticker + '\')" style="display:block;width:100%;margin-top:10px;padding:13px;background:linear-gradient(135deg,#ff9800,#FFD700);border:none;border-radius:12px;color:#263238;font-weight:800;font-size:0.9em;cursor:pointer;">\uD83D\uDCC8 Chart in App</button>' +
     '<a href="https://www.tradingview.com/chart/?symbol=NSE:' + encodeURIComponent(stock.ticker) + '" target="_blank" rel="noopener" ' +
       'style="display:block;width:100%;margin-top:16px;padding:14px;background:linear-gradient(135deg,#2962ff,#42a5f5);border:none;border-radius:12px;color:#fff;font-weight:700;font-size:0.92em;text-align:center;text-decoration:none;cursor:pointer;">' +
@@ -8547,6 +8441,7 @@ function selectStock(ticker) {
       '<button onclick="copyTicker(\'' + stock.ticker + '\')" style="flex:1;min-height:44px;padding:10px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.78em;cursor:pointer;">\uD83D\uDCCB<br>Copy</button>' +
     '</div>' +
     '<div style="font-size:0.68em;color:var(--muted);text-align:center;margin-top:10px;">TradingView \u2192 NSE:' + stock.ticker + ' \u00B7 Daily timeframe \u00B7 EMA 20/50 + RSI</div>';
+    renderFundBlock(stock.ticker);
   document.getElementById('stockModal').classList.add('show');
 }
 function closeStockModal(){ document.getElementById('stockModal').classList.remove('show'); }
@@ -8617,6 +8512,12 @@ function loadLiveMarket(){
         if(fl && d.fii && d.dii && d.fii.net!=null){
           fl.textContent = 'Latest (NSE): FII ' + (d.fii.net>=0?'+':'') + _fmtNum(d.fii.net,0) + ' Cr · DII ' + (d.dii.net>=0?'+':'') + _fmtNum(d.dii.net,0) + ' Cr (' + d.fii.date + ')';
         }
+        if(d.fii && d.dii && typeof FIIDII_DATA !== 'undefined' && FIIDII_DATA.daily){
+          var dp = (d.fii.date || '').split('-');
+          var lbl = dp.length >= 2 ? (dp[0] + ' ' + dp[1]) : (d.fii.date || 'Latest');
+          FIIDII_DATA.daily[0] = {date: lbl, fii: d.fii.net, dii: d.dii.net};
+          if(typeof renderFIIDII === 'function') renderFIIDII();
+        }
         var strip = document.getElementById('liveStrip');
         var txt = document.getElementById('liveText');
         if(strip && txt){
@@ -8632,6 +8533,77 @@ function loadLiveMarket(){
 loadLiveMarket();
 setInterval(loadLiveMarket, 300000);
 document.addEventListener('visibilitychange', function(){ if(!document.hidden) loadLiveMarket(); });
+
+// === NEWS TICKER (Task 3) ===
+var CHECKLIST_TICKER = [
+  '<b>8:30 AM</b> — Global Cues: GIFT Nifty, Brent, US/Asian markets',
+  '<b>9:00 AM</b> — Nifty vs 200-WMA: above 22,600? Only then think longs',
+  '<b>9:15 AM</b> — Check Watchlist for breakouts',
+  '<b>9:30 AM</b> — Market Open: breakout + volume = entry (use Calculator)',
+  '<b>Monitor Crude</b> — Brent above $100 → exit longs',
+  '<b>3:30 PM</b> — Update Journal: log trades + emotions'
+];
+function renderTicker(){
+  var t = document.getElementById('newsTickerTrack');
+  if(!t) return;
+  var html = '';
+  for(var r=0;r<2;r++){ for(var i=0;i<CHECKLIST_TICKER.length;i++){ html += '<span>' + CHECKLIST_TICKER[i] + '</span>'; } }
+  t.innerHTML = html;
+}
+renderTicker();
+
+// === STOCK META (sector + fundamentals) — Task 6 / 7 ===
+var STOCK_META = null;
+
+function fmtMcap(mc){
+  if(!mc) return '—';
+  if(mc >= 1e12) return '₹' + (mc / 1e12).toFixed(2) + ' L Cr';
+  return '₹' + Math.round(mc / 1e7).toLocaleString('en-IN') + ' Cr';
+}
+
+function renderFundBlock(ticker){
+  var el = document.getElementById('fundBlock');
+  if(!el) return;
+  var m = (STOCK_META && STOCK_META.stocks) ? STOCK_META.stocks[ticker] : null;
+  if(!m){
+    el.innerHTML = '<div style="font-size:0.68em;color:var(--text-muted);margin-top:10px;text-align:center;">📊 Fundamentals — loading…</div>';
+    return;
+  }
+  function row(lbl, val){
+    if(val === null || val === undefined || val === '' || val === '—') return '';
+    return '<div class="fund-row"><span>' + lbl + '</span><b>' + val + '</b></div>';
+  }
+  function pct(v){ return (v === null || v === undefined) ? '—' : (v * 100).toFixed(1) + '%'; }
+  function num(v, d){ return (v === null || v === undefined) ? '—' : Number(v).toFixed(d === undefined ? 2 : d); }
+  var h = '<div style="font-size:0.72em;color:var(--accent-orange);font-weight:700;margin:14px 0 6px;">📊 Fundamentals <span style="color:var(--text-muted);font-weight:400;">· അടിസ്ഥാന വിവരങ്ങൾ</span></div>';
+  h += row('Sector', m.sector || '—');
+  h += row('Industry', m.industry || '—');
+  h += row('Market Cap', fmtMcap(m.mcap));
+  h += row('P/E', num(m.pe, 1));
+  h += row('P/B', num(m.pb));
+  h += row('ROE', pct(m.roe));
+  h += row('Debt / Equity', num(m.de, 1));
+  h += row('Profit Margin', pct(m.profitMargin));
+  h += row('Revenue Growth', pct(m.revGrowth));
+  h += row('EPS', m.eps === null || m.eps === undefined ? '—' : '₹' + num(m.eps));
+  h += row('Dividend Yield', m.divYield === null || m.divYield === undefined ? '—' : (m.divYield * 100).toFixed(2) + '%');
+  el.innerHTML = h;
+}
+
+function loadStockMeta(){
+  try{
+    fetch('stock-meta.json?t=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){
+        if(!d || !d.stocks) return;
+        STOCK_META = d;
+        var sl = document.getElementById('sectorBrowseList');
+        if(sl) renderSectorBrowse();
+      })
+      .catch(function(){});
+  }catch(e){}
+}
+loadStockMeta();
 </script>
 </body>
 </html>
