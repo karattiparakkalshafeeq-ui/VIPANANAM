@@ -1,0 +1,161 @@
+name: Stock Fundamentals & Sectors
+
+# Builds stock-meta.json (sector, industry, P/E, ROE, Debt/Equity ...) for every
+# halal stock. Ticker list is read from index.html in this repo.
+# Runs every Saturday 15:00 UTC (8:30 PM IST).
+on:
+  schedule:
+    - cron: '0 15 * * 6'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  stock-meta:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build stock-meta.json
+        run: |
+          python3 - <<'PY'
+          # Builds stock-meta.json: sector / industry / fundamentals for every halal stock.
+          # Ticker list is parsed from index.html in the repo (self-contained).
+          import urllib.request, urllib.parse, json, http.cookiejar, re, time, os, sys
+
+          UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+          MODULES = "assetProfile,summaryDetail,defaultKeyStatistics,financialData"
+
+
+          def make_opener():
+              cj = http.cookiejar.CookieJar()
+              op = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+              op.addheaders = [("User-Agent", UA)]
+              try:
+                  op.open("https://fc.yahoo.com", timeout=20)
+              except Exception:
+                  pass
+              return op
+
+
+          def get_crumb(op):
+              return op.open("https://query1.finance.yahoo.com/v1/test/getcrumb", timeout=20).read().decode().strip()
+
+
+          def raw(x):
+              return x.get("raw") if isinstance(x, dict) else x
+
+
+          def r(x, n=2):
+              try:
+                  return round(float(x), n)
+              except (TypeError, ValueError):
+                  return None
+
+
+          def fetch(op, crumb, sym):
+              url = ("https://query1.finance.yahoo.com/v10/finance/quoteSummary/"
+                     + urllib.parse.quote(sym) + "?modules=" + MODULES + "&crumb=" + crumb)
+              d = json.load(op.open(url, timeout=25))
+              res = d.get("quoteSummary", {}).get("result")
+              if not res:
+                  return None
+              r0 = res[0]
+              ap = r0.get("assetProfile", {}) or {}
+              sd = r0.get("summaryDetail", {}) or {}
+              ks = r0.get("defaultKeyStatistics", {}) or {}
+              fd = r0.get("financialData", {}) or {}
+              pe = raw(sd.get("trailingPE"))
+              pb = raw(ks.get("priceToBook"))
+              roe = raw(fd.get("returnOnEquity"))
+              if roe is None and pe and pb:
+                  try:
+                      roe = float(pb) / float(pe)
+                  except Exception:
+                      roe = None
+              return {
+                  "sector": ap.get("sector"),
+                  "industry": ap.get("industry"),
+                  "pe": r(pe),
+                  "pb": r(pb),
+                  "roe": r(roe, 4),
+                  "de": r(raw(fd.get("debtToEquity"))),
+                  "mcap": raw(sd.get("marketCap")),
+                  "divYield": r(raw(sd.get("dividendYield")), 4),
+                  "profitMargin": r(raw(fd.get("profitMargins")), 4),
+                  "revGrowth": r(raw(fd.get("revenueGrowth")), 4),
+                  "eps": r(raw(ks.get("trailingEps"))),
+              }
+
+
+          def tickers_from_index(path="index.html"):
+              try:
+                  h = open(path, encoding="utf-8").read()
+              except Exception:
+                  return []
+              s = h.find("const ALL_STOCKS = ")
+              e = h.find("window.ALL_STOCKS = ALL_STOCKS;", s)
+              if s == -1 or e == -1:
+                  return []
+              try:
+                  data = json.loads(h[s + len("const ALL_STOCKS = "):e].strip().rstrip(";").strip())
+              except Exception:
+                  return []
+              return [d["ticker"] for d in data if d.get("ticker")]
+
+
+          def main():
+              tickers = tickers_from_index()
+              if not tickers:
+                  print("No tickers found in index.html")
+                  raise SystemExit(1)
+              print("tickers:", len(tickers))
+
+              op = make_opener()
+              crumb = get_crumb(op)
+              out = {"updated": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "stocks": {}}
+              ok = 0
+              miss = []
+              for i, t in enumerate(tickers):
+                  if i and i % 150 == 0:            # refresh crumb periodically
+                      try:
+                          op = make_opener()
+                          crumb = get_crumb(op)
+                      except Exception:
+                          pass
+                  try:
+                      d = fetch(op, crumb, t + ".NS")
+                      if d and (d.get("sector") or d.get("pe")):
+                          out["stocks"][t] = d
+                          ok += 1
+                      else:
+                          miss.append(t)
+                  except Exception:
+                      miss.append(t)
+                  time.sleep(0.25)
+                  if i % 50 == 0:
+                      print("  %d/%d  ok=%d" % (i, len(tickers), ok))
+              print("done. ok=%d, missing=%d" % (ok, len(miss)))
+              if miss:
+                  print("missing:", ",".join(miss[:40]))
+              with open("stock-meta.json", "w", encoding="utf-8") as f:
+                  json.dump(out, f, ensure_ascii=True, separators=(",", ":"))
+              print("stock-meta.json bytes:", os.path.getsize("stock-meta.json"))
+
+          main()
+          PY
+
+      - name: Commit if changed
+        run: |
+          git config user.name "vipananam-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add stock-meta.json
+          if git diff --staged --quiet; then
+            echo "No change to stock-meta.json"
+          else
+            git commit -m "Auto: stock fundamentals + sectors"
+            git push
+          fi
