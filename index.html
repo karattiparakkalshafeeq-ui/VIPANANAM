@@ -1219,10 +1219,26 @@ Chart nookki screenshot eduthu upload cheyyu. Book-de niyamangal adisthana aayi 
 
 <div class="section-title" style="margin-top:20px;">📊 Advanced Market Breadth — Breakouts & EMA</div>
 
-<div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0">
-<div class="breadth-stat"><div class="bs-val" style="color:var(--accent-green)" id="brHigh">143</div><div class="bs-label">High Breakouts (30 sessions)</div></div>
-<div class="breadth-stat"><div class="bs-val" style="color:var(--accent-red)" id="brLow">84</div><div class="bs-label">Low Breakouts (30 sessions)</div></div>
+<div class="fresh-strip" style="margin-bottom:10px"><span class="fs-l"><span class="live-dot"></span><span id="brFresh">Breadth —</span></span><span id="brSignal" class="summary-pill yellow">—</span></div>
+<div class="pulse-grid">
+<div class="pulse-tile"><div class="pulse-lbl">Advances</div><div class="pulse-val" style="color:var(--green)" id="brAdv">—</div><div class="pulse-sub">stocks up</div></div>
+<div class="pulse-tile"><div class="pulse-lbl">Declines</div><div class="pulse-val" style="color:var(--red)" id="brDec">—</div><div class="pulse-sub">stocks down</div></div>
+<div class="pulse-tile"><div class="pulse-lbl">A : D ratio</div><div class="pulse-val" id="brAD">—</div><div class="pulse-sub" id="brADnote">2:1 = healthy</div></div>
+<div class="pulse-tile"><div class="pulse-lbl">% Advancing</div><div class="pulse-val" id="brPctUp">—</div><div class="pulse-sub">of market</div></div>
 </div>
+<div class="pulse-grid">
+<div class="pulse-tile"><div class="pulse-lbl">New Highs 30d</div><div class="pulse-val" style="color:var(--green)" id="brHigh">—</div><div class="pulse-sub">30-session breakout</div></div>
+<div class="pulse-tile"><div class="pulse-lbl">New Lows 30d</div><div class="pulse-val" style="color:var(--red)" id="brLow">—</div><div class="pulse-sub">30-session breakdown</div></div>
+<div class="pulse-tile"><div class="pulse-lbl">52w Highs</div><div class="pulse-val" style="color:var(--green)" id="brHi52">—</div><div class="pulse-sub">fresh leaders</div></div>
+<div class="pulse-tile"><div class="pulse-lbl">52w Lows</div><div class="pulse-val" style="color:var(--red)" id="brLo52">—</div><div class="pulse-sub">weak hands</div></div>
+</div>
+<div class="pulse-grid">
+<div class="pulse-tile"><div class="pulse-lbl">Above 20 EMA</div><div class="pulse-val" id="brE20">—</div><div class="pulse-sub">short trend</div></div>
+<div class="pulse-tile"><div class="pulse-lbl">Above 50 EMA</div><div class="pulse-val" id="brE50">—</div><div class="pulse-sub">medium trend</div></div>
+<div class="pulse-tile"><div class="pulse-lbl">Above 100 EMA</div><div class="pulse-val" id="brE100">—</div><div class="pulse-sub">base trend</div></div>
+<div class="pulse-tile"><div class="pulse-lbl">Above 200 EMA</div><div class="pulse-val" id="brE200">—</div><div class="pulse-sub">long trend</div></div>
+</div>
+<div id="brUniverse" style="font-size:0.6em;color:var(--muted);text-align:center;margin-top:-2px">whole NSE market</div>
 
 <div class="chart-canvas-wrap">
 <canvas id="breadthChart" width="600" height="220"></canvas>
@@ -7943,7 +7959,7 @@ function calcESPlan(){
   } else {
     esLastPlan = null;
     out.innerHTML = '<div style="font-size:0.75em;color:var(--muted);padding:8px;">Entry-യും SL-ഉം നൽകൂ (SL, Entry-ക്ക് താഴെയായിരിക്കണം)</div>';
-  }
+  }a
   checkESVerdict();
 }
 function setESMood(m){
@@ -8870,6 +8886,7 @@ function updateFresh(){
 }
 setInterval(updateFresh, 30000);
 function refreshAll(){
+  if (typeof loadBreadth === 'function') loadBreadth();
   if (typeof loadLiveMarket === 'function') loadLiveMarket();
   if (typeof loadStockMeta === 'function') loadStockMeta();
   if (typeof loadSirVideo === 'function') loadSirVideo();
@@ -8980,6 +8997,59 @@ function closeDrawer(){ var m=document.getElementById('drawerMask'), d=document.
 
 loadSettings();
 updateFresh();
+
+// === MARKET BREADTH (all NSE) ===
+var BREADTH = null;
+function relMin(ms){
+  if(!ms) return '\u2014';
+  var s = Math.floor((Date.now()-ms)/1000);
+  if(s < 60) return 'just now';
+  var m = Math.floor(s/60); if(m < 60) return m + ' min ago';
+  var h = Math.floor(m/60); if(h < 24) return h + ' hr ago';
+  return Math.floor(h/24) + ' days ago';
+}
+function renderBreadth(){
+  if(!BREADTH) return;
+  var b = BREADTH;
+  function set(id, v){ var e = document.getElementById(id); if(e && v !== undefined && v !== null) e.textContent = v; }
+  set('brAdv', b.advances);
+  set('brDec', b.declines);
+  set('brAD', b.adRatio);
+  set('brPctUp', (b.pctAdvancing !== null && b.pctAdvancing !== undefined) ? b.pctAdvancing + '%' : '\u2014');
+  set('brHigh', b.newHigh30);
+  set('brLow', b.newLow30);
+  set('brHi52', b.newHigh52w);
+  set('brLo52', b.newLow52w);
+  var ae = b.aboveEma || {};
+  set('brE20', ae['20'] !== undefined ? ae['20'] + '%' : '\u2014');
+  set('brE50', ae['50'] !== undefined ? ae['50'] + '%' : '\u2014');
+  set('brE100', ae['100'] !== undefined ? ae['100'] + '%' : '\u2014');
+  set('brE200', ae['200'] !== undefined ? ae['200'] + '%' : '\u2014');
+  var sig = document.getElementById('brSignal');
+  if(sig){
+    sig.textContent = b.signal || '\u2014';
+    sig.className = 'summary-pill ' + (b.signal === 'Bullish' ? 'green' : b.signal === 'Bearish' ? 'red' : 'yellow');
+  }
+  var ad = document.getElementById('brADnote');
+  if(ad) ad.textContent = (b.adRatio >= 2 ? 'healthy breadth' : b.adRatio <= 0.5 ? 'poor breadth' : '2:1 = healthy');
+  var f = document.getElementById('brFresh');
+  if(f){
+    var t = '';
+    try { t = new Date(b.updated).toLocaleString('en-IN', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit', timeZone:'Asia/Kolkata'}); } catch(e){}
+    f.textContent = 'Breadth updated ' + relMin(Date.parse(b.updated)) + (t ? ' \u00b7 ' + t + ' IST' : '');
+  }
+  var u = document.getElementById('brUniverse');
+  if(u) u.textContent = 'Scanned ' + b.tested + ' of ' + b.universe + ' listed NSE stocks (whole market)';
+}
+function loadBreadth(){
+  try{
+    fetch('market-breadth.json?t=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){ if(!d) return; BREADTH = d; renderBreadth(); })
+      .catch(function(){});
+  }catch(e){}
+}
+loadBreadth();
 </script>
 
 <div class="drawer-mask" id="drawerMask" onclick="closeDrawer()"></div>
