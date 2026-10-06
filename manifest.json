@@ -1,18 +1,1 @@
-{
-  "name": "VipaNanam Swing Trading",
-  "short_name": "VipaNanam",
-  "description": "Halal Stock Swing Trading — Markets, Wisdom, Growth",
-  "start_url": "./",
-  "scope": "./",
-  "display": "standalone",
-  "orientation": "any",
-  "background_color": "#f0f2f5",
-  "theme_color": "#ff9800",
-  "lang": "ml",
-  "categories": ["finance","business","productivity"],
-  "icons": [
-    {"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
-    {"src":"./icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"},
-    {"src":"./favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}
-  ]
-}
+{"updated":"2026-10-06T19:31:19Z","universe":2334,"tested":2091,"failed":243,"advances":930,"declines":1143,"unchanged":18,"adRatio":0.81,"pctAdvancing":44.5,"aboveEma":{"20":21.5,"50":26.2,"100":32.2,"200":33.7},"newHigh30":69,"newLow30":559,"newHigh52w":40,"newLow52w":146,"signal":"Mixed"}
