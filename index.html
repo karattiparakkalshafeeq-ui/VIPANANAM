@@ -8548,4 +8548,165 @@ function loadLiveMarket(){
         if(!d) return;
         LIVE = d;
         renderIndex();
-        if(typeof updatePulse === 'function
+        if(typeof updatePulse === 'function') updatePulse(d);
+        var nc = document.getElementById('niftyCmp');
+        if(nc && d.nifty && d.nifty.price!=null) nc.textContent = _fmtNum(d.nifty.price);
+        var fl = document.getElementById('fiiLiveNote');
+        if(fl && d.fii && d.dii && d.fii.net!=null){
+          fl.textContent = 'Latest (NSE): FII ' + (d.fii.net>=0?'+':'') + _fmtNum(d.fii.net,0) + ' Cr · DII ' + (d.dii.net>=0?'+':'') + _fmtNum(d.dii.net,0) + ' Cr (' + d.fii.date + ')';
+        }
+        if(d.fii && d.dii && typeof FIIDII_DATA !== 'undefined' && FIIDII_DATA.daily){
+          var dp = (d.fii.date || '').split('-');
+          var lbl = dp.length >= 2 ? (dp[0] + ' ' + dp[1]) : (d.fii.date || 'Latest');
+          FIIDII_DATA.daily[0] = {date: lbl, fii: d.fii.net, dii: d.dii.net};
+          if(typeof renderFIIDII === 'function') renderFIIDII();
+        }
+        var strip = document.getElementById('liveStrip');
+        var txt = document.getElementById('liveText');
+        if(strip && txt){
+          var t = '';
+          if(d.updated){ try{ t = new Date(d.updated).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Kolkata'}); }catch(e){} }
+          txt.textContent = 'LIVE' + (t ? ' · updated ' + t + ' IST' : '');
+          strip.style.display = 'block';
+        }
+      })
+      .catch(function(){});
+  }catch(e){}
+}
+loadLiveMarket();
+setInterval(loadLiveMarket, 300000);
+document.addEventListener('visibilitychange', function(){ if(!document.hidden) loadLiveMarket(); });
+
+// === NEWS TICKER (Task 3) ===
+var CHECKLIST_TICKER = [
+  '<b>8:30 AM</b> — Global Cues: GIFT Nifty, Brent, US/Asian markets',
+  '<b>9:00 AM</b> — Nifty vs 200-WMA: above 22,600? Only then think longs',
+  '<b>9:15 AM</b> — Check Watchlist for breakouts',
+  '<b>9:30 AM</b> — Market Open: breakout + volume = entry (use Calculator)',
+  '<b>Monitor Crude</b> — Brent above $100 → exit longs',
+  '<b>3:30 PM</b> — Update Journal: log trades + emotions'
+];
+function renderTicker(){
+  var t = document.getElementById('newsTickerTrack');
+  if(!t) return;
+  var html = '';
+  for(var r=0;r<2;r++){ for(var i=0;i<CHECKLIST_TICKER.length;i++){ html += '<span>' + CHECKLIST_TICKER[i] + '</span>'; } }
+  t.innerHTML = html;
+}
+renderTicker();
+
+// === STOCK META (sector + fundamentals) — Task 6 / 7 ===
+var STOCK_META = null;
+
+function fmtMcap(mc){
+  if(!mc) return '—';
+  if(mc >= 1e12) return '₹' + (mc / 1e12).toFixed(2) + ' L Cr';
+  return '₹' + Math.round(mc / 1e7).toLocaleString('en-IN') + ' Cr';
+}
+
+function renderFundBlock(ticker){
+  var el = document.getElementById('fundBlock');
+  if(!el) return;
+  var m = (STOCK_META && STOCK_META.stocks) ? STOCK_META.stocks[ticker] : null;
+  if(!m){
+    el.innerHTML = '<div style="font-size:0.68em;color:var(--text-muted);margin-top:10px;text-align:center;">📊 Fundamentals — loading…</div>';
+    return;
+  }
+  function row(lbl, val){
+    if(val === null || val === undefined || val === '' || val === '—') return '';
+    return '<div class="fund-row"><span>' + lbl + '</span><b>' + val + '</b></div>';
+  }
+  function pct(v){ return (v === null || v === undefined) ? '—' : (v * 100).toFixed(1) + '%'; }
+  function num(v, d){ return (v === null || v === undefined) ? '—' : Number(v).toFixed(d === undefined ? 2 : d); }
+  var h = '<div style="font-size:0.72em;color:var(--accent-orange);font-weight:700;margin:14px 0 6px;">📊 Fundamentals <span style="color:var(--text-muted);font-weight:400;">· അടിസ്ഥാന വിവരങ്ങൾ</span></div>';
+  h += row('Sector', m.sector || '—');
+  h += row('Industry', m.industry || '—');
+  h += row('Market Cap', fmtMcap(m.mcap));
+  h += row('P/E', num(m.pe, 1));
+  h += row('P/B', num(m.pb));
+  h += row('ROE', pct(m.roe));
+  h += row('Debt / Equity', num(m.de, 1));
+  h += row('Profit Margin', pct(m.profitMargin));
+  h += row('Revenue Growth', pct(m.revGrowth));
+  h += row('EPS', m.eps === null || m.eps === undefined ? '—' : '₹' + num(m.eps));
+  h += row('Dividend Yield', m.divYield === null || m.divYield === undefined ? '—' : (m.divYield * 100).toFixed(2) + '%');
+  el.innerHTML = h;
+}
+
+function loadStockMeta(){
+  try{
+    fetch('stock-meta.json?t=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){
+        if(!d || !d.stocks) return;
+        STOCK_META = d;
+        var sl = document.getElementById('sectorBrowseList');
+        if(sl) renderSectorBrowse();
+      })
+      .catch(function(){});
+  }catch(e){}
+}
+loadStockMeta();
+
+// === UI REVIEW IMPROVEMENTS ===
+function updateChecklistScore(){
+  var el = document.getElementById('chkScore');
+  if(!el) return;
+  var groups = ['checklistVCP','checklistPullback','checklistIPO','checklistMultiYear'];
+  var total = 0, got = 0;
+  groups.forEach(function(gid){
+    var g = document.getElementById(gid);
+    if(!g) return;
+    if(g.style && g.style.display === 'none') return;   // count only the ACTIVE strategy
+    var items = g.querySelectorAll('.check-item');
+    for(var i=0;i<items.length;i++){
+      var pts = parseFloat(items[i].getAttribute('data-points')) || 0;
+      total += pts;
+      var cb = items[i].querySelector('input[type=checkbox]');
+      if(cb && cb.checked) got += pts;
+    }
+  });
+  var extra = ['m1','m2','m3'];
+  extra.forEach(function(id){
+    var cb = document.getElementById(id);
+    if(!cb) return;
+    var it = cb.closest('.check-item');
+    var pts = it ? (parseFloat(it.getAttribute('data-points')) || 0) : 0;
+    total += pts; if(cb.checked) got += pts;
+  });
+  el.textContent = got + ' / ' + total;
+}
+document.addEventListener('change', function(e){
+  if(e.target && e.target.type === 'checkbox') updateChecklistScore();
+});
+document.addEventListener('DOMContentLoaded', function(){ updateChecklistScore(); calculatePosition(true); });
+setTimeout(function(){ updateChecklistScore(); calculatePosition(true); }, 400);
+
+// pulse tiles + as-of, fed by the live feed
+function updatePulse(d){
+  if(!d) return;
+  if(d.nifty && d.nifty.price != null){
+    var n = document.getElementById('ptNifty');
+    if(n) n.textContent = Number(d.nifty.price).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+    var nc = document.getElementById('ptNiftyChg');
+    if(nc && d.nifty.pct != null){
+      nc.textContent = (d.nifty.pct >= 0 ? '\u25b2 +' : '\u25bc ') + Math.abs(d.nifty.pct).toFixed(2) + '%';
+      nc.style.color = d.nifty.pct >= 0 ? 'var(--green)' : 'var(--red)';
+    }
+  }
+  if(d.fii && d.fii.net != null){
+    var f = document.getElementById('ptFii');
+    if(f) f.textContent = (d.fii.net >= 0 ? '+' : '\u2013') + Math.abs(d.fii.net).toLocaleString('en-IN',{maximumFractionDigits:0});
+  }
+  var w = document.getElementById('ptWmaSub');
+  if(w && d.nifty && d.nifty.price != null) w.textContent = d.nifty.price >= 22600 ? 'above' : 'below';
+  if(d.updated){
+    var t = '';
+    try{ t = new Date(d.updated).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'Asia/Kolkata'}); }catch(e){}
+    var a = document.getElementById('asOfMain');
+    if(a && t) a.textContent = 'as of ' + t + ' IST';
+  }
+}
+</script>
+</body>
+</html>
