@@ -1,0 +1,184 @@
+name: Market Breadth (all NSE)
+
+# Builds market-breadth.json for the WHOLE NSE market (~2300 listed stocks).
+# Runs after market close, Mon-Fri. Takes ~20 minutes.
+on:
+  schedule:
+    - cron: '30 12 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  breadth:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build market-breadth.json
+        run: |
+          python3 - <<'PY'
+          # Real market-wide breadth for the WHOLE NSE market (~2500 stocks).
+          #  1. NSE publishes the full listed-equity list (symbol CSV) -> ~2600 symbols
+          #  2. For each symbol fetch ~2y of daily closes from Yahoo Finance
+          #  3. Compute advances/declines, % above EMA 20/50/100/200, 30-session &
+          #     52-week high/low breakouts  ->  market-breadth.json
+          import urllib.request, urllib.parse, json, time, sys, os
+
+          UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+          EQUITY_CSV = "https://nsearchives.nseindia.com/content/equities/EQUITY_L.csv"
+          LIMIT = 0
+          for a in sys.argv[1:]:
+              if a.startswith("--limit="):
+                  LIMIT = int(a.split("=")[1])
+
+
+          def http(url, timeout=25):
+              req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "*/*"})
+              return urllib.request.urlopen(req, timeout=timeout)
+
+
+          def nse_symbols():
+              txt = http(EQUITY_CSV, 30).read().decode("utf-8", "ignore")
+              out = []
+              for line in txt.splitlines()[1:]:
+                  parts = line.split(",")
+                  if len(parts) < 3:
+                      continue
+                  sym, series = parts[0].strip(), parts[2].strip()
+                  if series == "EQ" and sym:
+                      out.append(sym)
+              return out
+
+
+          def ema(vals, n):
+              if len(vals) < n:
+                  return None
+              k = 2.0 / (n + 1)
+              e = sum(vals[:n]) / n
+              for v in vals[n:]:
+                  e = v * k + e * (1 - k)
+              return e
+
+
+          def yahoo_series(sym):
+              u = ("https://query1.finance.yahoo.com/v8/finance/chart/"
+                   + urllib.parse.quote(sym + ".NS") + "?interval=1d&range=2y")
+              d = json.load(http(u, 25))
+              res = d["chart"]["result"][0]
+              q = res["indicators"]["quote"][0]
+              closes = [c for c in q.get("close", []) if c is not None]
+              return closes
+
+
+          CACHE = "breadth_cache.jsonl"
+
+
+          def load_cache():
+              done = {}
+              if os.path.exists(CACHE):
+                  for line in open(CACHE, encoding="utf-8"):
+                      try:
+                          o = json.loads(line)
+                          done[o["s"]] = o
+                      except Exception:
+                          pass
+              return done
+
+
+          def main():
+              syms = nse_symbols()
+              print("NSE listed EQ symbols:", len(syms))
+              if LIMIT:
+                  syms = syms[:LIMIT]
+                  print("(test mode, limited to", LIMIT, ")")
+
+              done = load_cache()
+              if done:
+                  print("resuming: %d symbols already cached" % len(done))
+
+              adv = dec = unch = tested = 0
+              above = {20: 0, 50: 0, 100: 0, 200: 0}
+              hi30 = lo30 = hi52 = lo52 = 0
+              failed = []
+              t0 = time.time()
+
+              cache_f = open(CACHE, "a", encoding="utf-8")
+              for i, s in enumerate(syms):
+                  rec = done.get(s)
+                  if rec is None:
+                      try:
+                          c = yahoo_series(s)
+                      except Exception:
+                          failed.append(s)
+                          continue
+                      if len(c) < 60:
+                          failed.append(s)
+                          continue
+                      last, prev = c[-1], c[-2]
+                      a = {20: 0, 50: 0, 100: 0, 200: 0}
+                      for n in (20, 50, 100, 200):
+                          e = ema(c, n)
+                          if e is not None and last > e:
+                              a[n] = 1
+                      w30 = c[-30:]; w52 = c[-250:]
+                      rec = {"s": s, "d": (1 if last > prev else -1 if last < prev else 0),
+                             "a": a, "h30": 1 if last >= max(w30) else 0, "l30": 1 if last <= min(w30) else 0,
+                             "h52": 1 if last >= max(w52) else 0, "l52": 1 if last <= min(w52) else 0}
+                      cache_f.write(json.dumps(rec, separators=(",", ":")) + "\n")
+                      cache_f.flush()
+                      time.sleep(0.12)
+                  tested += 1
+                  if rec["d"] > 0: adv += 1
+                  elif rec["d"] < 0: dec += 1
+                  else: unch += 1
+                  for n in (20, 50, 100, 200):
+                      if rec["a"].get(str(n)) or rec["a"].get(n):
+                          above[n] += 1
+                  hi30 += rec["h30"]; lo30 += rec["l30"]; hi52 += rec["h52"]; lo52 += rec["l52"]
+                  if i % 200 == 0:
+                      print("  %d/%d  tested=%d  adv=%d dec=%d  %.0fs" % (i, len(syms), tested, adv, dec, time.time() - t0))
+
+              def pct(x):
+                  return round(x * 100.0 / tested, 1) if tested else None
+
+              out = {
+                  "updated": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                  "universe": len(syms),
+                  "tested": tested,
+                  "failed": len(failed),
+                  "advances": adv,
+                  "declines": dec,
+                  "unchanged": unch,
+                  "adRatio": round(adv / dec, 2) if dec else None,
+                  "pctAdvancing": pct(adv),
+                  "aboveEma": {str(n): pct(above[n]) for n in (20, 50, 100, 200)},
+                  "newHigh30": hi30,
+                  "newLow30": lo30,
+                  "newHigh52w": hi52,
+                  "newLow52w": lo52,
+                  "signal": ("Bullish" if (dec and adv / dec >= 2) else
+                             "Bearish" if (adv and dec / adv >= 2) else "Mixed"),
+              }
+              with open("market-breadth.json", "w", encoding="utf-8") as f:
+                  json.dump(out, f, ensure_ascii=True, separators=(",", ":"))
+              print(json.dumps(out, indent=2))
+              print("bytes:", os.path.getsize("market-breadth.json"))
+
+          main()
+          PY
+
+      - name: Commit if changed
+        run: |
+          git config user.name "vipananam-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add market-breadth.json
+          if git diff --staged --quiet; then
+            echo "No change to market-breadth.json"
+          else
+            git commit -m "Auto: market breadth (all NSE)"
+            git push
+          fi
