@@ -880,7 +880,7 @@ body.dark .set-row input[type=number]{background:#0d1117}
 <div class="card" style="text-align:center;padding:10px 14px;margin-top:14px;">
 <div style="font-size:0.62em;color:var(--text2);"><b style="color:var(--gold);">MuhammedShafeeq KP</b> · VipaNanam · വിപണനം</div>
 <div style="font-size:0.54em;color:var(--text-muted);margin-top:3px;">Markets · Wisdom · Growth · Built with <b style="color:var(--accent);">Sarvam AI</b></div>
-<div style="font-size:0.54em;color:var(--text-muted);margin-top:2px;">App Version: <b style="color:var(--gold);">2026.10.06</b> · Auto-Update ON</div>
+<div style="font-size:0.54em;color:var(--text-muted);margin-top:2px;">App Version: <b style="color:var(--gold);">2026.10.07</b> · Auto-Update ON</div>
 </div>
 </div>
 
@@ -1340,6 +1340,14 @@ FII buying + DII selling = FII driven rally.<br>
 
 <script src="https://s3.tradingview.com/tv.js"></script>
 <script>
+/* ===== EARLY STATE INIT (prevents var-hoisting bugs) ===== */
+var FAVS = {};
+try { FAVS = JSON.parse(localStorage.getItem('vipananam_favs') || '{}') || {}; } catch(e){ FAVS = {}; }
+var favFilter = false;
+var STOCK_META = null;
+var lastLiveFetch = 0;
+/* ======================================================== */
+
 const ALL_STOCKS = [
  {
   "ticker": "3IINFOLTD",
@@ -6628,13 +6636,14 @@ function renderStocks() {
       return ind === sec;
     });
   }
-  if (favFilter) stocks = stocks.filter(function(s){ return !!FAVS[s.ticker]; });
+  var _favs = FAVS || {};
+  if (favFilter) stocks = stocks.filter(function(s){ return !!_favs[s.ticker]; });
 
   var sortEl = document.getElementById('scrSort');
   var sort = sortEl ? sortEl.value : 'name';
   stocks = stocks.slice().sort(function(a,b){
     if (sort === 'chg') return (b.change||0) - (a.change||0);
-    if (sort === 'fav') return ((FAVS[b.ticker]?1:0) - (FAVS[a.ticker]?1:0)) || (a.ticker||'').localeCompare(b.ticker||'');
+    if (sort === 'fav') return ((_favs[b.ticker]?1:0) - (_favs[a.ticker]?1:0)) || (a.ticker||'').localeCompare(b.ticker||'');
     if (sort === 'cat') return (a.category||'').localeCompare(b.category||'') || (a.ticker||'').localeCompare(b.ticker||'');
     return (a.ticker||'').localeCompare(b.ticker||'');
   });
@@ -6663,7 +6672,7 @@ function renderStocks() {
           '<div style="font-weight:700;font-size:0.85em">\u20b9' + (s.price||0).toFixed(2) + '</div>' +
           '<div style="font-size:0.7em;color:' + chColor + ';font-weight:600">' + chStr + '</div>' +
         '</div>' +
-        '<div class="fav-star' + (FAVS[s.ticker] ? ' on' : '') + '" onclick="toggleFav(\'' + (s.ticker||'') + '\',event)">' + (FAVS[s.ticker] ? '\u2605' : '\u2606') + '</div>' +
+        '<div class="fav-star' + (_favs[s.ticker] ? ' on' : '') + '" onclick="toggleFav(\'' + (s.ticker||'') + '\',event)">' + (_favs[s.ticker] ? '\u2605' : '\u2606') + '</div>' +
       '</div>';
     }).join('');
   }
@@ -6893,6 +6902,7 @@ function renderTradeSetupChart(){
   card.style.display = 'block';
   var cv = document.getElementById('tradeSetupCanvas');
   var ctx = cv.getContext('2d');
+  if(!ctx) return;
   var W = cv.width, H = cv.height;
   var entry = la.entry, sl = la.sl, t1 = la.t1, t2 = la.t2, t3 = la.t3;
   var risk = entry - sl;
@@ -7301,7 +7311,7 @@ function getAIAnswer(q) {
   return '🤔 Interesting question! I know about:<br><br>• VCP Strategy (7 criteria, 100 pts)<br>• Position Sizing (formula, risk %)<br>• Market Breadth (4 types, A/D ratio)<br>• IPO Trading (3 types)<br>• Multi-Year Breakout (8 checks)<br>• Pullback Trading (7 checks)<br>• 14-Point Checklist<br>• R:R Ratio (1:3+ ideal)<br>• Stop Loss Rules<br>• Trading Psychology (Confident=100% win)<br>• Halal Stocks (584 stocks)<br>• Sectors (favorable vs avoid)<br>• Capital & Risk Management<br>• TradingView Setup<br>• RSI 60 Strategy (Nikhil Sir)<br>• Sideways Market Rules<br>• Liquid Fund Strategy<br><br>Try the quick buttons above or ask about any of these!<br><br><div style="margin-top:10px;padding:8px 10px;background:var(--card2);border:1px solid var(--gold);border-radius:8px;"><b style="color:var(--gold);">🙏 Learn from our Teacher</b><br>Nikhil Mathew — Oharipadanam Malayalam<br>7 years · 2000+ students<br><a href="https://www.oharipadanam.com" target="_blank" style="color:var(--accent);">📚 Master Swing Trading Course →</a></div>';
 }
 
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && navigator.serviceWorker) {
   var vpReloaded = false;
   navigator.serviceWorker.addEventListener('controllerchange', function() {
     if (!vpReloaded) { vpReloaded = true; location.reload(); }
@@ -7331,6 +7341,7 @@ function drawAnalyzeChart(strategy, score){
   const canvas = document.getElementById('patternCanvas');
   if(!canvas) return;
   const ctx = canvas.getContext('2d');
+  if(!ctx) return;
   const w = canvas.width, h = canvas.height;
   ctx.clearRect(0,0,w,h);
   ctx.fillStyle = '#0d1117';
@@ -7435,7 +7446,7 @@ function showPattern(type, btn){
   };
   const p = patterns[type]; if(!p) return;
   lib.innerHTML = '<div class="pattern-card"><h4>'+p.t+'</h4><div class="pattern-img"><canvas id="libCanvas" width="500" height="180"></canvas></div><p>'+p.d+'</p><p style="color:#26a69a">'+p.e+'</p></div>';
-  setTimeout(()=>{const c=document.getElementById('libCanvas');if(c){const ctx=c.getContext('2d');const w=c.width,h=c.height;ctx.fillStyle='#0d1117';ctx.fillRect(0,0,w,h);ctx.save();ctx.scale(0.8,0.6);ctx.translate(40,20);p.fn(ctx,w*1.25,h*1.67);ctx.restore();}},100);
+  setTimeout(()=>{const c=document.getElementById('libCanvas');if(c){const ctx=c.getContext('2d');if(!ctx)return;const w=c.width,h=c.height;ctx.fillStyle='#0d1117';ctx.fillRect(0,0,w,h);ctx.save();ctx.scale(0.8,0.6);ctx.translate(40,20);p.fn(ctx,w*1.25,h*1.67);ctx.restore();}},100);
 }
 
 // === JOURNAL ANALYTICS ===
@@ -7479,6 +7490,7 @@ function drawPnLHeatmap(trades){
 function drawEquityCurve(trades){
   const cv=document.getElementById('equityCanvas'); if(!cv) return;
   const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  if(!ctx) return;
   ctx.clearRect(0,0,w,h); ctx.fillStyle='#0d1117'; ctx.fillRect(0,0,w,h);
   ctx.strokeStyle='#1a2332'; for(let i=0;i<5;i++){const y=(h/5)*i;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
   const sorted=[...trades].filter(t=>t.exitDate).sort((a,b)=>new Date(a.exitDate)-new Date(b.exitDate));
@@ -7796,6 +7808,7 @@ function drawFIIDIIChart(data){
   const canvas = document.getElementById('fiiDiiChart');
   if(!canvas) return;
   const ctx = canvas.getContext('2d');
+  if(!ctx) return;
   const w = canvas.width, h = canvas.height;
   ctx.clearRect(0,0,w,h);
   ctx.fillStyle = '#0d1117';
@@ -8431,6 +8444,7 @@ function drawBreadthChart(){
   const cv = document.getElementById('breadthChart');
   if(!cv) return;
   const ctx = cv.getContext('2d'), w = cv.width, h = cv.height;
+  if(!ctx) return;
   ctx.clearRect(0,0,w,h);
   ctx.fillStyle = 'rgba(255,255,255,0.02)'; ctx.fillRect(0,0,w,h);
   ctx.strokeStyle = 'rgba(128,128,128,0.1)';
@@ -8473,6 +8487,7 @@ function drawEMAChart(){
   const cv = document.getElementById('emaChart');
   if(!cv) return;
   const ctx = cv.getContext('2d'), w = cv.width, h = cv.height;
+  if(!ctx) return;
   ctx.clearRect(0,0,w,h);
   ctx.strokeStyle = 'rgba(128,128,128,0.1)';
   for(let i=0; i<5; i++){const y=(h/5)*i;ctx.beginPath();ctx.moveTo(40,y);ctx.lineTo(w-20,y);ctx.stroke();}
@@ -8804,6 +8819,7 @@ var favFilter = false;
 function saveFavs(){ try { localStorage.setItem('vipananam_favs', JSON.stringify(FAVS)); } catch(e){} }
 function toggleFav(ticker, ev){
   if (ev && ev.stopPropagation) ev.stopPropagation();
+  if (!FAVS) FAVS = {};
   if (FAVS[ticker]) delete FAVS[ticker]; else FAVS[ticker] = 1;
   saveFavs();
   renderStocks();
