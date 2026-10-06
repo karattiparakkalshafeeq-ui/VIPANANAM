@@ -705,6 +705,37 @@ body.dark .news-ticker{background:linear-gradient(90deg,#0d1117,#161b22,#0d1117)
 .fund-row span{color:var(--text2)}
 .fund-row b{color:var(--accent)}
 body.dark .sb-stock{background:rgba(22,27,34,0.5)}
+
+/* === UI REVIEW IMPROVEMENTS (6 Oct 2026) === */
+/* #1 Market pulse strip */
+.risk-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(239,83,80,0.12);border:1px solid var(--red);border-radius:20px;padding:4px 12px;font-size:0.68em;font-weight:800;color:var(--red);margin-bottom:7px}
+.as-of{font-size:0.58em;color:var(--text-muted);margin-left:5px;font-weight:400}
+.pulse-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:8px;margin:6px 0 10px}
+.pulse-tile{background:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.35);border-radius:10px;padding:8px 9px;text-align:center}
+.pulse-lbl{font-size:0.56em;color:#7c8496;text-transform:uppercase;letter-spacing:0.5px}
+.pulse-val{font-size:0.92em;font-weight:800;margin-top:2px}
+.pulse-sub{font-size:0.55em;color:#7c8496;margin-top:1px}
+body.dark .pulse-tile{background:rgba(22,27,34,0.6);border-color:rgba(48,54,61,0.5)}
+/* #3 risk bar */
+.risk-bar{height:8px;border-radius:4px;background:rgba(0,0,0,0.08);overflow:hidden;margin:8px 0 10px}
+.risk-bar-fill{height:100%;width:0;background:linear-gradient(90deg,#26a69a,#ff9800,#ef5350);transition:width .25s}
+/* #4 sticky checklist score */
+.score-chip{position:sticky;top:58px;z-index:20;display:flex;justify-content:space-between;align-items:center;background:rgba(255,152,0,0.13);border:1px solid var(--accent-orange);border-radius:10px;padding:8px 12px;font-size:0.76em;font-weight:800;color:var(--accent-orange);margin:8px 0}
+/* #5 in-page anchors */
+.anchor-nav{position:sticky;top:52px;z-index:25;display:flex;gap:6px;overflow-x:auto;padding:6px 2px;margin-bottom:10px;border-radius:10px;background:rgba(240,242,245,0.92);backdrop-filter:blur(6px)}
+.anchor-nav a{flex-shrink:0;font-size:0.64em;font-weight:700;color:var(--text-secondary);text-decoration:none;padding:5px 12px;border-radius:16px;background:rgba(255,255,255,0.75);border:1px solid rgba(0,0,0,0.06)}
+body.dark .anchor-nav{background:rgba(13,17,23,0.9)}
+body.dark .anchor-nav a{background:rgba(22,27,34,0.8);color:#adbac7;border-color:rgba(48,54,61,0.6)}
+/* #6 wide tables -> cards on phones */
+@media(max-width:600px){
+  .table-cards table,.table-cards thead,.table-cards tbody,.table-cards th,.table-cards td,.table-cards tr{display:block;width:100%}
+  .table-cards thead{display:none}
+  .table-cards tr{background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.35);border-radius:10px;padding:8px 10px;margin-bottom:8px}
+  .table-cards td{border:none;padding:3px 0;display:flex;justify-content:space-between;align-items:center;font-size:0.8em}
+  .table-cards td::before{content:attr(data-label);color:#7c8496;font-weight:600;margin-right:10px}
+  .table-cards td:first-child{font-weight:800;color:var(--accent-orange)}
+  body.dark .table-cards tr{background:rgba(22,27,34,0.6);border-color:rgba(48,54,61,0.5)}
+}
 </style>
 
 
@@ -724,6 +755,7 @@ body.dark .sb-stock{background:rgba(22,27,34,0.5)}
 
 <!-- DASHBOARD -->
 <div class="page active" id="page-dashboard">
+<div class="anchor-nav"><a href="#dashMarket">📈 Market</a><a href="#dashCall">🎯 Sir's Call</a><a href="#dashFii">🏦 FII/DII</a><a href="#dashRates">💱 Rates</a></div>
 <div class="card" style="text-align:center;background:linear-gradient(135deg,#263238,#1e1e30);border:1px solid var(--gold);">
 <div style="font-size:0.7em;color:var(--text2);text-transform:uppercase;letter-spacing:2px;">Welcome</div>
 <div style="font-size:1.3em;font-weight:800;color:var(--gold);margin:4px 0;">MuhammedShafeeq KP</div>
@@ -746,15 +778,21 @@ body.dark .sb-stock{background:rgba(22,27,34,0.5)}
 </a>
 <div class="index-grid" id="indexGrid"></div>
 <div id="liveStrip" style="display:none;text-align:center;font-size:0.62em;color:var(--green);margin:-4px 0 10px;letter-spacing:0.5px;"><span class="live-dot" style="display:inline-block;margin-right:5px;"></span><span id="liveText">LIVE</span></div>
-<div class="card"><div class="card-title">Market Status <span class="ml">മാർക്കറ്റ് അവസ്ഥ</span></div>
-<div class="alert alert-red"><div class="alert-title">🔴 HIGH RISK · NO-TRADE ZONE</div><div class="alert-text">Nifty 8 weeks down · first 200-WMA breach since 2020. Swing trader: NO opportunity — stay 100% cash. Use 0.5% risk only.<span class="ml">നിഫ്റ്റി 8 ആഴ്ച താഴ്ച · 2020-ന് ശേഷം ആദ്യമായി 200-WMA തകർന്നു. സ്വിംഗ് ട്രേഡർ: അവസരമില്ല — 100% ക്യാഷിൽ ഇരിക്കൂ.</span></div></div>
-<div class="drow"><div class="dlabel">Nifty CMP</div><div class="dvalue negative" id="niftyCmp">22,420</div></div>
+<div class="card" id="dashMarket"><div class="card-title">Market Status <span class="ml">മാർക്കറ്റ് അവസ്ഥ</span></div>
+<div class="risk-badge">🔴 HIGH RISK · NO-TRADE ZONE <span class="as-of" id="asOfMain">as of —</span></div>
+<div style="font-size:0.72em;color:var(--text-secondary);line-height:1.5;margin-bottom:4px;">Nifty 8 weeks down · first 200-WMA breach since 2020. Swing trader: NO opportunity — stay 100% cash.<span class="ml">നിഫ്റ്റി 8 ആഴ്ച താഴ്ച · 2020-ന് ശേഷം ആദ്യമായി 200-WMA തകർന്നു.</span></div>
+<div class="pulse-grid">
+<div class="pulse-tile"><div class="pulse-lbl">Nifty CMP</div><div class="pulse-val" id="ptNifty">22,420</div><div class="pulse-sub" id="ptNiftyChg">—</div></div>
+<div class="pulse-tile"><div class="pulse-lbl">200-WMA</div><div class="pulse-val" style="color:var(--accent)">22,600</div><div class="pulse-sub" id="ptWmaSub">below</div></div>
+<div class="pulse-tile"><div class="pulse-lbl">FII net</div><div class="pulse-val" style="color:var(--red)" id="ptFii">–9,484</div><div class="pulse-sub">₹ Cr</div></div>
+<div class="pulse-tile"><div class="pulse-lbl">Stance</div><div class="pulse-val" style="color:var(--red)">Cash</div><div class="pulse-sub">100%</div></div>
+</div>
 <div class="drow"><div class="dlabel">Support</div><div class="dvalue negative">22,200–22,000</div></div>
 <div class="drow"><div class="dlabel">Resistance</div><div class="dvalue positive">22,800–23,000</div></div>
 <div class="drow"><div class="dlabel">200-WMA (Pivot)</div><div class="dvalue" style="color:var(--accent);">22,600</div></div>
 <div class="drow"><div class="dlabel">Next Events</div><div class="dvalue" style="font-size:0.78em;">Oct 5-7 RBI MPC · Q2 results mid-Oct</div></div>
 </div>
-<div class="card"><div class="card-title">🎯 Sir's Market Call <span class="ml">· സർ-ന്റെ കോൾ</span></div>
+<div class="card" id="dashCall"><div class="card-title">🎯 Sir's Market Call <span class="ml">· സർ-ന്റെ കോൾ</span></div>
 <div class="drow"><div class="dlabel">Swing Trader</div><div class="dvalue negative">100% CASH · No entry</div></div>
 <div class="drow"><div class="dlabel">SIP Investor</div><div class="dvalue positive">Keep investing ✓</div></div>
 <div style="font-size:0.7em;color:var(--text2);margin-top:8px;line-height:1.55;">Entry only when ALL improve: Nifty back above 200-WMA + US bond yields fall + Crude falls + FIIs buy again.<span class="ml">നിഫ്റ്റി 200-WMA-ക്ക് മുകളിൽ തിരിച്ചെത്തുക + US bond yield താഴുക + Crude താഴുക + FII വാങ്ങൽ തുടങ്ങുക — എല്ലാം ശരിയായാൽ മാത്രം entry.</span></div>
@@ -771,13 +809,13 @@ body.dark .sb-stock{background:rgba(22,27,34,0.5)}
 </div>
 </a>
 </div>
-<div class="card"><div class="card-title">FII/DII <span class="ml">· ഇൻവെസ്റ്റർ ഡാറ്റ</span></div>
-<table><tr><th>Date</th><th>FII (₹Cr)</th><th>DII (₹Cr)</th><th>Total</th></tr>
-<tr><td>Sep 29</td><td style="color:var(--red);">-9,980</td><td style="color:var(--green);">+6,953</td><td style="color:var(--red);">-3,027</td></tr>
-<tr><td>Sep 30</td><td style="color:var(--red);">-10,148</td><td style="color:var(--green);">+11,272</td><td style="color:var(--green);">+1,124</td></tr>
-<tr><td>Oct 1</td><td style="color:var(--red);">-9,484</td><td style="color:var(--green);">+10,042</td><td style="color:var(--green);">+558</td></tr>
-</table><div id="fiiLiveNote" style="font-size:0.62em;color:var(--muted);margin-top:6px;">FII selling 6 sessions: ₹43,687 Cr · DII buying 32 sessions</div></div>
-<div class="card"><div class="card-title">RBI & Rates <span class="ml">· റിസർവ് ബാങ്ക്</span></div>
+<div class="card" id="dashFii"><div class="card-title">FII/DII <span class="ml">· ഇൻവെസ്റ്റർ ഡാറ്റ</span></div>
+<table class="table-cards"><tr><th>Date</th><th>FII (₹Cr)</th><th>DII (₹Cr)</th><th>Total</th></tr>
+<tr><td data-label="Date">Sep 29</td><td data-label="FII" style="color:var(--red);">-9,980</td><td data-label="DII" style="color:var(--green);">+6,953</td><td data-label="Net" style="color:var(--red);">-3,027</td></tr>
+<tr><td data-label="Date">Sep 30</td><td data-label="FII" style="color:var(--red);">-10,148</td><td data-label="DII" style="color:var(--green);">+11,272</td><td data-label="Net" style="color:var(--green);">+1,124</td></tr>
+<tr><td data-label="Date">Oct 1</td><td data-label="FII" style="color:var(--red);">-9,484</td><td data-label="DII" style="color:var(--green);">+10,042</td><td data-label="Net" style="color:var(--green);">+558</td></tr>
+</table><div id="fiiLiveNote" style="font-size:0.62em;color:var(--muted);margin-top:6px;"><span class="as-of" style="margin:0 4px 0 0;">as of latest NSE</span> FII selling 6 sessions: ₹43,687 Cr · DII buying 32 sessions</div></div>
+<div class="card" id="dashRates"><div class="card-title">RBI & Rates <span class="ml">· റിസർവ് ബാങ്ക്</span></div>
 <div class="drow"><div class="dlabel">Repo Rate</div><div class="dvalue">5.25%</div></div>
 <div class="drow"><div class="dlabel">CPI Inflation</div><div class="dvalue" style="color:var(--accent);">4.45% (19-mo high)</div></div>
 <div class="drow"><div class="dlabel">RBI MPC</div><div class="dvalue" style="color:var(--accent);">Oct 5-7 · hike seen</div></div>
@@ -839,11 +877,11 @@ body.dark .sb-stock{background:rgba(22,27,34,0.5)}
 <div class="page" id="page-calc">
 <div class="card"><div class="card-title">Position Sizing <span class="ml">· പൊസിഷൻ കാൽക്കുലേറ്റർ</span></div>
 <div class="calc-label">Capital (₹)</div>
-<input type="number" class="calc-input" id="capital" value="50000">
+<input type="number" class="calc-input" id="capital" value="50000" oninput="calculatePosition(true)">
 <div class="calc-label">Entry Price (₹)</div>
-<input type="number" class="calc-input" id="entryPrice" placeholder="100">
+<input type="number" class="calc-input" id="entryPrice" value="100" oninput="calculatePosition(true)">
 <div class="calc-label">Stop Loss (₹)</div>
-<input type="number" class="calc-input" id="stopPrice" placeholder="95">
+<input type="number" class="calc-input" id="stopPrice" value="95" oninput="calculatePosition(true)">
 <div class="calc-label">Risk Per Trade</div>
 <div class="risk-options" id="riskOptions">
 <button class="risk-btn" data-risk="0.5">0.5%</button>
@@ -852,6 +890,7 @@ body.dark .sb-stock{background:rgba(22,27,34,0.5)}
 <button class="risk-btn" data-risk="3">3%</button>
 </div>
 <button class="btn btn-primary" onclick="calculatePosition()">Calculate</button>
+<div class="risk-bar"><div class="risk-bar-fill" id="riskBarFill"></div></div>
 <div class="calc-result" id="calcResult" style="display:none;">
 <div class="calc-result-row"><div class="calc-result-label">Risk Amount</div><div class="calc-result-value" id="riskAmount">₹0</div></div>
 <div class="calc-result-row"><div class="calc-result-label">Per Share Risk</div><div class="calc-result-value" id="perShareRisk">₹0</div></div>
@@ -932,6 +971,7 @@ Chart nookki screenshot eduthu upload cheyyu. Book-de niyamangal adisthana aayi 
 <input type="number" class="calc-input" id="anCapital" value="50000">
 
 <!-- Step 4: Checklist -->
+<div class="score-chip"><span>📋 Checklist Score</span><span id="chkScore">0 / 100</span></div>
 <div class="calc-label" style="margin-top:12px;">Step 4: Checklist — Check from Chart <span class="ml">· ചാർട്ട് നോക്കി ചെക്ക് ചെയ്യുക</span></div>
 <div id="checklistVCP" style="display:block;">
 <div class="check-item" data-points="25"><input type="checkbox" id="c1"> <label for="c1">Stage 2 — Price > 50EMA > 200EMA <span style="color:var(--muted);">(25 pts)</span></label></div>
@@ -6601,12 +6641,12 @@ document.querySelectorAll('.risk-btn').forEach(btn => {
   });
 });
 
-function calculatePosition() {
+function calculatePosition(silent) {
   const cap = parseFloat(document.getElementById('capital').value) || 0;
   const entry = parseFloat(document.getElementById('entryPrice').value) || 0;
   const stop = parseFloat(document.getElementById('stopPrice').value) || 0;
-  if (!cap || !entry || !stop) { alert('Enter all values'); return; }
-  if (stop >= entry) { alert('SL must be below entry'); return; }
+  if (!cap || !entry || !stop) { if(!silent) alert('Enter all values'); return; }
+  if (stop >= entry) { if(!silent) alert('SL must be below entry'); return; }
   const riskAmt = cap * (selectedRisk / 100);
   const perShare = entry - stop;
   const shares = Math.floor(riskAmt / perShare);
@@ -6621,6 +6661,8 @@ function calculatePosition() {
   document.getElementById('target1').textContent = '₹' + (entry + r * 2).toFixed(2);
   document.getElementById('target2').textContent = '₹' + (entry + r * 3).toFixed(2);
   document.getElementById('target3').textContent = '₹' + (entry + r * 6).toFixed(2);
+  var rb = document.getElementById('riskBarFill');
+  if(rb){ var pctNum = parseFloat(pct) || 0; rb.style.width = Math.min(pctNum, 100) + '%'; }
   document.getElementById('calcResult').style.display = 'block';
 }
 
@@ -8506,104 +8548,4 @@ function loadLiveMarket(){
         if(!d) return;
         LIVE = d;
         renderIndex();
-        var nc = document.getElementById('niftyCmp');
-        if(nc && d.nifty && d.nifty.price!=null) nc.textContent = _fmtNum(d.nifty.price);
-        var fl = document.getElementById('fiiLiveNote');
-        if(fl && d.fii && d.dii && d.fii.net!=null){
-          fl.textContent = 'Latest (NSE): FII ' + (d.fii.net>=0?'+':'') + _fmtNum(d.fii.net,0) + ' Cr · DII ' + (d.dii.net>=0?'+':'') + _fmtNum(d.dii.net,0) + ' Cr (' + d.fii.date + ')';
-        }
-        if(d.fii && d.dii && typeof FIIDII_DATA !== 'undefined' && FIIDII_DATA.daily){
-          var dp = (d.fii.date || '').split('-');
-          var lbl = dp.length >= 2 ? (dp[0] + ' ' + dp[1]) : (d.fii.date || 'Latest');
-          FIIDII_DATA.daily[0] = {date: lbl, fii: d.fii.net, dii: d.dii.net};
-          if(typeof renderFIIDII === 'function') renderFIIDII();
-        }
-        var strip = document.getElementById('liveStrip');
-        var txt = document.getElementById('liveText');
-        if(strip && txt){
-          var t = '';
-          if(d.updated){ try{ t = new Date(d.updated).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Kolkata'}); }catch(e){} }
-          txt.textContent = 'LIVE' + (t ? ' · updated ' + t + ' IST' : '');
-          strip.style.display = 'block';
-        }
-      })
-      .catch(function(){});
-  }catch(e){}
-}
-loadLiveMarket();
-setInterval(loadLiveMarket, 300000);
-document.addEventListener('visibilitychange', function(){ if(!document.hidden) loadLiveMarket(); });
-
-// === NEWS TICKER (Task 3) ===
-var CHECKLIST_TICKER = [
-  '<b>8:30 AM</b> — Global Cues: GIFT Nifty, Brent, US/Asian markets',
-  '<b>9:00 AM</b> — Nifty vs 200-WMA: above 22,600? Only then think longs',
-  '<b>9:15 AM</b> — Check Watchlist for breakouts',
-  '<b>9:30 AM</b> — Market Open: breakout + volume = entry (use Calculator)',
-  '<b>Monitor Crude</b> — Brent above $100 → exit longs',
-  '<b>3:30 PM</b> — Update Journal: log trades + emotions'
-];
-function renderTicker(){
-  var t = document.getElementById('newsTickerTrack');
-  if(!t) return;
-  var html = '';
-  for(var r=0;r<2;r++){ for(var i=0;i<CHECKLIST_TICKER.length;i++){ html += '<span>' + CHECKLIST_TICKER[i] + '</span>'; } }
-  t.innerHTML = html;
-}
-renderTicker();
-
-// === STOCK META (sector + fundamentals) — Task 6 / 7 ===
-var STOCK_META = null;
-
-function fmtMcap(mc){
-  if(!mc) return '—';
-  if(mc >= 1e12) return '₹' + (mc / 1e12).toFixed(2) + ' L Cr';
-  return '₹' + Math.round(mc / 1e7).toLocaleString('en-IN') + ' Cr';
-}
-
-function renderFundBlock(ticker){
-  var el = document.getElementById('fundBlock');
-  if(!el) return;
-  var m = (STOCK_META && STOCK_META.stocks) ? STOCK_META.stocks[ticker] : null;
-  if(!m){
-    el.innerHTML = '<div style="font-size:0.68em;color:var(--text-muted);margin-top:10px;text-align:center;">📊 Fundamentals — loading…</div>';
-    return;
-  }
-  function row(lbl, val){
-    if(val === null || val === undefined || val === '' || val === '—') return '';
-    return '<div class="fund-row"><span>' + lbl + '</span><b>' + val + '</b></div>';
-  }
-  function pct(v){ return (v === null || v === undefined) ? '—' : (v * 100).toFixed(1) + '%'; }
-  function num(v, d){ return (v === null || v === undefined) ? '—' : Number(v).toFixed(d === undefined ? 2 : d); }
-  var h = '<div style="font-size:0.72em;color:var(--accent-orange);font-weight:700;margin:14px 0 6px;">📊 Fundamentals <span style="color:var(--text-muted);font-weight:400;">· അടിസ്ഥാന വിവരങ്ങൾ</span></div>';
-  h += row('Sector', m.sector || '—');
-  h += row('Industry', m.industry || '—');
-  h += row('Market Cap', fmtMcap(m.mcap));
-  h += row('P/E', num(m.pe, 1));
-  h += row('P/B', num(m.pb));
-  h += row('ROE', pct(m.roe));
-  h += row('Debt / Equity', num(m.de, 1));
-  h += row('Profit Margin', pct(m.profitMargin));
-  h += row('Revenue Growth', pct(m.revGrowth));
-  h += row('EPS', m.eps === null || m.eps === undefined ? '—' : '₹' + num(m.eps));
-  h += row('Dividend Yield', m.divYield === null || m.divYield === undefined ? '—' : (m.divYield * 100).toFixed(2) + '%');
-  el.innerHTML = h;
-}
-
-function loadStockMeta(){
-  try{
-    fetch('stock-meta.json?t=' + Date.now())
-      .then(function(r){ return r.ok ? r.json() : null; })
-      .then(function(d){
-        if(!d || !d.stocks) return;
-        STOCK_META = d;
-        var sl = document.getElementById('sectorBrowseList');
-        if(sl) renderSectorBrowse();
-      })
-      .catch(function(){});
-  }catch(e){}
-}
-loadStockMeta();
-</script>
-</body>
-</html>
+        if(typeof updatePulse === 'function
