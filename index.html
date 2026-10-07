@@ -830,6 +830,32 @@ body.dark .index-card{background:rgba(255,255,255,0.05)!important}
 /* debt link -> quiet row */
 .debt-row{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:12px;background:rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.05);text-decoration:none;margin-bottom:10px}
 body.dark .debt-row{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.06)}
+
+/* ================= FIX: BOTTOM TAB BAR (all 7 tabs must be reachable on phones) =================
+   Was: .tab-btn{min-width:52px} with no min-width:0 for <768px  ->  7 x 52px = 364px+
+   overflowed narrow screens and pushed the last tabs (AI, Intel) off the bar. */
+.tab-bar{justify-content:space-between}
+.tab-btn{
+  flex:1 1 0 !important;
+  min-width:0 !important;      /* allow shrink below content width */
+  max-width:100%;
+  min-height:48px;             /* keep a 48px touch target */
+  padding:6px 1px !important;
+  font-size:0.58em !important;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  box-sizing:border-box;
+}
+.tab-btn .icon{font-size:1.3em !important;line-height:1.15}
+@media(max-width:380px){
+  .tab-btn{font-size:0.5em !important;padding:5px 0 !important}
+  .tab-btn .icon{font-size:1.15em !important}
+}
+@media(max-width:320px){
+  .tab-btn{font-size:0.44em !important}
+  .tab-btn .icon{font-size:1.05em !important}
+}
 </style>
 
 
@@ -911,7 +937,7 @@ body.dark .debt-row{background:rgba(255,255,255,0.05);border-color:rgba(255,255,
 <div class="card" style="text-align:center;padding:10px 14px;margin-top:14px;">
 <div style="font-size:0.62em;color:var(--text2);"><b style="color:var(--gold);">MuhammedShafeeq KP</b> · VipaNanam · വിപണനം</div>
 <div style="font-size:0.54em;color:var(--text-muted);margin-top:3px;">Markets · Wisdom · Growth · Built with <b style="color:var(--accent);">Sarvam AI</b></div>
-<div style="font-size:0.54em;color:var(--text-muted);margin-top:2px;">App Version: <b style="color:var(--gold);">2026.10.07b</b> · Auto-Update ON</div>
+<div style="font-size:0.54em;color:var(--text-muted);margin-top:2px;">App Version: <b style="color:var(--gold);">2026.10.07c</b> · Auto-Update ON</div>
 </div>
 </div>
 
@@ -7263,7 +7289,7 @@ function sendChat() {
   const qb = document.getElementById('quickButtons');
   if (qb) qb.style.display = 'none';
   // User message
-  chat.innerHTML += '<div class="chat-msg user"><div class="chat-bubble user">' + q.replace(/</g, '<') + '</div></div>';
+  chat.innerHTML += '<div class="chat-msg user"><div class="chat-bubble user">' + q.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div></div>';
   // Typing indicator
   chat.innerHTML += '<div class="chat-msg bot" id="typing"><div class="chat-bubble bot"><span class="chat-typing"></span><span class="chat-typing"></span><span class="chat-typing"></span></div></div>';
   chat.scrollTop = chat.scrollHeight;
