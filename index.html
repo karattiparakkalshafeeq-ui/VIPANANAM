@@ -799,6 +799,37 @@ body.dark .set-row input[type=number]{background:#0d1117}
   body{background:#fff!important;color:#000!important;padding-bottom:0!important}
   .card{break-inside:avoid;border:1px solid #ccc!important;box-shadow:none!important;background:#fff!important}
 }
+
+/* ================= CALM / DECLUTTER PASS ================= */
+.card{box-shadow:none!important;border:1px solid rgba(0,0,0,0.06)!important;border-radius:14px!important;padding:14px!important;margin-bottom:10px!important}
+body.dark .card{border-color:rgba(255,255,255,0.06)!important}
+.card-title{font-size:0.76em!important;letter-spacing:1px!important;margin-bottom:9px!important;padding-bottom:5px!important;border-bottom:1px solid rgba(0,0,0,0.05)!important}
+body.dark .card-title{border-bottom-color:rgba(255,255,255,0.06)!important}
+/* collapsible sections */
+.acc{background:var(--glass-card,rgba(255,255,255,0.7));border:1px solid rgba(0,0,0,0.06);border-radius:14px;margin-bottom:10px;overflow:hidden}
+body.dark .acc{background:rgba(22,27,34,0.6);border-color:rgba(255,255,255,0.06)}
+.acc>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:13px 14px;font-size:0.76em;font-weight:700;color:var(--accent-orange);letter-spacing:0.6px}
+.acc>summary::-webkit-details-marker{display:none}
+.acc>summary::after{content:'\25be';margin-left:auto;font-size:0.9em;color:var(--text-muted);transition:transform .2s}
+.acc[open]>summary::after{transform:rotate(180deg)}
+.acc-hint{font-weight:400;color:var(--text-muted);font-size:0.85em;letter-spacing:0;margin-left:2px}
+.acc-body{padding:0 14px 14px}
+.acc .drow:last-child,.acc .drow:last-of-type{border-bottom:none}
+/* slimmer nav + tiles */
+.anchor-nav{padding:4px 2px!important;margin-bottom:8px!important;background:transparent!important;backdrop-filter:none!important}
+.anchor-nav a{font-size:0.6em!important;padding:4px 10px!important;background:rgba(0,0,0,0.04)!important;border:none!important}
+body.dark .anchor-nav a{background:rgba(255,255,255,0.06)!important}
+.pulse-grid{gap:7px!important;margin:6px 0 8px!important}
+.pulse-tile{padding:8px!important;border:none!important;background:rgba(0,0,0,0.03)!important}
+body.dark .pulse-tile{background:rgba(255,255,255,0.05)!important}
+.fresh-strip{background:transparent!important;border:none!important;border-top:1px solid rgba(0,0,0,0.05)!important;border-radius:0!important;padding:7px 0 0!important}
+body.dark .fresh-strip{border-top-color:rgba(255,255,255,0.06)!important}
+.index-grid{gap:7px!important}
+.index-card{padding:10px!important;border:none!important;background:rgba(0,0,0,0.03)!important}
+body.dark .index-card{background:rgba(255,255,255,0.05)!important}
+/* debt link -> quiet row */
+.debt-row{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:12px;background:rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.05);text-decoration:none;margin-bottom:10px}
+body.dark .debt-row{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.06)}
 </style>
 
 
@@ -820,18 +851,6 @@ body.dark .set-row input[type=number]{background:#0d1117}
 <!-- DASHBOARD -->
 <div class="page active" id="page-dashboard">
 <div class="anchor-nav"><a href="#dashMarket">📈 Market</a><a href="#dashCall">🎯 Sir's Call</a><a href="#dashFii">🏦 FII/DII</a><a href="#dashRates">💱 Rates</a></div>
-<a href="debt-tracker.html" style="text-decoration:none;display:block;">
-<div style="background:linear-gradient(135deg,#1a237e,#283593);border:1px solid rgba(255,215,0,0.45);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,0.3);">
-<div style="font-size:1.7em;">💰</div>
-<div style="flex:1;">
-<div style="font-weight:800;color:var(--gold);font-size:0.95em;">Money Flow · Debt Tracker</div>
-<div style="font-size:0.65em;color:var(--text2);">Loans · Kuri · Savings · Expenses — കടം തീരുത്തു, മൂലധനം ഉണ്ടാക്കു, പിന്നെ trade!</div>
-</div>
-<div style="color:var(--accent);font-size:1.3em;">→</div>
-</div>
-</a>
-<div class="index-grid" id="indexGrid"></div>
-<div id="liveStrip" style="display:none;text-align:center;font-size:0.62em;color:var(--green);margin:-4px 0 10px;letter-spacing:0.5px;"><span class="live-dot" style="display:inline-block;margin-right:5px;"></span><span id="liveText">LIVE</span></div>
 <div class="card" id="dashMarket"><div class="card-title">Market Status <span class="ml">മാർക്കറ്റ് അവസ്ഥ</span></div>
 <div class="risk-badge">🔴 HIGH RISK · NO-TRADE ZONE <span class="as-of" id="asOfMain">as of —</span></div>
 <div style="font-size:0.72em;color:var(--text-secondary);line-height:1.5;margin-bottom:4px;">Nifty 8 weeks down · first 200-WMA breach since 2020. Swing trader: NO opportunity — stay 100% cash.<span class="ml">നിഫ്റ്റി 8 ആഴ്ച താഴ്ച · 2020-ന് ശേഷം ആദ്യമായി 200-WMA തകർന്നു.</span></div>
@@ -842,17 +861,32 @@ body.dark .set-row input[type=number]{background:#0d1117}
 <div class="pulse-tile"><div class="pulse-lbl">Stance</div><div class="pulse-val" style="color:var(--red)">Cash</div><div class="pulse-sub">100%</div></div>
 </div>
 <div class="fresh-strip"><span class="fs-l"><span class="live-dot"></span><span id="freshText">Data updated —</span></span><button class="fresh-btn" onclick="refreshAll()">↻ Refresh</button></div>
-<div class="drow"><div class="dlabel">Support</div><div class="dvalue negative">22,200–22,000</div></div>
+<details class="acc" style="margin:8px 0 0;border:none;background:transparent"><summary style="padding:9px 0;border-top:1px solid rgba(0,0,0,0.05)">📊 Levels &amp; events<span class="acc-hint">support · resistance · 200-WMA · next</span></summary><div class="acc-body" style="padding:0"><div class="drow"><div class="dlabel">Support</div><div class="dvalue negative">22,200–22,000</div></div>
 <div class="drow"><div class="dlabel">Resistance</div><div class="dvalue positive">22,800–23,000</div></div>
 <div class="drow"><div class="dlabel">200-WMA (Pivot)</div><div class="dvalue" style="color:var(--accent);">22,600</div></div>
 <div class="drow"><div class="dlabel">Next Events</div><div class="dvalue" style="font-size:0.78em;">Oct 5-7 RBI MPC · Q2 results mid-Oct</div></div>
-</div>
+</div></details></div>
 <div class="card" id="dashCall"><div class="card-title">🎯 Sir's Market Call <span class="ml">· സർ-ന്റെ കോൾ</span></div>
 <div class="drow"><div class="dlabel">Swing Trader</div><div class="dvalue negative">100% CASH · No entry</div></div>
 <div class="drow"><div class="dlabel">SIP Investor</div><div class="dvalue positive">Keep investing ✓</div></div>
 <div style="font-size:0.7em;color:var(--text2);margin-top:8px;line-height:1.55;">Entry only when ALL improve: Nifty back above 200-WMA + US bond yields fall + Crude falls + FIIs buy again.<span class="ml">നിഫ്റ്റി 200-WMA-ക്ക് മുകളിൽ തിരിച്ചെത്തുക + US bond yield താഴുക + Crude താഴുക + FII വാങ്ങൽ തുടങ്ങുക — എല്ലാം ശരിയായാൽ മാത്രം entry.</span></div>
 </div>
-<div class="card" id="sirVideoCard" style="display:none;">
+<div class="index-grid" id="indexGrid"></div>
+<div id="liveStrip" style="display:none;text-align:center;font-size:0.62em;color:var(--green);margin:-4px 0 10px;letter-spacing:0.5px;"><span class="live-dot" style="display:inline-block;margin-right:5px;"></span><span id="liveText">LIVE</span></div>
+<details class="acc" id="dashFii"><summary>FII/DII <span class="ml">· ഇൻവെസ്റ്റർ ഡാറ്റ</span><span class="acc-hint">daily flows · last 3 sessions</span></summary><div class="acc-body">
+<table class="table-cards"><tr><th>Date</th><th>FII (₹Cr)</th><th>DII (₹Cr)</th><th>Total</th></tr>
+<tr><td data-label="Date">Sep 29</td><td data-label="FII" style="color:var(--red);">▼ -9,980</td><td data-label="DII" style="color:var(--green);">▲ +6,953</td><td data-label="Net" style="color:var(--red);">▼ -3,027</td></tr>
+<tr><td data-label="Date">Sep 30</td><td data-label="FII" style="color:var(--red);">▼ -10,148</td><td data-label="DII" style="color:var(--green);">▲ +11,272</td><td data-label="Net" style="color:var(--green);">▲ +1,124</td></tr>
+<tr><td data-label="Date">Oct 1</td><td data-label="FII" style="color:var(--red);">▼ -9,484</td><td data-label="DII" style="color:var(--green);">▲ +10,042</td><td data-label="Net" style="color:var(--green);">▲ +558</td></tr>
+</table><div id="fiiLiveNote" style="font-size:0.62em;color:var(--muted);margin-top:6px;"><span class="as-of" style="margin:0 4px 0 0;">as of latest NSE</span> FII selling 6 sessions: ₹43,687 Cr · DII buying 32 sessions</div></div></details>
+<details class="acc" id="dashRates"><summary>RBI & Rates <span class="ml">· റിസർവ് ബാങ്ക്</span><span class="acc-hint">repo · CPI · yield · crude</span></summary><div class="acc-body">
+<div class="drow"><div class="dlabel">Repo Rate</div><div class="dvalue">5.25%</div></div>
+<div class="drow"><div class="dlabel">CPI Inflation</div><div class="dvalue" style="color:var(--accent);">4.45% (19-mo high)</div></div>
+<div class="drow"><div class="dlabel">RBI MPC</div><div class="dvalue" style="color:var(--accent);">Oct 5-7 · hike seen</div></div>
+<div class="drow"><div class="dlabel">US 10-yr Yield</div><div class="dvalue negative">5.2%+ (20-yr high)</div></div>
+<div class="drow"><div class="dlabel">Brent Crude</div><div class="dvalue negative">$95.60</div></div>
+</div></details>
+<details class="acc" id="sirVideoCard" style="display:none;">
 <div class="card-title">🔔 Sir's Latest Video <span class="ml">· പുതിയ വീഡിയോ</span></div>
 <a id="sirVideoLink" href="#" target="_blank" rel="noopener" style="text-decoration:none;display:block;">
 <div style="display:flex;gap:10px;align-items:center;">
@@ -863,20 +897,17 @@ body.dark .set-row input[type=number]{background:#0d1117}
 </div>
 </div>
 </a>
+</details>
+<a href="debt-tracker.html" class="debt-row">
+<div style="background:linear-gradient(135deg,#1a237e,#283593);border:1px solid rgba(255,215,0,0.45);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,0.3);">
+<div style="font-size:1.7em;">💰</div>
+<div style="flex:1;">
+<div style="font-weight:800;color:var(--gold);font-size:0.95em;">Money Flow · Debt Tracker</div>
+<div style="font-size:0.65em;color:var(--text2);">Loans · Kuri · Savings · Expenses — കടം തീരുത്തു, മൂലധനം ഉണ്ടാക്കു, പിന്നെ trade!</div>
 </div>
-<div class="card" id="dashFii"><div class="card-title">FII/DII <span class="ml">· ഇൻവെസ്റ്റർ ഡാറ്റ</span></div>
-<table class="table-cards"><tr><th>Date</th><th>FII (₹Cr)</th><th>DII (₹Cr)</th><th>Total</th></tr>
-<tr><td data-label="Date">Sep 29</td><td data-label="FII" style="color:var(--red);">▼ -9,980</td><td data-label="DII" style="color:var(--green);">▲ +6,953</td><td data-label="Net" style="color:var(--red);">▼ -3,027</td></tr>
-<tr><td data-label="Date">Sep 30</td><td data-label="FII" style="color:var(--red);">▼ -10,148</td><td data-label="DII" style="color:var(--green);">▲ +11,272</td><td data-label="Net" style="color:var(--green);">▲ +1,124</td></tr>
-<tr><td data-label="Date">Oct 1</td><td data-label="FII" style="color:var(--red);">▼ -9,484</td><td data-label="DII" style="color:var(--green);">▲ +10,042</td><td data-label="Net" style="color:var(--green);">▲ +558</td></tr>
-</table><div id="fiiLiveNote" style="font-size:0.62em;color:var(--muted);margin-top:6px;"><span class="as-of" style="margin:0 4px 0 0;">as of latest NSE</span> FII selling 6 sessions: ₹43,687 Cr · DII buying 32 sessions</div></div>
-<div class="card" id="dashRates"><div class="card-title">RBI & Rates <span class="ml">· റിസർവ് ബാങ്ക്</span></div>
-<div class="drow"><div class="dlabel">Repo Rate</div><div class="dvalue">5.25%</div></div>
-<div class="drow"><div class="dlabel">CPI Inflation</div><div class="dvalue" style="color:var(--accent);">4.45% (19-mo high)</div></div>
-<div class="drow"><div class="dlabel">RBI MPC</div><div class="dvalue" style="color:var(--accent);">Oct 5-7 · hike seen</div></div>
-<div class="drow"><div class="dlabel">US 10-yr Yield</div><div class="dvalue negative">5.2%+ (20-yr high)</div></div>
-<div class="drow"><div class="dlabel">Brent Crude</div><div class="dvalue negative">$95.60</div></div>
+<div style="color:var(--accent);font-size:1.3em;">→</div>
 </div>
+</a>
 <div class="card" style="text-align:center;padding:10px 14px;margin-top:14px;">
 <div style="font-size:0.62em;color:var(--text2);"><b style="color:var(--gold);">MuhammedShafeeq KP</b> · VipaNanam · വിപണനം</div>
 <div style="font-size:0.54em;color:var(--text-muted);margin-top:3px;">Markets · Wisdom · Growth · Built with <b style="color:var(--accent);">Sarvam AI</b></div>
@@ -1118,7 +1149,7 @@ Chart nookki screenshot eduthu upload cheyyu. Book-de niyamangal adisthana aayi 
 </div>
 
 
-<div class="section-title" style="margin-top:20px;">🔍 Technical Screener — Pre-built Filters</div>
+<details class="acc"><summary>📚 Reference &amp; screener<span class="acc-hint">filters · auto-draw · patterns</span></summary><div class="acc-body"><div class="section-title" style="margin-top:20px;">🔍 Technical Screener — Pre-built Filters</div>
 <div class="sub-tabs">
 <div class="sub-tab active" onclick="filterScreener('all',this)">All</div>
 <div class="sub-tab" onclick="filterScreener('ema50',this)">Close > 50 EMA</div>
@@ -1202,7 +1233,7 @@ Chart nookki screenshot eduthu upload cheyyu. Book-de niyamangal adisthana aayi 
 
 <!-- MARKET INTEL -->
 <div class="page" id="page-intel">
-<div class="card"><div class="card-title">Geopolitics <span class="ml">· ഭൂമിശാസ്ത്രം</span></div>
+<details class="acc"><summary>📌 Market context<span class="acc-hint">geopolitics · crude · strategy</span></summary><div class="acc-body"><div style="display:flex;flex-direction:column;gap:10px"><div class="card"><div class="card-title">Geopolitics <span class="ml">· ഭൂമിശാസ്ത്രം</span></div>
 <div class="alert alert-red"><div class="alert-title">🔴 US-Iran War</div><div class="alert-text">Direct conflict. Brent $95.60. Strait of Hormuz threatened.<span class="ml">യുഎസ്-ഇറാൻ യുദ്ധം രൂക്ഷം.</span></div></div>
 <div class="alert alert-red"><div class="alert-title">🔴 US Tariffs (Graham Act)</div><div class="alert-text">100% tariff on Russian crude buyers. India 2nd largest. Pharma: 100% tariff from 2028.<span class="ml">ഇന്ത്യയ്ക്ക് 110% തരിഫ് സാധ്യത.</span></div></div>
 </div>
@@ -1217,7 +1248,8 @@ Chart nookki screenshot eduthu upload cheyyu. Book-de niyamangal adisthana aayi 
 1. Use 0.5% risk<br>2. Only Stage 2 stocks<br>3. Breakout + volume<br>4. AVOID: IT, OMCs, Aviation, Paints<br>5. FOCUS: Metals, Chemicals, Defense, Pharma, Auto<br>6. Tight SL<br>7. 3 losses = STOP
 <span class="ml">0.5% റിസ്ക്. ബ്രേക്ക്ഔട്ട് + വോളിയം. ജാഗ്രത.</span></div></
 
-<div class="section-title" style="margin-top:20px;">📊 Advanced Market Breadth — Breakouts & EMA</div>
+</div></div></details>
+<div class="section-title" style="margin-top:20px;">📊 Market Breadth — all NSE</div>
 
 <div class="fresh-strip" style="margin-bottom:10px"><span class="fs-l"><span class="live-dot"></span><span id="brFresh">Breadth —</span></span><span id="brSignal" class="summary-pill yellow">—</span></div>
 <div class="pulse-grid">
@@ -1226,7 +1258,7 @@ Chart nookki screenshot eduthu upload cheyyu. Book-de niyamangal adisthana aayi 
 <div class="pulse-tile"><div class="pulse-lbl">A : D ratio</div><div class="pulse-val" id="brAD">—</div><div class="pulse-sub" id="brADnote">2:1 = healthy</div></div>
 <div class="pulse-tile"><div class="pulse-lbl">% Advancing</div><div class="pulse-val" id="brPctUp">—</div><div class="pulse-sub">of market</div></div>
 </div>
-<div class="pulse-grid">
+<details class="acc" style="margin:0 0 10px"><summary>📊 Breakouts &amp; EMA breadth<span class="acc-hint">30-session highs/lows · EMA %</span></summary><div class="acc-body"><div class="pulse-grid">
 <div class="pulse-tile"><div class="pulse-lbl">New Highs 30d</div><div class="pulse-val" style="color:var(--green)" id="brHigh">—</div><div class="pulse-sub">30-session breakout</div></div>
 <div class="pulse-tile"><div class="pulse-lbl">New Lows 30d</div><div class="pulse-val" style="color:var(--red)" id="brLow">—</div><div class="pulse-sub">30-session breakdown</div></div>
 <div class="pulse-tile"><div class="pulse-lbl">52w Highs</div><div class="pulse-val" style="color:var(--green)" id="brHi52">—</div><div class="pulse-sub">fresh leaders</div></div>
@@ -1248,8 +1280,8 @@ Chart nookki screenshot eduthu upload cheyyu. Book-de niyamangal adisthana aayi 
 </div>
 </div>
 
-<div class="section-title" style="margin-top:15px;">📈 EMA Breadth — % Stocks Above EMA</div>
-<div class="sub-tabs">
+</div></details>
+<details class="acc"><summary>📈 EMA breadth chart<span class="acc-hint">% above 10/20/50/100/200 EMA</span></summary><div class="acc-body"><div class="sub-tabs">
 <div class="sub-tab active" onclick="filterEMA('10',this)">10 EMA</div>
 <div class="sub-tab" onclick="filterEMA('20',this)">20 EMA</div>
 <div class="sub-tab" onclick="filterEMA('50',this)">50 EMA</div>
@@ -1260,9 +1292,8 @@ Chart nookki screenshot eduthu upload cheyyu. Book-de niyamangal adisthana aayi 
 <canvas id="emaChart" width="600" height="200"></canvas>
 </div>
 
-<div class="section-title" style="margin-top:20px;">🏦 FII / DII Activity — Institutional Money Flow</div>
-
-<div class="summary-pills" id="fiiDiiSummary"></div>
+</div></details>
+<details class="acc"><summary>🏦 FII / DII activity<span class="acc-hint">institutional flows · trend chart</span></summary><div class="acc-body"><div class="summary-pills" id="fiiDiiSummary"></div>
 
 <div class="sub-tabs">
 <div class="sub-tab active" onclick="filterFIIDII('daily',this)">Daily</div>
@@ -1272,7 +1303,6 @@ Chart nookki screenshot eduthu upload cheyyu. Book-de niyamangal adisthana aayi 
 
 <div id="fiiDiiTable"></div>
 
-<div class="section-title" style="margin-top:15px;">📊 FII/DII Trend Chart</div>
 <div class="chart-canvas-wrap">
 <canvas id="fiiDiiChart" width="600" height="250"></canvas>
 <div class="chart-legend">
@@ -1292,8 +1322,8 @@ FII buying + DII selling = FII driven rally.<br>
 
 
 
-<div class="section-title" style="margin-top:20px;">🏭 Sector Strength — Weinstein Stage Analysis</div>
-<div class="summary-pills" id="sectorSummary"></div>
+</div></details>
+<details class="acc"><summary>🏭 Sector strength<span class="acc-hint">Weinstein stage analysis</span></summary><div class="acc-body"><div class="summary-pills" id="sectorSummary"></div>
 <div class="sub-tabs">
 <div class="sub-tab active" onclick="filterSector('all',this)">All</div>
 <div class="sub-tab" onclick="filterSector('strong',this)">Strong (S2)</div>
@@ -1301,8 +1331,8 @@ FII buying + DII selling = FII driven rally.<br>
 <div class="sub-tab" onclick="filterSector('weak',this)">Weak (S4)</div>
 </div>
 <div id="sectorStrength"></div>
-<div class="section-title" style="margin-top:20px;">💪 Relative Strength — Stock RS Ranking</div>
-<div class="summary-pills">
+</div></details>
+<details class="acc"><summary>💪 Relative strength<span class="acc-hint">stock RS ranking</span></summary><div class="acc-body"><div class="summary-pills">
 <div class="summary-pill green">RS > 1.5 (Strong)</div>
 <div class="summary-pill yellow">RS 0.8-1.5 (Average)</div>
 <div class="summary-pill red">RS < 0.8 (Weak)</div>
@@ -1343,6 +1373,7 @@ FII buying + DII selling = FII driven rally.<br>
 <div class="news-ticker" id="newsTicker">
 <div class="news-ticker-track" id="newsTickerTrack"></div>
 </div>
+</div></details></div></details>
 <div class="tab-bar">
 <button class="tab-btn active" onclick="showPage('dashboard',this)"><span class="icon">📊</span>Dashboard</button>
 <button class="tab-btn" onclick="showPage('watchlist',this)"><span class="icon">👁️</span>Watchlist</button>
@@ -7959,7 +7990,7 @@ function calcESPlan(){
   } else {
     esLastPlan = null;
     out.innerHTML = '<div style="font-size:0.75em;color:var(--muted);padding:8px;">Entry-യും SL-ഉം നൽകൂ (SL, Entry-ക്ക് താഴെയായിരിക്കണം)</div>';
-  }a
+  }
   checkESVerdict();
 }
 function setESMood(m){
