@@ -1,21 +1,22 @@
-const CACHE_NAME = 'vipananam-2026-09-18';
+const CACHE_NAME = 'vipananam-2026-10-07-calm';
 const ASSETS = ['./manifest.json','./favicon.svg','./icon-192.png','./icon-512.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS)));
   self.skipWaiting();
 });
 self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(names =>
-    Promise.all(names.filter(n => n !== CACHE_NAME).map(n => caches.delete(n)))
-  ));
-  self.clients.claim();
+  e.waitUntil(
+    caches.keys()
+      .then(names => Promise.all(names.filter(n => n !== CACHE_NAME).map(n => caches.delete(n))))
+      .then(() => self.clients.claim())
+  );
 });
+self.addEventListener('message', e => { if (e.data && e.data.type === 'SKIP_WAITING') self.skipWaiting(); });
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   const url = new URL(e.request.url);
   if (url.origin !== self.location.origin) return;
-  if (url.pathname.endsWith('sw.js')) return; // never intercept SW script itself
-  // Navigate requests (the app page): bypass HTTP cache -> always latest when online
+  if (url.pathname.endsWith('sw.js')) return;
   const opts = (e.request.mode === 'navigate') ? { cache: 'no-store' } : {};
   e.respondWith(
     fetch(e.request, opts).then(resp => {
