@@ -1,29 +1,29 @@
 {
-  "updated": "2026-10-08T04:10:33Z",
+  "updated": "2026-10-08T04:27:35Z",
   "nifty": {
-    "price": 22488.35,
-    "change": -114.6,
-    "pct": -0.51
+    "price": 22475.0,
+    "change": -128.16,
+    "pct": -0.57
   },
   "sensex": {
-    "price": 72390.27,
-    "change": -248.42,
-    "pct": -0.34
+    "price": 72299.08,
+    "change": -339.95,
+    "pct": -0.47
   },
   "brent": {
-    "price": 102.34,
-    "change": 2.14,
-    "pct": 2.14
+    "price": 102.49,
+    "change": 2.29,
+    "pct": 2.29
   },
   "usdinr": {
-    "price": 96.71,
-    "change": -0.05,
-    "pct": -0.05
+    "price": 96.72,
+    "change": -0.04,
+    "pct": -0.04
   },
   "vix": {
-    "price": 14.11,
-    "change": 0.22,
-    "pct": 1.58
+    "price": 14.17,
+    "change": 0.29,
+    "pct": 2.07
   },
   "dii": {
     "date": "07-Oct-2026",
