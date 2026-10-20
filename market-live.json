@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-19T15:37:50Z",
+  "updated": "2026-10-20T08:00:17Z",
   "nifty": {
     "price": 22888.95,
     "change": -257.15,
@@ -11,14 +11,14 @@
     "pct": -1.17
   },
   "brent": {
-    "price": 108.17,
-    "change": -1.69,
-    "pct": -1.54
+    "price": 110.55,
+    "change": 1.0,
+    "pct": 0.91
   },
   "usdinr": {
     "price": 94.92,
-    "change": -0.04,
-    "pct": -0.04
+    "change": 0.01,
+    "pct": 0.01
   },
   "vix": {
     "price": 14.77,
